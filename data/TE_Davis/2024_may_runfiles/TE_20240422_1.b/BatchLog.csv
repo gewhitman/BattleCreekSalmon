@@ -1,5 +1,0 @@
-#,Acq. Date-Time,Sample Type,Sample Name,Vial#,File Name,Acquisition Result,Error Message,Dilution Result,Comment,Operator,Error Action,Replicates,Level,ISTD Conc,Auto Dilution (ISIS 2),Total Dil.,Final Weight or Volume,Sample Weight or Volume,Dilution Multiplier,Sublist,Total Acq Time,Max. Daily Dose,%J,User Def. 1,User Def. 2,User Def. 3,QC Failed Criteria,QC Failed Elements,
-1,2024-04-22 13:33:47,Sample,TEAA_TEAB_TEAC_TEAE,<Manual>,D:\Agilent\ICPMH\1\DATA\Rachel Johnson\TE_20240422_1.b\TEAA_TEAB_TEAC_TEAE.d,Fail,Aborted by operator.,1,-,Admin,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
-2,2024-04-22 13:53:39,Sample,TEAA_TEAB_TEAC_TEAE,<Manual>,D:\Agilent\ICPMH\1\DATA\Rachel Johnson\TE_20240422_1.b\TEAA_TEAB_TEAC_TEAE.d,Error,Specified data file name D:\Agilent\ICPMH\1\DATA\Rachel Johnson\TE_20240422_1.b\TEAA_TEAB_TEAC_TEAE.d already exists. Please enter a different data file name.,-,-,Admin,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
-3,2024-04-22 13:54:33,Sample,TEAA_TEAB_TEAC_TEAE,<Manual>,D:\Agilent\ICPMH\1\DATA\Rachel Johnson\TE_20240422_1.b\TEAA_TEAB_TEAC_TEAE.d,Pass,-,1,-,Admin,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
-
