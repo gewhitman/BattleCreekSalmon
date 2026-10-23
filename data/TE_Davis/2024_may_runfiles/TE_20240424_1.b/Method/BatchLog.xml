@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BatchLogDataSet SchemaVersion="65536" DataVersion="1" SIVersion="C.1.5.588.9" BatchName="TE_202424_1.b" BatchDataPath="D:\Agilent\ICPMH\1\DATA\Rachel Johnson\TE_202424_1.b" UserDefineColumnsCaptions="" HashCode="1FF06FE6316A5161C2B7A68A23D5C65FA43DE336A196689AE725708ECE392A7400A3FAC935447BA4E25FEC99856357D7D8FBA5453851398D61A89B069063E625" xmlns="BatchLog">
+  <BatchLogInfo>
+    <BatchLogID>-1</BatchLogID>
+    <SampleLogID>0</SampleLogID>
+    <AcqDateTime>2024-04-24T13:15:47-07:00</AcqDateTime>
+    <AcqResult>Pass</AcqResult>
+    <DataFileName>D:\Agilent\ICPMH\1\DATA\Rachel Johnson\TE_202424_1.b\FCA_FC2BU_TEAH.d</DataFileName>
+    <DilutionResult>1</DilutionResult>
+    <OperatorName>Admin</OperatorName>
+    <SampleName>FCA_FC2BU_TEAH</SampleName>
+    <SampleType>Sample</SampleType>
+    <ErrorMessage />
+  </BatchLogInfo>
+</BatchLogDataSet>

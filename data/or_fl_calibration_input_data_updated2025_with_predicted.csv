@@ -1,0 +1,814 @@
+"","Sample_ID","Collection_site","Collection_year","OR","FL","Source","or_fl_dataset","Region","predicted_FL_Willmes2024Yuba_line","predicted_FL_new_segmented_line"
+"1","VE554","Coleman Hatchery",2002,246,28.248,"Sturrock et al. (2015) PLoS ONE","original",NA,33.28164,36.317194
+"2","VE271","Coleman Hatchery",2002,267,28.711,"Sturrock et al. (2015) PLoS ONE","original",NA,34.00143,38.35132
+"3","VE268","Coleman Hatchery",2002,256,28.716,"Sturrock et al. (2015) PLoS ONE","original",NA,33.41504,36.52906
+"4","VE234","Coleman Hatchery",2002,261,29.189,"Sturrock et al. (2015) PLoS ONE","original",NA,33.48174,37.35736
+"5","VE381","Coleman Hatchery",2002,238,29.263,"Sturrock et al. (2015) PLoS ONE","original",NA,33.17492,36.147122
+"6","VE235","Coleman Hatchery",2002,292,29.285,"Sturrock et al. (2015) PLoS ONE","original",NA,37.99868,42.49282
+"7","VE552","Coleman Hatchery",2002,226,30.026,"Sturrock et al. (2015) PLoS ONE","original",NA,33.01484,35.892014
+"8","VE379","Coleman Hatchery",2002,254,30.773,"Sturrock et al. (2015) PLoS ONE","original",NA,33.38836,36.487266
+"9","VE331","Coleman Hatchery",2002,294,30.814,"Sturrock et al. (2015) PLoS ONE","original",NA,38.31846,42.82414
+"10","VE380","Coleman Hatchery",2002,263,31.161,"Sturrock et al. (2015) PLoS ONE","original",NA,33.50842,37.68868
+"11","VE455","Coleman Hatchery",2002,335,31.588,"Sturrock et al. (2015) PLoS ONE","original",NA,44.87395,49.6162
+"12","VE509","Coleman Hatchery",2002,231,31.597,"Sturrock et al. (2015) PLoS ONE","original",NA,33.08154,35.998309
+"13","VE222","Coleman Hatchery",2002,290,31.85,"Sturrock et al. (2015) PLoS ONE","original",NA,37.6789,42.1615
+"14","VE263","Coleman Hatchery",2002,261,32.376,"Sturrock et al. (2015) PLoS ONE","original",NA,33.48174,37.35736
+"15","VE438","Coleman Hatchery",2002,294,32.676,"Sturrock et al. (2015) PLoS ONE","original",NA,38.31846,42.82414
+"16","VE406","Coleman Hatchery",2002,316,32.718,"Sturrock et al. (2015) PLoS ONE","original",NA,41.83604,46.46866
+"17","VE415","Coleman Hatchery",2002,335,32.718,"Sturrock et al. (2015) PLoS ONE","original",NA,44.87395,49.6162
+"18","VE417","Coleman Hatchery",2002,317,32.925,"Sturrock et al. (2015) PLoS ONE","original",NA,41.99593,46.63432
+"19","VE317","Coleman Hatchery",2002,286,32.965,"Sturrock et al. (2015) PLoS ONE","original",NA,37.03934,41.49886
+"20","VE318","Coleman Hatchery",2002,329,33.074,"Sturrock et al. (2015) PLoS ONE","original",NA,43.91461,48.62224
+"21","VE213","Coleman Hatchery",2002,309,33.479,"Sturrock et al. (2015) PLoS ONE","original",NA,40.71681,45.30904
+"22","VE422","Coleman Hatchery",2002,319,33.712,"Sturrock et al. (2015) PLoS ONE","original",NA,42.31571,46.96564
+"23","VE112","Coleman Hatchery",2002,305,33.748,"Sturrock et al. (2015) PLoS ONE","original",NA,40.07725,44.6464
+"24","VE290","Coleman Hatchery",2002,318,33.753,"Sturrock et al. (2015) PLoS ONE","original",NA,42.15582,46.79998
+"25","VE323","Coleman Hatchery",2002,307,34.132,"Sturrock et al. (2015) PLoS ONE","original",NA,40.39703,44.97772
+"26","VE366","Coleman Hatchery",2002,323,34.142,"Sturrock et al. (2015) PLoS ONE","original",NA,42.95527,47.62828
+"27","VE328","Coleman Hatchery",2002,327,34.272,"Sturrock et al. (2015) PLoS ONE","original",NA,43.59483,48.29092
+"28","VE106","Coleman Hatchery",2002,286,34.385,"Sturrock et al. (2015) PLoS ONE","original",NA,37.03934,41.49886
+"29","VE475","Coleman Hatchery",2002,325,34.48,"Sturrock et al. (2015) PLoS ONE","original",NA,43.27505,47.9596
+"30","VE204","Coleman Hatchery",2002,313,34.754,"Sturrock et al. (2015) PLoS ONE","original",NA,41.35637,45.97168
+"31","VE202","Coleman Hatchery",2002,320,35.031,"Sturrock et al. (2015) PLoS ONE","original",NA,42.4756,47.1313
+"32","VE150","Coleman Hatchery",2002,312,35.075,"Sturrock et al. (2015) PLoS ONE","original",NA,41.19648,45.80602
+"33","VE212","Coleman Hatchery",2002,335,35.367,"Sturrock et al. (2015) PLoS ONE","original",NA,44.87395,49.6162
+"34","VE524","Coleman Hatchery",2002,318,35.481,"Sturrock et al. (2015) PLoS ONE","original",NA,42.15582,46.79998
+"35","VE199","Coleman Hatchery",2002,314,35.512,"Sturrock et al. (2015) PLoS ONE","original",NA,41.51626,46.13734
+"36","VE293","Coleman Hatchery",2002,342,36.06,"Sturrock et al. (2015) PLoS ONE","original",NA,45.99318,50.77582
+"37","VE185","Coleman Hatchery",2002,331,36.086,"Sturrock et al. (2015) PLoS ONE","original",NA,44.23439,48.95356
+"38","VE163","Coleman Hatchery",2002,301,36.191,"Sturrock et al. (2015) PLoS ONE","original",NA,39.43769,43.98376
+"39","VE173","Coleman Hatchery",2002,316,36.371,"Sturrock et al. (2015) PLoS ONE","original",NA,41.83604,46.46866
+"40","VE338","Coleman Hatchery",2002,316,37.506,"Sturrock et al. (2015) PLoS ONE","original",NA,41.83604,46.46866
+"41","SG150051","Golden Gate",2005,503.0666,83,"Sturrock et al. (2015) PLoS ONE","original",NA,71.746118674,77.458112956
+"42","SG150052","Golden Gate",2005,493.3247,81,"Sturrock et al. (2015) PLoS ONE","original",NA,70.188486283,75.844269802
+"43","SG150053","Golden Gate",2005,605.3589,77,"Sturrock et al. (2015) PLoS ONE","original",NA,88.101634521,94.403855374
+"44","SG150054","Golden Gate",2005,481.688,74,"Sturrock et al. (2015) PLoS ONE","original",NA,68.32789432,73.91653408
+"45","SG150055","Golden Gate",2005,518.2201,75,"Sturrock et al. (2015) PLoS ONE","original",NA,74.169011789,79.968441766
+"46","SG150056","Golden Gate",2005,558.5471,90,"Sturrock et al. (2015) PLoS ONE","original",NA,80.616895819,86.649012586
+"47","SG150062","Golden Gate",2005,579.6,84,"Sturrock et al. (2015) PLoS ONE","original",NA,83.983044,90.136636
+"48","SG150064","Golden Gate",2005,565.0405,78,"Sturrock et al. (2015) PLoS ONE","original",NA,81.655125545,87.72470923
+"49","SG150075","Golden Gate",2005,740.2884,114,"Sturrock et al. (2015) PLoS ONE","original",NA,109.675512276,116.756276344
+"50","SG150077","Golden Gate",2005,632.51,79,"Sturrock et al. (2015) PLoS ONE","original",NA,92.4428239,98.9017066
+"51","SG150078","Golden Gate",2005,629.1,94,"Sturrock et al. (2015) PLoS ONE","original",NA,91.897599,98.336806
+"52","SG150080","Golden Gate",2005,440.8256,74,"Sturrock et al. (2015) PLoS ONE","original",NA,61.794405184,67.147268896
+"53","SG150081","Golden Gate",2005,546.3642,74,"Sturrock et al. (2015) PLoS ONE","original",NA,78.668971938,84.630793372
+"54","SG150086","Golden Gate",2005,493.3296,77,"Sturrock et al. (2015) PLoS ONE","original",NA,70.189269744,75.845081536
+"55","SG150087","Golden Gate",2005,563.93,80,"Sturrock et al. (2015) PLoS ONE","original",NA,81.4775677,87.5407438
+"56","SG150088","Golden Gate",2005,414.95,74,"Sturrock et al. (2015) PLoS ONE","original",NA,57.6571555,62.860717
+"57","SG150089","Golden Gate",2005,457.13,75,"Sturrock et al. (2015) PLoS ONE","original",NA,64.4013157,69.8482558
+"58","SG150090","Golden Gate",2005,523.0917,82,"Sturrock et al. (2015) PLoS ONE","original",NA,74.947931913,80.775471022
+"59","SG150093","Golden Gate",2005,530.3943,84,"Sturrock et al. (2015) PLoS ONE","original",NA,76.115544627,81.985219738
+"60","SG150094","Golden Gate",2005,595.37,90,"Sturrock et al. (2015) PLoS ONE","original",NA,86.5045093,92.7490942
+"61","SG150098","Golden Gate",2005,552.36,75,"Sturrock et al. (2015) PLoS ONE","original",NA,79.6276404,85.6240576
+"62","SG150101","Golden Gate",2005,563.9559,90,"Sturrock et al. (2015) PLoS ONE","original",NA,81.481708851,87.545034394
+"63","SG150102","Golden Gate",2005,735.9749,132,"Sturrock et al. (2015) PLoS ONE","original",NA,108.985826761,116.041701934
+"64","SG150103","Golden Gate",2005,568.0143,82,"Sturrock et al. (2015) PLoS ONE","original",NA,82.130606427,88.217348938
+"65","SG150105","Golden Gate",2005,503.3369,76,"Sturrock et al. (2015) PLoS ONE","original",NA,71.789336941,77.502890854
+"66","SG150107","Golden Gate",2005,545.56,88,"Sturrock et al. (2015) PLoS ONE","original",NA,78.5403884,84.4975696
+"67","SG150109","Golden Gate",2005,529.24,88,"Sturrock et al. (2015) PLoS ONE","original",NA,75.9309836,81.7939984
+"68","SG150113","Golden Gate",2005,522.84,75,"Sturrock et al. (2015) PLoS ONE","original",NA,74.9076876,80.7337744
+"69","SG150115","Golden Gate",2005,545.99,77,"Sturrock et al. (2015) PLoS ONE","original",NA,78.6091411,84.5688034
+"70","SG150116","Golden Gate",2005,514.7093,82,"Sturrock et al. (2015) PLoS ONE","original",NA,73.607669977,79.386842638
+"71","SG150118","Golden Gate",2005,496.04,77,"Sturrock et al. (2015) PLoS ONE","original",NA,70.6226356,76.2940864
+"72","SG150128","Golden Gate",2005,573.155,88,"Sturrock et al. (2015) PLoS ONE","original",NA,82.95255295,89.0689573
+"73","SG150130","Golden Gate",2005,641.09,90,"Sturrock et al. (2015) PLoS ONE","original",NA,93.8146801,100.3230694
+"74","SG150131","Golden Gate",2005,601.21,84,"Sturrock et al. (2015) PLoS ONE","original",NA,87.4382669,93.7165486
+"75","SG150132","Golden Gate",2005,502.71,83,"Sturrock et al. (2015) PLoS ONE","original",NA,71.6891019,77.3990386
+"76","SG150133","Golden Gate",2005,575.22,85,"Sturrock et al. (2015) PLoS ONE","original",NA,83.2827258,89.4110452
+"77","SG150134","Golden Gate",2005,537.7031,82,"Sturrock et al. (2015) PLoS ONE","original",NA,77.284148659,83.195995546
+"78","SG150136","Golden Gate",2005,588.3167,95,"Sturrock et al. (2015) PLoS ONE","original",NA,85.376757163,91.580644522
+"79","SG150137","Golden Gate",2005,671.1162,107,"Sturrock et al. (2015) PLoS ONE","original",NA,98.615569218,105.297209692
+"80","SG150142","Golden Gate",2005,523.6325,84,"Sturrock et al. (2015) PLoS ONE","original",NA,75.034400425,80.86505995
+"81","SG150143","Golden Gate",2005,529.3155,77,"Sturrock et al. (2015) PLoS ONE","original",NA,75.943055295,81.80650573
+"82","SG150144","Golden Gate",2005,585.3319,92,"Sturrock et al. (2015) PLoS ONE","original",NA,84.899517491,91.086182554
+"83","SG150148","Golden Gate",2005,537.13,88,"Sturrock et al. (2015) PLoS ONE","original",NA,77.1925157,83.1010558
+"84","SG150150","Golden Gate",2005,653.72,96,"Sturrock et al. (2015) PLoS ONE","original",NA,95.8340908,102.4153552
+"85","SG150207","Golden Gate",2005,486.2882,79,"Sturrock et al. (2015) PLoS ONE","original",NA,69.063420298,74.678603212
+"86","SG150209","Golden Gate",2005,573.425,80,"Sturrock et al. (2015) PLoS ONE","original",NA,82.99572325,89.1136855
+"87","SG150214","Golden Gate",2005,561.5186,82,"Sturrock et al. (2015) PLoS ONE","original",NA,81.092008954,87.141271276
+"88","SG150215","Golden Gate",2005,605.0878,86,"Sturrock et al. (2015) PLoS ONE","original",NA,88.058288342,94.358944948
+"89","SG150218","Golden Gate",2005,491.6211,75,"Sturrock et al. (2015) PLoS ONE","original",NA,69.916097679,75.562051426
+"90","SG150219","Golden Gate",2005,494.136,74,"Sturrock et al. (2015) PLoS ONE","original",NA,70.31820504,75.97866976
+"91","SG150220","Golden Gate",2005,618.0763,91,"Sturrock et al. (2015) PLoS ONE","original",NA,90.135019607,96.510619858
+"92","SG150221","Golden Gate",2005,474.6578,73,"Sturrock et al. (2015) PLoS ONE","original",NA,67.203835642,72.751911148
+"93","SG150222","Golden Gate",2005,461.1266,74,"Sturrock et al. (2015) PLoS ONE","original",NA,65.040332074,70.510332556
+"94","SG150224","Golden Gate",2005,509.86,68,"Sturrock et al. (2015) PLoS ONE","original",NA,72.8323154,78.5835076
+"95","SG150226","Golden Gate",2005,503.88,74,"Sturrock et al. (2015) PLoS ONE","original",NA,71.8761732,77.5928608
+"96","SG150228","Golden Gate",2005,517.4147,77,"Sturrock et al. (2015) PLoS ONE","original",NA,74.040236383,79.835019202
+"97","SG150229","Golden Gate",2005,449.0561,70,"Sturrock et al. (2015) PLoS ONE","original",NA,63.110379829,68.510733526
+"98","SG150231","Golden Gate",2005,579.3808,87,"Sturrock et al. (2015) PLoS ONE","original",NA,83.947996112,90.100323328
+"99","SG150232","Golden Gate",2005,533.9521,77,"Sturrock et al. (2015) PLoS ONE","original",NA,76.684401269,82.574604886
+"100","SG150233","Golden Gate",2005,595.3464,79,"Sturrock et al. (2015) PLoS ONE","original",NA,86.500735896,92.745184624
+"101","SG150234","Golden Gate",2005,544.75,84,"Sturrock et al. (2015) PLoS ONE","original",NA,78.4108775,84.363385
+"102","SG150237","Golden Gate",2005,613.81,85,"Sturrock et al. (2015) PLoS ONE","original",NA,89.4528809,95.8038646
+"103","SG150238","Golden Gate",2005,699.5351,91,"Sturrock et al. (2015) PLoS ONE","original",NA,103.159467139,110.005084666
+"104","SG150239","Golden Gate",2005,580.1907,87,"Sturrock et al. (2015) PLoS ONE","original",NA,84.077491023,90.234491362
+"105","SG150243","Golden Gate",2005,573.08,79,"Sturrock et al. (2015) PLoS ONE","original",NA,82.9405612,89.0565328
+"106","SG150244","Golden Gate",2005,642.1603,94,"Sturrock et al. (2015) PLoS ONE","original",NA,93.985810367,100.500375298
+"107","SG150247","Golden Gate",2005,651.0911,90,"Sturrock et al. (2015) PLoS ONE","original",NA,95.413755979,101.979851626
+"108","SG150250","Golden Gate",2005,497.8344,78,"Sturrock et al. (2015) PLoS ONE","original",NA,70.909542216,76.591346704
+"109","SG150251","Golden Gate",2005,555.2946,85,"Sturrock et al. (2015) PLoS ONE","original",NA,80.096853594,86.110203436
+"110","SG150252","Golden Gate",2005,489.87,80,"Sturrock et al. (2015) PLoS ONE","original",NA,69.6361143,75.2719642
+"111","SG150256","Golden Gate",2005,484.394,76,"Sturrock et al. (2015) PLoS ONE","original",NA,68.76055666,74.36481004
+"112","SG150258","Golden Gate",2005,449.2143,74,"Sturrock et al. (2015) PLoS ONE","original",NA,63.135674427,68.536940938
+"113","SG150260","Golden Gate",2005,504.75,82,"Sturrock et al. (2015) PLoS ONE","original",NA,72.0152775,77.736985
+"114","SG150262","Golden Gate",2005,505.77,62,"Sturrock et al. (2015) PLoS ONE","original",NA,72.1783653,77.9059582
+"115","SG150265","Golden Gate",2005,586.85,87,"Sturrock et al. (2015) PLoS ONE","original",NA,85.1422465,91.337671
+"116","SG150266","Golden Gate",2005,611.321,99,"Sturrock et al. (2015) PLoS ONE","original",NA,89.05491469,95.39153686
+"117","SG150267","Golden Gate",2005,573.32,81,"Sturrock et al. (2015) PLoS ONE","original",NA,82.9789348,89.0962912
+"118","SG150268","Golden Gate",2005,534.81,89,"Sturrock et al. (2015) PLoS ONE","original",NA,76.8215709,82.7167246
+"119","SG150272","Golden Gate",2005,507.666,82,"Sturrock et al. (2015) PLoS ONE","original",NA,72.48151674,78.22004956
+"120","SG150274","Golden Gate",2005,660.2889,93,"Sturrock et al. (2015) PLoS ONE","original",NA,96.884392221,103.503559174
+"121","SG150275","Golden Gate",2005,622.68,105,"Sturrock et al. (2015) PLoS ONE","original",NA,90.8711052,97.2732688
+"122","SG150276","Golden Gate",2005,682.7,94,"Sturrock et al. (2015) PLoS ONE","original",NA,100.467703,107.216182
+"123","SG150279","Golden Gate",2005,627.8218,80,"Sturrock et al. (2015) PLoS ONE","original",NA,91.693227602,98.125059388
+"124","SR00093","Stanislaus River",2000,544,80,"Sturrock et al. (2015) PLoS ONE","original",NA,78.29096,84.23914
+"125","SR00094","Stanislaus River",2000,535,80,"Sturrock et al. (2015) PLoS ONE","original",NA,76.85195,82.7482
+"126","SR00095","Stanislaus River",2000,507,74,"Sturrock et al. (2015) PLoS ONE","original",NA,72.37503,78.10972
+"127","SR00096","Stanislaus River",2000,507,84,"Sturrock et al. (2015) PLoS ONE","original",NA,72.37503,78.10972
+"128","SR00097","Stanislaus River",2000,533,79,"Sturrock et al. (2015) PLoS ONE","original",NA,76.53217,82.41688
+"129","SR00098","Stanislaus River",2000,526,81,"Sturrock et al. (2015) PLoS ONE","original",NA,75.41294,81.25726
+"130","SR00099","Stanislaus River",2000,548,80,"Sturrock et al. (2015) PLoS ONE","original",NA,78.93052,84.90178
+"131","SR00117","Stanislaus River",2000,488,74,"Sturrock et al. (2015) PLoS ONE","original",NA,69.33712,74.96218
+"132","SR00118","Stanislaus River",2000,559,84,"Sturrock et al. (2015) PLoS ONE","original",NA,80.68931,86.72404
+"133","SR00119","Stanislaus River",2000,564,82,"Sturrock et al. (2015) PLoS ONE","original",NA,81.48876,87.55234
+"134","SR00120","Stanislaus River",2000,498,74,"Sturrock et al. (2015) PLoS ONE","original",NA,70.93602,76.61878
+"135","SR00121","Stanislaus River",2000,515,76,"Sturrock et al. (2015) PLoS ONE","original",NA,73.65415,79.435
+"136","SR00122","Stanislaus River",2000,555,76,"Sturrock et al. (2015) PLoS ONE","original",NA,80.04975,86.0614
+"137","SR00123","Stanislaus River",2000,533,69,"Sturrock et al. (2015) PLoS ONE","original",NA,76.53217,82.41688
+"138","SR00124","Stanislaus River",2000,526,81,"Sturrock et al. (2015) PLoS ONE","original",NA,75.41294,81.25726
+"139","SR00125","Stanislaus River",2000,537,74,"Sturrock et al. (2015) PLoS ONE","original",NA,77.17173,83.07952
+"140","SR00126","Stanislaus River",2000,514,68,"Sturrock et al. (2015) PLoS ONE","original",NA,73.49426,79.26934
+"141","SR00127","Stanislaus River",2000,560,73,"Sturrock et al. (2015) PLoS ONE","original",NA,80.8492,86.8897
+"142","SR00128","Stanislaus River",2000,519,74,"Sturrock et al. (2015) PLoS ONE","original",NA,74.29371,80.09764
+"143","SR00129","Stanislaus River",2000,523,78,"Sturrock et al. (2015) PLoS ONE","original",NA,74.93327,80.76028
+"144","SR00130","Stanislaus River",2000,522,79,"Sturrock et al. (2015) PLoS ONE","original",NA,74.77338,80.59462
+"145","SR00131","Stanislaus River",2000,548,80,"Sturrock et al. (2015) PLoS ONE","original",NA,78.93052,84.90178
+"146","SR00133","Stanislaus River",2000,499,80,"Sturrock et al. (2015) PLoS ONE","original",NA,71.09591,76.78444
+"147","SR00134","Stanislaus River",2000,500,71,"Sturrock et al. (2015) PLoS ONE","original",NA,71.2558,76.9501
+"148","SR00135","Stanislaus River",2000,551,83,"Sturrock et al. (2015) PLoS ONE","original",NA,79.41019,85.39876
+"149","SR00136","Stanislaus River",2000,443,75,"Sturrock et al. (2015) PLoS ONE","original",NA,62.14207,67.50748
+"150","SR00138","Stanislaus River",2000,431,63,"Sturrock et al. (2015) PLoS ONE","original",NA,60.22339,65.51956
+"151","SR00139","Stanislaus River",2000,548,81,"Sturrock et al. (2015) PLoS ONE","original",NA,78.93052,84.90178
+"152","SR20282","Stanislaus River",2002,302,38,"Sturrock et al. (2015) PLoS ONE","original",NA,39.59758,44.14942
+"153","SR20283","Stanislaus River",2002,260,36,"Sturrock et al. (2015) PLoS ONE","original",NA,33.4684,37.1917
+"154","SR20284","Stanislaus River",2002,314,34,"Sturrock et al. (2015) PLoS ONE","original",NA,41.51626,46.13734
+"155","SR20285","Stanislaus River",2002,262,36,"Sturrock et al. (2015) PLoS ONE","original",NA,33.49508,37.52302
+"156","SR20286","Stanislaus River",2002,283,37,"Sturrock et al. (2015) PLoS ONE","original",NA,36.55967,41.00188
+"157","SR20287","Stanislaus River",2002,242,33,"Sturrock et al. (2015) PLoS ONE","original",NA,33.22828,36.232158
+"158","SR20288","Stanislaus River",2002,263,35,"Sturrock et al. (2015) PLoS ONE","original",NA,33.50842,37.68868
+"159","SR20289","Stanislaus River",2002,266,38,"Sturrock et al. (2015) PLoS ONE","original",NA,33.84154,38.18566
+"160","SR20290","Stanislaus River",2002,450,71,"Sturrock et al. (2015) PLoS ONE","original",NA,63.2613,68.6671
+"161","SR20291","Stanislaus River",2002,511,69,"Sturrock et al. (2015) PLoS ONE","original",NA,73.01459,78.77236
+"162","SR20292","Stanislaus River",2002,541,77,"Sturrock et al. (2015) PLoS ONE","original",NA,77.81129,83.74216
+"163","SR20297","Stanislaus River",2002,353,46,"Sturrock et al. (2015) PLoS ONE","original",NA,47.75197,52.59808
+"164","SR20298","Stanislaus River",2002,375,56,"Sturrock et al. (2015) PLoS ONE","original",NA,51.26955,56.2426
+"165","SR20299","Stanislaus River",2002,417,58,"Sturrock et al. (2015) PLoS ONE","original",NA,57.98493,63.20032
+"166","SR20300","Stanislaus River",2002,438,61,"Sturrock et al. (2015) PLoS ONE","original",NA,61.34262,66.67918
+"167","SR20301","Stanislaus River",2002,481,60,"Sturrock et al. (2015) PLoS ONE","original",NA,68.21789,73.80256
+"168","SR20302","Stanislaus River",2002,391,50,"Sturrock et al. (2015) PLoS ONE","original",NA,53.82779,58.89316
+"169","SR20303","Stanislaus River",2002,457,53,"Sturrock et al. (2015) PLoS ONE","original",NA,64.38053,69.82672
+"170","SR20304","Stanislaus River",2002,402,54,"Sturrock et al. (2015) PLoS ONE","original",NA,55.58658,60.71542
+"171","SR20305","Stanislaus River",2002,409,53,"Sturrock et al. (2015) PLoS ONE","original",NA,56.70581,61.87504
+"172","SR20306","Stanislaus River",2002,385,56,"Sturrock et al. (2015) PLoS ONE","original",NA,52.86845,57.8992
+"173","SR20307","Stanislaus River",2002,362,45,"Sturrock et al. (2015) PLoS ONE","original",NA,49.19098,54.08902
+"174","SR20308","Stanislaus River",2002,398,45,"Sturrock et al. (2015) PLoS ONE","original",NA,54.94702,60.05278
+"175","SR20310","Stanislaus River",2002,374,59,"Sturrock et al. (2015) PLoS ONE","original",NA,51.10966,56.07694
+"176","SR20311","Stanislaus River",2002,433,52,"Sturrock et al. (2015) PLoS ONE","original",NA,60.54317,65.85088
+"177","SR20312","Stanislaus River",2002,413,53,"Sturrock et al. (2015) PLoS ONE","original",NA,57.34537,62.53768
+"178","SR20313","Stanislaus River",2002,431,56,"Sturrock et al. (2015) PLoS ONE","original",NA,60.22339,65.51956
+"179","SR20314","Stanislaus River",2002,366,48,"Sturrock et al. (2015) PLoS ONE","original",NA,49.83054,54.75166
+"180","SR20316","Stanislaus River",2002,364,45,"Sturrock et al. (2015) PLoS ONE","original",NA,49.51076,54.42034
+"181","SR20317","Stanislaus River",2002,397,49,"Sturrock et al. (2015) PLoS ONE","original",NA,54.78713,59.88712
+"182","SR20318","Stanislaus River",2002,404,62,"Sturrock et al. (2015) PLoS ONE","original",NA,55.90636,61.04674
+"183","SR20530","Stanislaus River",2002,469,71,"Sturrock et al. (2015) PLoS ONE","original",NA,66.29921,71.81464
+"184","SR20532","Stanislaus River",2002,511,74,"Sturrock et al. (2015) PLoS ONE","original",NA,73.01459,78.77236
+"185","SR20534","Stanislaus River",2002,527,78,"Sturrock et al. (2015) PLoS ONE","original",NA,75.57283,81.42292
+"186","SR20535","Stanislaus River",2002,610,94,"Sturrock et al. (2015) PLoS ONE","original",NA,88.8437,95.1727
+"187","SR20536","Stanislaus River",2002,532,78,"Sturrock et al. (2015) PLoS ONE","original",NA,76.37228,82.25122
+"188","SR20537","Stanislaus River",2002,564,84,"Sturrock et al. (2015) PLoS ONE","original",NA,81.48876,87.55234
+"189","SR20539","Stanislaus River",2002,600,91,"Sturrock et al. (2015) PLoS ONE","original",NA,87.2448,93.5161
+"190","SR20540","Stanislaus River",2002,570,87,"Sturrock et al. (2015) PLoS ONE","original",NA,82.4481,88.5463
+"191","SR20542","Stanislaus River",2002,550,83,"Sturrock et al. (2015) PLoS ONE","original",NA,79.2503,85.2331
+"192","SR20543","Stanislaus River",2002,635,90,"Sturrock et al. (2015) PLoS ONE","original",NA,92.84095,99.3142
+"193","SR20544","Stanislaus River",2002,568,82,"Sturrock et al. (2015) PLoS ONE","original",NA,82.12832,88.21498
+"194","SR130001","Stanislaus River",2013,291,35,"Sturrock et al. (2015) PLoS ONE","original",NA,37.83879,42.32716
+"195","SR130002","Stanislaus River",2013,277.5,36,"Sturrock et al. (2015) PLoS ONE","original",NA,35.680275,40.09075
+"196","SR130003","Stanislaus River",2013,242,32,"Sturrock et al. (2015) PLoS ONE","original",NA,33.22828,36.232158
+"197","SR130004","Stanislaus River",2013,233,34,"Sturrock et al. (2015) PLoS ONE","original",NA,33.10822,36.040827
+"198","SR130005","Stanislaus River",2013,237,30,"Sturrock et al. (2015) PLoS ONE","original",NA,33.16158,36.125863
+"199","SR130006","Stanislaus River",2013,243,34,"Sturrock et al. (2015) PLoS ONE","original",NA,33.24162,36.253417
+"200","SR130007","Stanislaus River",2013,251,33,"Sturrock et al. (2015) PLoS ONE","original",NA,33.34834,36.423489
+"201","SR130008","Stanislaus River",2013,227,33,"Sturrock et al. (2015) PLoS ONE","original",NA,33.02818,35.913273
+"202","SR130009","Stanislaus River",2013,290,40,"Sturrock et al. (2015) PLoS ONE","original",NA,37.6789,42.1615
+"203","SR130010","Stanislaus River",2013,239,36,"Sturrock et al. (2015) PLoS ONE","original",NA,33.18826,36.168381
+"204","SR130011","Stanislaus River",2013,264,33,"Sturrock et al. (2015) PLoS ONE","original",NA,33.52176,37.85434
+"205","SR130012","Stanislaus River",2013,252,27.5,"Sturrock et al. (2015) PLoS ONE","original",NA,33.36168,36.444748
+"206","SR130013","Stanislaus River",2013,240,30,"Sturrock et al. (2015) PLoS ONE","original",NA,33.2016,36.18964
+"207","SR130014","Stanislaus River",2013,226,33,"Sturrock et al. (2015) PLoS ONE","original",NA,33.01484,35.892014
+"208","SR130050","Stanislaus River",2013,302,43,"Sturrock et al. (2015) PLoS ONE","original",NA,39.59758,44.14942
+"209","SR130051","Stanislaus River",2013,324,49,"Sturrock et al. (2015) PLoS ONE","original",NA,43.11516,47.79394
+"210","SR130052","Stanislaus River",2013,293,37.5,"Sturrock et al. (2015) PLoS ONE","original",NA,38.15857,42.65848
+"211","SR130053","Stanislaus River",2013,336,51.5,"Sturrock et al. (2015) PLoS ONE","original",NA,45.03384,49.78186
+"212","SR130054","Stanislaus River",2013,351,53.5,"Sturrock et al. (2015) PLoS ONE","original",NA,47.43219,52.26676
+"213","SR130055","Stanislaus River",2013,351,49.5,"Sturrock et al. (2015) PLoS ONE","original",NA,47.43219,52.26676
+"214","SR130056","Stanislaus River",2013,336,49,"Sturrock et al. (2015) PLoS ONE","original",NA,45.03384,49.78186
+"215","SR130057","Stanislaus River",2013,293,47,"Sturrock et al. (2015) PLoS ONE","original",NA,38.15857,42.65848
+"216","SR130058","Stanislaus River",2013,267,38,"Sturrock et al. (2015) PLoS ONE","original",NA,34.00143,38.35132
+"217","SR130059","Stanislaus River",2013,334,53,"Sturrock et al. (2015) PLoS ONE","original",NA,44.71406,49.45054
+"218","SR130060","Stanislaus River",2013,346,48,"Sturrock et al. (2015) PLoS ONE","original",NA,46.63274,51.43846
+"219","TR30007","Tuolumne River",2003,550,84,"Sturrock et al. (2015) PLoS ONE","original",NA,79.2503,85.2331
+"220","TR30006","Tuolumne River",2003,526,85,"Sturrock et al. (2015) PLoS ONE","original",NA,75.41294,81.25726
+"221","TR30005","Tuolumne River",2003,483,78,"Sturrock et al. (2015) PLoS ONE","original",NA,68.53767,74.13388
+"222","TR30004","Tuolumne River",2003,455,71,"Sturrock et al. (2015) PLoS ONE","original",NA,64.06075,69.4954
+"223","TR30003","Tuolumne River",2003,540,87,"Sturrock et al. (2015) PLoS ONE","original",NA,77.6514,83.5765
+"224","TR30002","Tuolumne River",2003,450,71,"Sturrock et al. (2015) PLoS ONE","original",NA,63.2613,68.6671
+"225","AL012214_1","Coleman Hatchery",2014,194,34,"Sturrock et al. (in review)","original",NA,32.58796,35.211726
+"226","AL012314_1","Coleman Hatchery",2014,179,32,"Sturrock et al. (in review)","original",NA,32.38786,34.892841
+"227","AL012414_1","Coleman Hatchery",2014,177,34,"Sturrock et al. (in review)","original",NA,32.36118,34.850323
+"228","AL012514_1","Coleman Hatchery",2014,178,35,"Sturrock et al. (in review)","original",NA,32.37452,34.871582
+"229","AL012614_1","Coleman Hatchery",2014,208,35,"Sturrock et al. (in review)","original",NA,32.77472,35.509352
+"230","AL012714_1","Coleman Hatchery",2014,208,33,"Sturrock et al. (in review)","original",NA,32.77472,35.509352
+"231","AL012814_1","Coleman Hatchery",2014,176,33,"Sturrock et al. (in review)","original",NA,32.34784,34.829064
+"232","AL012914_1","Coleman Hatchery",2014,192,36,"Sturrock et al. (in review)","original",NA,32.56128,35.169208
+"233","AL013014_1","Coleman Hatchery",2014,191,36,"Sturrock et al. (in review)","original",NA,32.54794,35.147949
+"234","AL013114_1","Coleman Hatchery",2014,194,34,"Sturrock et al. (in review)","original",NA,32.58796,35.211726
+"235","AL020114_1","Coleman Hatchery",2014,197,34,"Sturrock et al. (in review)","original",NA,32.62798,35.275503
+"236","AL020214_1","Coleman Hatchery",2014,218,34,"Sturrock et al. (in review)","original",NA,32.90812,35.721942
+"237","AL020414_2","Coleman Hatchery",2014,229,36,"Sturrock et al. (in review)","original",NA,33.05486,35.955791
+"238","AL021114_3","Coleman Hatchery",2014,237,40,"Sturrock et al. (in review)","original",NA,33.16158,36.125863
+"239","FEA041015-1","Feather River",2015,295,39,"Sturrock et al. (in review)","original",NA,38.47835,42.9898
+"240","FEA041015-1","Feather River",2015,285,39,"Sturrock et al. (in review)","original",NA,36.87945,41.3332
+"241","FEA041015-2","Feather River",2015,302,42,"Sturrock et al. (in review)","original",NA,39.59758,44.14942
+"242","FEA050715-1","Feather River",2015,571,113,"Sturrock et al. (in review)","original",NA,82.60799,88.71196
+"243","FEA050715-2","Feather River",2015,702,116,"Sturrock et al. (in review)","original",NA,103.55358,110.41342
+"244","FEA050814-1","Feather River",2014,501,99,"Sturrock et al. (in review)","original",NA,71.41569,77.11576
+"245","FH20425","Feather Hatchery",2002,500,85,"Sturrock et al. (in review)","original",NA,71.2558,76.9501
+"246","FH20431","Feather Hatchery",2002,452,77,"Sturrock et al. (in review)","original",NA,63.58108,68.99842
+"247","FH40292","Feather Hatchery",2004,528,78,"Sturrock et al. (in review)","original",NA,75.73272,81.58858
+"248","FH40308","Feather Hatchery",2004,538,91,"Sturrock et al. (in review)","original",NA,77.33162,83.24518
+"249","FH40312","Feather Hatchery",2004,434,73,"Sturrock et al. (in review)","original",NA,60.70306,66.01654
+"250","FH99506","Feather Hatchery",1999,482,70,"Sturrock et al. (in review)","original",NA,68.37778,73.96822
+"251","SR110003","Stanislaus River",2011,288,45,"Sturrock et al. (in review)","original",NA,37.35912,41.83018
+"252","TJ11-112","Tuolumne River",2011,693,128,"Sturrock et al. (in review)","original",NA,102.11457,108.92248
+"253","TJ11-113","Tuolumne River",2011,200,35,"Sturrock et al. (in review)","original",NA,32.668,35.33928
+"254","TJ11-80","Tuolumne River",2011,222,36,"Sturrock et al. (in review)","original",NA,32.96148,35.806978
+"255","TJ11-90","Tuolumne River",2011,242,34,"Sturrock et al. (in review)","original",NA,33.22828,36.232158
+"256","TJ11-97","Tuolumne River",2011,229,35,"Sturrock et al. (in review)","original",NA,33.05486,35.955791
+"257","TJ11-98","Tuolumne River",2011,293,45,"Sturrock et al. (in review)","original",NA,38.15857,42.65848
+"258","YR20380","Yuba River",2002,314,60,"Sturrock et al. (in review)","original",NA,41.51626,46.13734
+"259","YR20383","Yuba River",2002,415,62,"Sturrock et al. (in review)","original",NA,57.66515,62.869
+"260","YR20392","Yuba River",2002,362,60,"Sturrock et al. (in review)","original",NA,49.19098,54.08902
+"261","YR20396","Yuba River",2002,399,54,"Sturrock et al. (in review)","original",NA,55.10691,60.21844
+"262","YR20406","Yuba River",2002,357,54,"Sturrock et al. (in review)","original",NA,48.39153,53.26072
+"263","YR20409","Yuba River",2002,420,69,"Sturrock et al. (in review)","original",NA,58.4646,63.6973
+"264","YR20412","Yuba River",2002,352,50,"Sturrock et al. (in review)","original",NA,47.59208,52.43242
+"265","YR20596","Yuba River",2002,397,57,"Sturrock et al. (in review)","original",NA,54.78713,59.88712
+"266","YR20600","Yuba River",2002,318,46,"Sturrock et al. (in review)","original",NA,42.15582,46.79998
+"267","YR20603","Yuba River",2002,332,47,"Sturrock et al. (in review)","original",NA,44.39428,49.11922
+"268","YR20607","Yuba River",2002,407,63,"Sturrock et al. (in review)","original",NA,56.38603,61.54372
+"269","MR30028","Merced River",2003,422,62,"Sturrock et al. (in review)","original",NA,58.78438,64.02862
+"270","MR30026","Merced River",2003,540,79,"Sturrock et al. (in review)","original",NA,77.6514,83.5765
+"271","MR30020","Merced River",2003,519,82,"Sturrock et al. (in review)","original",NA,74.29371,80.09764
+"272","MR30016","Merced River",2003,530,70,"Sturrock et al. (in review)","original",NA,76.0525,81.9199
+"273","SR120021","Stanislaus River",2012,432,71,"Sturrock et al. (in review)","original",NA,60.38328,65.68522
+"274","SR120020","Stanislaus River",2012,398,69,"Sturrock et al. (in review)","original",NA,54.94702,60.05278
+"275","SR120019","Stanislaus River",2012,437,75,"Sturrock et al. (in review)","original",NA,61.18273,66.51352
+"276","SR120018","Stanislaus River",2012,400,74,"Sturrock et al. (in review)","original",NA,55.2668,60.3841
+"277","SR120016","Stanislaus River",2012,471,85,"Sturrock et al. (in review)","original",NA,66.61899,72.14596
+"278","SR120015","Stanislaus River",2012,449,75,"Sturrock et al. (in review)","original",NA,63.10141,68.50144
+"279","SR120014","Stanislaus River",2012,406,75,"Sturrock et al. (in review)","original",NA,56.22614,61.37806
+"280","SR120013","Stanislaus River",2012,479,69,"Sturrock et al. (in review)","original",NA,67.89811,73.47124
+"281","SR120004","Stanislaus River",2012,353,58,"Sturrock et al. (in review)","original",NA,47.75197,52.59808
+"282","SR120002","Stanislaus River",2012,353,57,"Sturrock et al. (in review)","original",NA,47.75197,52.59808
+"283","SR110004","Stanislaus River",2011,501,85,"Sturrock et al. (in review)","original",NA,71.41569,77.11576
+"284","SR110001","Stanislaus River",2011,382,56,"Sturrock et al. (in review)","original",NA,52.38878,57.40222
+"285","SR99149","Stanislaus River",1999,422,63,"Sturrock et al. (in review)","original",NA,58.78438,64.02862
+"286","TJ11-105","Stanislaus River",2011,456,75,"Sturrock et al. (in review)","original",NA,64.22064,69.66106
+"287","TJ11-98","Stanislaus River",2011,290,45,"Sturrock et al. (in review)","original",NA,37.6789,42.1615
+"288","TJ11-88","Stanislaus River",2011,376,59,"Sturrock et al. (in review)","original",NA,51.42944,56.40826
+"289","SR99154","Stanislaus River",1999,404,65.5,"Sturrock et al. (in review)","original",NA,55.90636,61.04674
+"290","SR99153","Stanislaus River",1999,471,82.24,"Sturrock et al. (in review)","original",NA,66.61899,72.14596
+"291","SR99152","Stanislaus River",1999,492,82.07,"Sturrock et al. (in review)","original",NA,69.97668,75.62482
+"292","SR99151","Stanislaus River",1999,530,95.38,"Sturrock et al. (in review)","original",NA,76.0525,81.9199
+"293","SR99150","Stanislaus River",1999,391,61,"Sturrock et al. (in review)","original",NA,53.82779,58.89316
+"294","SR99147","Stanislaus River",1999,470,82.5,"Sturrock et al. (in review)","original",NA,66.4591,71.9803
+"295","DM16016","clarksburg",2016,309.006,45,NA,"new_dm_fish","Sac",40.71776934,45.31003396
+"296","DM16026","sherwood harbor",2016,277.411,48,NA,"new_dm_fish","Sac",35.66604479,40.07600626
+"297","DM16021","garcia bend",2016,293.45,42,NA,"new_dm_fish","Sac",38.2305205,42.733027
+"298","DM16041","sherwood harbor",2016,265.272,44,NA,"new_dm_fish","Sac",33.72514008,38.06505952
+"299","DM16079","sherwood harbor",2016,222.627,38,NA,"new_dm_fish","Sac",32.96984418,35.820307393
+"300","DM16025","sherwood harbor",2016,278.141,38,NA,"new_dm_fish","Sac",35.78276449,40.19693806
+"301","DM16081","clarksburg",2016,246.677,38,NA,"new_dm_fish","Sac",33.29067118,36.331586343
+"302","DM16064","clarksburg",2016,266.058,38,NA,"new_dm_fish","Sac",33.85081362,38.19526828
+"303","DM16055","sherwood harbor",2016,227.005,38,NA,"new_dm_fish","Sac",33.0282467,35.913379295
+"304","DM14252",NA,NA,530.536,NA,NA,"new_dm_fish",NA,76.13820104,82.00869376
+"305","DM16078","steamboat slough",2016,287.739,36,NA,"new_dm_fish","Delta",37.31738871,41.78694274
+"306","DM16048","sherwood harbor",2016,287.952,43,NA,"new_dm_fish","Sac",37.35144528,41.82222832
+"307","DM16035","sherwood harbor",2016,252.652,36,NA,"new_dm_fish","Sac",33.37037768,36.458608868
+"308","DM16033","sherwood harbor",2016,234,39,NA,"new_dm_fish","Sac",33.12156,36.062086
+"309","DM16069","sherwood harbor",2016,223.624,34,NA,"new_dm_fish","Sac",32.98314416,35.841502616
+"310","DM16034","sherwood harbor",2016,329.632,50,NA,"new_dm_fish","Sac",44.01566048,48.72693712
+"311","DM16031","sherwood harbor",2016,219.694,38,NA,"new_dm_fish","Sac",32.93071796,35.757954746
+"312","DM16054","sherwood harbor",2016,234.954,34,NA,"new_dm_fish","Sac",33.13428636,36.082367086
+"313","DM16065","sherwood harbor",2016,340.491,45,NA,"new_dm_fish","Sac",45.75190599,50.52583906
+"314","DM16015","steamboat slough",2016,237.941,35,NA,"new_dm_fish","Delta",33.17413294,36.145867719
+"315","DM16017","clarksburg",2016,304.51,53,NA,"new_dm_fish","Sac",39.9989039,44.5652266
+"316","DM16024","sherwood harbor",2016,334.736,46,NA,"new_dm_fish","Sac",44.83173904,49.57246576
+"317","DM16018","clarksburg",2016,313.039,49,NA,"new_dm_fish","Sac",41.36260571,45.97814074
+"318","DM16094","b&w marina",2016,270.962,37,NA,"new_dm_fish","Delta",34.63491418,39.00766492
+"319","DM16123","terminous",2016,288.77,44,NA,"new_dm_fish","Delta",37.4822353,41.9577382
+"320","DM16152","sherwood harbor",2016,284.931,37,NA,"new_dm_fish","Sac",36.86841759,41.32176946
+"321","DM16162","sherwood harbor",2016,216.368,35,NA,"new_dm_fish","Sac",32.88634912,35.687247312
+"322","DM16163","sherwood harbor",2016,246.856,37,NA,"new_dm_fish","Sac",33.29305904,36.335391704
+"323","DM16117","brannan island",2016,267.199,38,NA,"new_dm_fish","Delta",34.03324811,38.38428634
+"324","DM16135","sandy beach",2016,333.9,53,NA,"new_dm_fish","Delta",44.698071,49.433974
+"325","DM14045","clarksburg",2014,384.03,55,NA,"new_dm_fish","Sac",52.7133567,57.7385098
+"326","DM16129","sandy beach",2016,217.954,38,NA,"new_dm_fish","Delta",32.90750636,35.720964086
+"327","DM16133","sandy beach",2016,328.751,54,NA,"new_dm_fish","Delta",43.87479739,48.58099066
+"328","DM14043","clarksburg",2014,382.661,50,NA,"new_dm_fish","Sac",52.49446729,57.51172126
+"329","DM16109","medford island",2016,232.689,39,NA,"new_dm_fish","Delta",33.10407126,36.034215451
+"330","DM16176","b&w marina",2016,260.797,45,NA,"new_dm_fish","Delta",33.47903198,37.32373102
+"331","DM16172",NA,NA,281.068,NA,NA,"new_dm_fish",NA,36.25076252,40.68182488
+"332","DM16196","terminous",2016,302.953,37,NA,"new_dm_fish","Delta",39.74995517,44.30729398
+"333","DM14012","clarksburg",2014,377.828,49,NA,"new_dm_fish","Sac",51.72171892,56.71108648
+"334","DM16124","sherman island",2016,313.763,53,NA,"new_dm_fish","Delta",41.47836607,46.09807858
+"335","DM16184","terminous",2016,277.025,41,NA,"new_dm_fish","Delta",35.60432725,40.0120615
+"336","DM16126","clarksburg",2016,308.01,42,NA,"new_dm_fish","Sac",40.5585189,45.1450366
+"337","DM16168","garcia bend",2016,278.398,41,NA,"new_dm_fish","Sac",35.82385622,40.23951268
+"338","DM16156","garcia bend",2016,237.273,37,NA,"new_dm_fish","Sac",33.16522182,36.131666707
+"339","DM16131","garcia bend",2016,263.258,39,NA,"new_dm_fish","Sac",33.51186172,37.73142028
+"340","DM16178","rio vista",2016,231.302,43,NA,"new_dm_fish","Delta",33.08556868,36.004729218
+"341","DM16149","sherwood harbor",2016,433,68,NA,"new_dm_fish","Sac",60.54317,65.85088
+"342","DM16199","rio vista",2016,254.812,37,NA,"new_dm_fish","Delta",33.39919208,36.504528308
+"343","DM16043","sherwood harbor",2016,224.188,39,NA,"new_dm_fish","Sac",32.99066792,35.853492692
+"344","DM16091","koket",2016,225.806,38,NA,"new_dm_fish","Delta",33.01225204,35.887889754
+"345","DM14009","clarksburg",2014,312.59,48,NA,"new_dm_fish","Sac",41.2908151,45.9037594
+"346","DM16206","clarksburg",2016,394.948,59,NA,"new_dm_fish","Sac",54.45903572,59.54718568
+"347","DM16087","sherwood harbor",2016,269.354,38,NA,"new_dm_fish","Sac",34.37781106,38.74128364
+"348","DM16153","sherwood harbor",2016,308.048,43,NA,"new_dm_fish","Sac",40.56459472,45.15133168
+"349","DM16095","antioch dunes",2016,323.745,54,NA,"new_dm_fish","Delta",43.07438805,47.7516967
+"350","DM16146","b&w marina",2016,241.47,36,NA,"new_dm_fish","Delta",33.2212098,36.22089073
+"351","DM14014","clarksburg",2014,358.625,48,NA,"new_dm_fish","Sac",48.65135125,53.5299175
+"352","DM16083","clarksburg",2016,266.038,38,NA,"new_dm_fish","Sac",33.84761582,38.19195508
+"353","DM16084","clarksburg",2016,302.28,47,NA,"new_dm_fish","Sac",39.6423492,44.1958048
+"354","DM14350",NA,NA,480.839,NA,NA,"new_dm_fish",NA,68.19214771,73.77588874
+"355","DM16090","koket",2016,354.577,65,NA,"new_dm_fish","Delta",48.00411653,52.85932582
+"356","DM16142","garcia bend",2016,304.03,46,NA,"new_dm_fish","Sac",39.9221567,44.4857098
+"357","DM16132",NA,NA,278.906,NA,NA,"new_dm_fish",NA,35.90508034,40.32366796
+"358","DM16165","b&w marina",2016,250.723,45,NA,"new_dm_fish","Delta",33.34464482,36.417600257
+"359","DM16186","terminous",2016,275.279,43,NA,"new_dm_fish","Delta",35.32515931,39.72281914
+"360","DM16125","sandy beach",2016,446.816,67,NA,"new_dm_fish","Delta",62.75221024,68.13963856
+"361","DM14008","clarksburg",2014,321.474,46,NA,"new_dm_fish","Sac",42.71127786,47.37548284
+"362","DM16140","sandy beach",2016,283.942,45,NA,"new_dm_fish","Delta",36.71028638,41.15793172
+"363","DM16143","sandy beach",2016,315.664,45,NA,"new_dm_fish","Delta",41.78231696,46.41299824
+"364","DM16188","b&w marina",2016,269.269,42,NA,"new_dm_fish","Delta",34.36422041,38.72720254
+"365","DM16218","steamboat slough",2016,269.833,43,NA,"new_dm_fish","Delta",34.45439837,38.82063478
+"366","DM16147","sherwood harbor",2016,425.27,67,NA,"new_dm_fish","Sac",59.3072203,64.5703282
+"367","DM14121","sherman island",2014,346.484,43,NA,"new_dm_fish","Delta",46.71012676,51.51863944
+"368","DM14072","brannan island",2014,296.693,43,NA,"new_dm_fish","Delta",38.74904377,43.27026238
+"369","DM14154","clarksburg",2014,241.124,34,NA,"new_dm_fish","Sac",33.21659416,36.213535116
+"370","DM16223","steamboat slough",2016,304.591,47,NA,"new_dm_fish","Delta",40.01185499,44.57864506
+"371","DM14148","b&w marina",2014,365.784,61,NA,"new_dm_fish","Delta",49.79600376,54.71587744
+"372","DM16145","b&w marina",2016,262.668,38,NA,"new_dm_fish","Delta",33.50399112,37.63368088
+"373","DM14139","clarksburg",2014,270.917,40,NA,"new_dm_fish","Sac",34.62771913,39.00021022
+"374","DM14044","clarksburg",2014,365.53,50,NA,"new_dm_fish","Sac",49.7553917,54.6737998
+"375","DM16205","clarksburg",2016,305.043,40,NA,"new_dm_fish","Sac",40.08412527,44.65352338
+"376","DM16174","eddo’s",2016,339.041,46,NA,"new_dm_fish","Delta",45.52006549,50.28563206
+"377","DM14013","clarksburg",2014,312.664,47,NA,"new_dm_fish","Sac",41.30264696,45.91601824
+"378","DM16200","sherman island",2016,236.071,33,NA,"new_dm_fish","Delta",33.14918714,36.106113389
+"379","DM16179","medford island",2016,275.912,42,NA,"new_dm_fish","Delta",35.42636968,39.82768192
+"380","DM16154",NA,NA,227.449,NA,NA,"new_dm_fish",NA,33.03416966,35.922818291
+"381","DM16228","steamboat slough",2016,224.41,40,NA,"new_dm_fish","Delta",32.9936294,35.85821219
+"382","DM16193","b&w marina",2016,244.282,36,NA,"new_dm_fish","Delta",33.25872188,36.280671038
+"383","DM16097","sandy beach",2016,341.119,53,NA,"new_dm_fish","Delta",45.85231691,50.62987354
+"384","DM14091","rio vista",2014,325.544,47,NA,"new_dm_fish","Delta",43.36203016,48.04971904
+"385","DM14010","clarksburg",2014,286.484,50,NA,"new_dm_fish","Sac",37.11672676,41.57903944
+"386","DM14015","clarksburg",2014,253.054,37,NA,"new_dm_fish","Sac",33.37574036,36.467154986
+"387","DM16201",NA,NA,258.743,NA,NA,"new_dm_fish",NA,33.45163162,36.98346538
+"388","DM16213","garcia bend",2016,231.878,37,NA,"new_dm_fish","Sac",33.09325252,36.016974402
+"389","DM14056","clarksburg",2014,401.849,71,NA,"new_dm_fish","Sac",55.56243661,60.69040534
+"390","DM16085","clarksburg",2016,327.181,53,NA,"new_dm_fish","Sac",43.62377009,48.32090446
+"391","DM14076","rio vista",2014,318.693,47,NA,"new_dm_fish","Delta",42.26662377,46.91478238
+"392","DM14109","b&w marina",2014,335.787,44,NA,"new_dm_fish","Delta",44.99978343,49.74657442
+"393","DM14127","antioch dunes",2014,343.152,55,NA,"new_dm_fish","Delta",46.17737328,50.96666032
+"394","DM14130","antioch dunes",2014,286.933,43,NA,"new_dm_fish","Delta",37.18851737,41.65342078
+"395","DM14085","medford island",2014,352.339,53,NA,"new_dm_fish","Delta",47.64628271,52.48857874
+"396","DM14075","rio vista",2014,341.571,49,NA,"new_dm_fish","Delta",45.92458719,50.70475186
+"397","DM14065","rio vista",2014,313.361,48,NA,"new_dm_fish","Delta",41.41409029,46.03148326
+"398","DM16122","medford island",2016,296.577,43,NA,"new_dm_fish","Delta",38.73049653,43.25104582
+"399","DM16194","terminous",2016,281.416,40,NA,"new_dm_fish","Delta",36.30640424,40.73947456
+"400","DM16219","steamboat slough",2016,275.763,45,NA,"new_dm_fish","Delta",35.40254607,39.80299858
+"401","DM14007",NA,NA,363.576,NA,NA,"new_dm_fish",NA,49.44296664,54.35010016
+"402","DM16160","sherwood harbor",2016,334.233,43,NA,"new_dm_fish","Sac",44.75131437,49.48913878
+"403","DM14126","antioch dunes",2014,378.281,54,NA,"new_dm_fish","Delta",51.79414909,56.78613046
+"404","DM14134","antioch dunes",2014,311.547,55,NA,"new_dm_fish","Delta",41.12404983,45.73097602
+"405","DM14069","terminous",2014,320.37,45,NA,"new_dm_fish","Delta",42.5347593,47.1925942
+"406","DM14117","b&w marina",2014,286.105,35,NA,"new_dm_fish","Delta",37.05612845,41.5162543
+"407","DM14073","brannan island",2014,319.93,43,NA,"new_dm_fish","Delta",42.4644077,47.1197038
+"408","DM16226","terminous",2016,242.912,35,NA,"new_dm_fish","Delta",33.24044608,36.251546208
+"409","DM14118","sandy beach",2014,342.765,56,NA,"new_dm_fish","Delta",46.11549585,50.9025499
+"410","DM14107","b&w marina",2014,258.061,38,NA,"new_dm_fish","Delta",33.44253374,36.87048526
+"411","DM14112","b&w marina",2014,310.988,46,NA,"new_dm_fish","Delta",41.03467132,45.63837208
+"412","DM14111","b&w marina",2014,276.006,45,NA,"new_dm_fish","Delta",35.44139934,39.84325396
+"413","DM14078","rio vista",2014,291.624,44,NA,"new_dm_fish","Delta",37.93856136,42.43053184
+"414","DM14088","sandy beach",2014,494.715,66,NA,"new_dm_fish","Delta",70.41078135,76.0745869
+"415","DM14094","eddo’s",2014,393.464,54,NA,"new_dm_fish","Delta",54.22175896,59.30134624
+"416","DM16198","eddo’s",2016,260.625,37,NA,"new_dm_fish","Delta",33.4767375,37.2952375
+"417","DM14129","antioch dunes",2014,313.215,52,NA,"new_dm_fish","Delta",41.39074635,46.0072969
+"418","DM14108","b&w marina",2014,215.132,36,NA,"new_dm_fish","Delta",32.86986088,35.660971188
+"419","DM14101","eddo’s",2014,344.869,50,NA,"new_dm_fish","Delta",46.45190441,51.25109854
+"420","DM14102","b&w marina",2014,317.997,46,NA,"new_dm_fish","Delta",42.15534033,46.79948302
+"421","DM14087","sandy beach",2014,428.386,69,NA,"new_dm_fish","Delta",59.80543754,65.08652476
+"422","DM14147","b&w marina",2014,340.39,49,NA,"new_dm_fish","Delta",45.7357571,50.5091074
+"423","DM16171","eddo’s",2016,331.947,44,NA,"new_dm_fish","Delta",44.38580583,49.11044002
+"424","DM16195","b&w marina",2016,326.255,47,NA,"new_dm_fish","Delta",43.47571195,48.1675033
+"425","DM15099","rio vista",2015,281.437,39,NA,"new_dm_fish","Delta",36.30976193,40.74295342
+"426","DM14146","b&w marina",2014,355.726,55,NA,"new_dm_fish","Delta",48.18783014,53.04966916
+"427","DM14128","antioch dunes",2014,391.911,53,NA,"new_dm_fish","Delta",53.97344979,59.04407626
+"428","DM14011","clarksburg",2014,309.952,46,NA,"new_dm_fish","Sac",40.86902528,45.46674832
+"429","DM14113","b&w marina",2014,317.277,40,NA,"new_dm_fish","Delta",42.04021953,46.68020782
+"430","DM14104","b&w marina",2014,336.589,54,NA,"new_dm_fish","Delta",45.12801521,49.87943374
+"431","DM14090","rio vista",2014,371.229,46,NA,"new_dm_fish","Delta",50.66660481,55.61789614
+"432","DM14068","rio vista",2014,239.469,36,NA,"new_dm_fish","Delta",33.19451646,36.178351471
+"433","DM14103","b&w marina",2014,295.053,45,NA,"new_dm_fish","Delta",38.48682417,42.99857998
+"434","DM14135","antioch dunes",2014,372.96,55,NA,"new_dm_fish","Delta",50.9433744,55.9046536
+"435","DM14131","antioch dunes",2014,281.211,38,NA,"new_dm_fish","Delta",36.27362679,40.70551426
+"436","DM14138","clarksburg",2014,292.851,37,NA,"new_dm_fish","Sac",38.13474639,42.63379666
+"437","DM14070","rio vista",2014,347.452,44,NA,"new_dm_fish","Delta",46.86490028,51.67899832
+"438","DM14133","antioch dunes",2014,437.42,64,NA,"new_dm_fish","Delta",61.2498838,66.5830972
+"439","DM16169","b&w marina",2016,225.204,37,NA,"new_dm_fish","Delta",33.00422136,35.875091836
+"440","DM14123","sandy beach",2014,339.25,45,NA,"new_dm_fish","Delta",45.5534825,50.320255
+"441","DM16222","garcia bend",2016,240.113,38,NA,"new_dm_fish","Sac",33.20310742,36.192042267
+"442","DM15021","sherwood harbor",2015,434.443,70,NA,"new_dm_fish","Sac",60.77389127,66.08992738
+"443","DM14120","sherman island",2014,405.02,58,NA,"new_dm_fish","Delta",56.0694478,61.2157132
+"444","DM14097","eddo’s",2014,396.475,56,NA,"new_dm_fish","Delta",54.70318775,59.8001485
+"445","DM14067","rio vista",2014,320.751,40,NA,"new_dm_fish","Delta",42.59567739,47.25571066
+"446","DM15029","sherwood harbor",2015,387.554,69,NA,"new_dm_fish","Sac",53.27680906,58.32229564
+"447","DM14093","eddo’s",2014,360.534,58,NA,"new_dm_fish","Delta",48.95658126,53.84616244
+"448","DM15079","rio vista",2015,402.379,53,NA,"new_dm_fish","Delta",55.64717831,60.77820514
+"449","DM15091","koket",2015,370.434,58,NA,"new_dm_fish","Delta",50.53949226,55.48619644
+"450","DM15018","sherwood harbor",2015,237.718,34,NA,"new_dm_fish","Sac",33.17115812,36.141126962
+"451","DM16170","sandy beach",2016,381.247,56,NA,"new_dm_fish","Delta",52.26838283,57.27747802
+"452","DM14137","antioch dunes",2014,361.712,46,NA,"new_dm_fish","Delta",49.14493168,54.04130992
+"453","DM15030","sherwood harbor",2015,235.751,35,NA,"new_dm_fish","Sac",33.14491834,36.099310509
+"454","DM15025","sherwood harbor",2015,209.184,38,NA,"new_dm_fish","Sac",32.79051456,35.534522656
+"455","DM16175","terminous",2016,227.34,36,NA,"new_dm_fish","Delta",33.0327156,35.92050106
+"456","DM15033","sherwood harbor",2015,278.191,37,NA,"new_dm_fish","Sac",35.79075899,40.20522106
+"457","DM14100","eddo’s",2014,438.713,90,NA,"new_dm_fish","Delta",61.45662157,66.79729558
+"458","DM14054","sandy beach",2014,438.793,79,NA,"new_dm_fish","Delta",61.46941277,66.81054838
+"459","DM15057",NA,NA,327.432,NA,NA,"new_dm_fish",NA,43.66390248,48.36248512
+"460","DM15052","clarksburg",2015,276.876,39,NA,"new_dm_fish","Sac",35.58050364,39.98737816
+"461","DM15062","clarksburg",2015,311.2,42,NA,"new_dm_fish","Sac",41.068568,45.673492
+"462","DM15096","king island",2015,283.305,45,NA,"new_dm_fish","Delta",36.60843645,41.0524063
+"463","DM15014","sherwood harbor",2015,267.82,34,NA,"new_dm_fish","Sac",34.1325398,38.4871612
+"464","DM15081","terminous",2015,336.629,47,NA,"new_dm_fish","Delta",45.13441081,49.88606014
+"465","DM15093","king island",2015,306.775,42,NA,"new_dm_fish","Delta",40.36105475,44.9404465
+"466","DM15100","rio vista",2015,273.07,38,NA,"new_dm_fish","Delta",34.9719623,39.3568762
+"467","DM15035","sherwood harbor",2015,475.013,80,NA,"new_dm_fish","Sac",67.26062857,72.81075358
+"468","DM15032","sherwood harbor",2015,318.589,43,NA,"new_dm_fish","Sac",42.24999521,46.89755374
+"469","DM15016","sherwood harbor",2015,249.077,36,NA,"new_dm_fish","Sac",33.32268718,36.382607943
+"470","DM15084",NA,NA,307.25,NA,NA,"new_dm_fish",NA,40.4370025,45.019135
+"471","DM15102","koket",2015,271.104,36,NA,"new_dm_fish","Delta",34.65761856,39.03118864
+"472","DM15027","sherwood harbor",2015,358.066,50,NA,"new_dm_fish","Sac",48.56197274,53.43731356
+"473","DM15007","sherwood harbor",2015,434.094,66,NA,"new_dm_fish","Sac",60.71808966,66.03211204
+"474","CWT14040",NA,NA,494.16,NA,NA,"new_dm_fish",NA,70.3220424,75.9826456
+"475","CWT16107",NA,NA,493.752,NA,NA,"new_dm_fish",NA,70.25680728,75.91505632
+"476","CWT14037",NA,NA,510.443,NA,NA,"new_dm_fish",NA,72.92553127,78.68008738
+"477","CWT14039",NA,NA,515.72,NA,NA,"new_dm_fish",NA,73.7692708,79.5542752
+"478","CWT16096",NA,NA,444.974,NA,NA,"new_dm_fish",NA,62.45769286,67.83449284
+"479","DM14079","rio vista",2014,267.315,40,NA,"new_dm_fish","Delta",34.05179535,38.4035029
+"480","CWT15033",NA,NA,492.803,NA,NA,"new_dm_fish",NA,70.10507167,75.75784498
+"481","CWT16095",NA,NA,518.002,NA,NA,"new_dm_fish",NA,74.13413978,79.93231132
+"482","CWT16114",NA,NA,457.678,NA,NA,"new_dm_fish",NA,64.48893542,69.93903748
+"483","DM15078","sandy beach",2015,339.031,50,NA,"new_dm_fish","Delta",45.51846659,50.28397546
+"484","DM15020","sherwood harbor",2015,502.867,86,NA,"new_dm_fish","Sac",71.71420463,77.42504722
+"485","DM15053","clarksburg",2015,263.018,38,NA,"new_dm_fish","Sac",33.50866012,37.69166188
+"486","DM14066","brannan island",2014,311.676,45,NA,"new_dm_fish","Delta",41.14467564,45.75234616
+"487","DM14124","sandy beach",2014,277.176,41,NA,"new_dm_fish","Delta",35.62847064,40.03707616
+"488","DM15038","sherwood harbor",2015,433.106,69,NA,"new_dm_fish","Sac",60.56011834,65.86843996
+"489","DM15001","sherwood harbor",2015,420.907,80,NA,"new_dm_fish","Sac",58.60962023,63.84755362
+"490","DM15008","sherwood harbor",2015,470.002,82,NA,"new_dm_fish","Sac",66.45941978,71.98063132
+"491","CWT16118",NA,NA,549.744,NA,NA,"new_dm_fish",NA,79.20936816,85.19069104
+"492","DM14077","rio vista",2014,329.17,42,NA,"new_dm_fish","Delta",43.9417913,48.6504022
+"493","CWT16113",NA,NA,489.034,NA,NA,"new_dm_fish",NA,69.50244626,75.13347244
+"494","DM14105","b&w marina",2014,330.67,40,NA,"new_dm_fish","Delta",44.1816263,48.8988922
+"495","DM15037","sherwood harbor",2015,432.98,80,NA,"new_dm_fish","Sac",60.5399722,65.8475668
+"496","DM14140",NA,NA,378.636,NA,NA,"new_dm_fish",NA,51.85091004,56.84493976
+"497","DM15005","sherwood harbor",2015,485.932,68,NA,"new_dm_fish","Sac",69.00646748,74.61959512
+"498","DM14114","b&w marina",2014,268.521,40,NA,"new_dm_fish","Delta",34.24462269,38.60328886
+"499","DM14419",NA,NA,436.661,NA,NA,"new_dm_fish",NA,61.12852729,66.45736126
+"500","DM15028","sherwood harbor",2015,450.301,70,NA,"new_dm_fish","Sac",63.30942689,68.71696366
+"501","DM14422",NA,NA,464.538,NA,NA,"new_dm_fish",NA,65.58578082,71.07546508
+"502","DM14119","rio vista",2014,281.902,42,NA,"new_dm_fish","Delta",36.38411078,40.81998532
+"503","DM14136","antioch dunes",2014,336.478,51,NA,"new_dm_fish","Delta",45.11026742,49.86104548
+"504","DM16190","sherman island",2016,254.946,38,NA,"new_dm_fish","Delta",33.40097964,36.507377014
+"505","DM15209","chipps island",2015,465.588,79,NA,"new_dm_fish","Chipps",65.75366532,71.24940808
+"506","DM14125","eddo’s",2014,242.668,45,NA,"new_dm_fish","Delta",33.23719112,36.246359012
+"507","CWT16133",NA,NA,427.818,NA,NA,"new_dm_fish",NA,59.71462002,64.99242988
+"508","DM15092","koket",2015,350.006,61,NA,"new_dm_fish","Delta",47.27325934,52.10209396
+"509","DM15103","koket",2015,276.709,43,NA,"new_dm_fish","Delta",35.55380201,39.95971294
+"510","CWT15034",NA,NA,542.456,NA,NA,"new_dm_fish",NA,78.04408984,83.98336096
+"511","DM15172","chipps island",2015,609.317,91,NA,"new_dm_fish","Chipps",88.73449513,95.05955422
+"512","DM15002","sherwood harbor",2015,468.254,78,NA,"new_dm_fish","Sac",66.17993206,71.69105764
+"513","DM15196","chipps island",2015,528.615,76,NA,"new_dm_fish","Chipps",75.83105235,81.6904609
+"514","DM15034","sherwood harbor",2015,223.692,34,NA,"new_dm_fish","Sac",32.98405128,35.842948228
+"515","DM14074","rio vista",2014,377.28,59,NA,"new_dm_fish","Delta",51.6340992,56.6203048
+"516","DM15095","antioch dunes",2015,269.601,34,NA,"new_dm_fish","Delta",34.41730389,38.78220166
+"517","DM15009","sherwood harbor",2015,451.479,74,NA,"new_dm_fish","Sac",63.49777731,68.91211114
+"518","DM16029","sherwood harbor",2016,403.758,60,NA,"new_dm_fish","Sac",55.86766662,61.00665028
+"519","DM16001",NA,NA,400.008,NA,NA,"new_dm_fish",NA,55.26807912,60.38542528
+"520","DM15176","chipps island",2015,531.261,86,NA,"new_dm_fish","Chipps",76.25412129,82.12879726
+"521","DM14058","clarksburg",2014,265.1,37,NA,"new_dm_fish","Sac",33.697639,38.036566
+"522","DM15108","wimpy’s",2015,286.441,41,NA,"new_dm_fish","Delta",37.10985149,41.57191606
+"523","DM15011","sherwood harbor",2015,534.053,90,NA,"new_dm_fish","Sac",76.70053417,82.59131998
+"524","DM15193","chipps island",2015,491.929,76,NA,"new_dm_fish","Chipps",69.96532781,75.61305814
+"525","DM15194","chipps island",2015,418.088,72,NA,"new_dm_fish","Chipps",58.15889032,63.38055808
+"526","CWT16132",NA,NA,556.109,NA,NA,"new_dm_fish",NA,80.22706801,86.24511694
+"527","DM14110","b&w marina",2014,298.078,46,NA,"new_dm_fish","Delta",38.97049142,43.49970148
+"528","DM15238","chipps island",2015,461.251,67,NA,"new_dm_fish","Chipps",65.06022239,70.53094066
+"529","DM15076","clarksburg",2015,240.874,36,NA,"new_dm_fish","Sac",33.21325916,36.208220366
+"530","DM15097","sandy beach",2015,349.753,51,NA,"new_dm_fish","Delta",47.23280717,52.06018198
+"531","DM14132","antioch dunes",2014,361.76,55,NA,"new_dm_fish","Delta",49.1526064,54.0492616
+"532","DM15010","sherwood harbor",2015,421.675,71,NA,"new_dm_fish","Sac",58.73241575,63.9747805
+"533","DM15186","chipps island",2015,442.569,78,NA,"new_dm_fish","Chipps",62.07315741,67.43608054
+"534","DM15216","chipps island",2015,593.439,90,NA,"new_dm_fish","Chipps",86.19576171,92.42920474
+"535","CWT16130",NA,NA,437.088,NA,NA,"new_dm_fish",NA,61.19680032,66.52809808
+"536","DM15205","chipps island",2015,455.517,76,NA,"new_dm_fish","Chipps",64.14341313,69.58104622
+"537","DM15061","clarksburg",2015,265.692,38,NA,"new_dm_fish","Sac",33.79229388,38.13463672
+"538","DM15182","chipps island",2015,539.872,79,NA,"new_dm_fish","Chipps",77.63093408,83.55529552
+"539","DM15181","chipps island",2015,591.982,93,NA,"new_dm_fish","Chipps",85.96280198,92.18783812
+"540","DM15013","sherwood harbor",2015,238.842,37,NA,"new_dm_fish","Sac",33.18615228,36.165022078
+"541","DM15203","chipps island",2015,451.315,78,NA,"new_dm_fish","Chipps",63.47155535,68.8849429
+"542","DM16005",NA,NA,526.881,NA,NA,"new_dm_fish",NA,75.55380309,81.40320646
+"543","DM15243","chipps island",2015,462.684,80,NA,"new_dm_fish","Chipps",65.28934476,70.76833144
+"544","DM14304",NA,NA,499.812,NA,NA,"new_dm_fish",NA,71.22574068,76.91895592
+"545","DM15202","chipps island",2015,503.341,76,NA,"new_dm_fish","Chipps",71.78999249,77.50357006
+"546","DM14115","b&w marina",2014,260.575,39,NA,"new_dm_fish","Delta",33.4760705,37.2869545
+"547","DM15077","clarksburg",2015,232.784,37,NA,"new_dm_fish","Sac",33.10533856,36.036235056
+"548","DM14283",NA,NA,477.629,NA,NA,"new_dm_fish",NA,67.67890081,73.24412014
+"549","DM15191","chipps island",2015,517.919,79,NA,"new_dm_fish","Chipps",74.12086891,79.91856154
+"550","CWT15030",NA,NA,477.11,NA,NA,"new_dm_fish",NA,67.5959179,73.1581426
+"551","DM14026",NA,NA,452.203,NA,NA,"new_dm_fish",NA,63.61353767,69.03204898
+"552","DM15015","sherwood harbor",2015,203.441,39,NA,"new_dm_fish","Sac",32.71390294,35.412432219
+"553","DM15083","sandy beach",2015,502.798,75,NA,"new_dm_fish","Delta",71.70317222,77.41361668
+"554","DM16052","sherwood harbor",2016,403.24,71,NA,"new_dm_fish","Sac",55.7848436,60.9208384
+"555","DM15212","chipps island",2015,517.222,78,NA,"new_dm_fish","Chipps",74.00942558,79.80309652
+"556","DM15210","chipps island",2015,541.718,77,NA,"new_dm_fish","Chipps",77.92609102,83.86110388
+"557","DM14092","sandy beach",2014,428.484,55,NA,"new_dm_fish","Delta",59.82110676,65.10275944
+"558","DM14417",NA,NA,471.701,NA,NA,"new_dm_fish",NA,66.73107289,72.26208766
+"559","DM14122","sherman island",2014,356.077,55,NA,"new_dm_fish","Delta",48.24395153,53.10781582
+"560","DM14071","brannan island",2014,345.538,47,NA,"new_dm_fish","Delta",46.55887082,51.36192508
+"561","DM15226","chipps island",2015,437.13,82,NA,"new_dm_fish","Chipps",61.2035157,66.5350558
+"562","DM15082","terminous",2015,306.322,42,NA,"new_dm_fish","Delta",40.28862458,44.86540252
+"563","DM14057","clarksburg",2014,275.863,39,NA,"new_dm_fish","Sac",35.41853507,39.81956458
+"564","DM16014","sherwood harbor",2016,461.251,68,NA,"new_dm_fish","Sac",65.06022239,70.53094066
+"565","DM16009",NA,NA,498.66,NA,NA,"new_dm_fish",NA,71.0415474,76.7281156
+"566","CWT16100",NA,NA,537.901,NA,NA,"new_dm_fish",NA,77.31579089,83.22877966
+"567","DM15201","chipps island",2015,480.073,73,NA,"new_dm_fish","Chipps",68.06967197,73.64899318
+"568","DM16237",NA,NA,542.172,NA,NA,"new_dm_fish",NA,77.99868108,83.93631352
+"569","DM14268",NA,NA,401.987,NA,NA,"new_dm_fish",NA,55.58450143,60.71326642
+"570","DM15019","sherwood harbor",2015,411.023,69,NA,"new_dm_fish","Sac",57.02926747,62.21017018
+"571","DM14157","brannan island",2014,433.042,75,NA,"new_dm_fish","Delta",60.54988538,65.85783772
+"572","DM15022","sherwood harbor",2015,425.831,69,NA,"new_dm_fish","Sac",59.39691859,64.66326346
+"573","DM14099","eddo’s",2014,346.01,51,NA,"new_dm_fish","Delta",46.6343389,51.4401166
+"574","DM14089","sandy beach",2014,484.29,65,NA,"new_dm_fish","Delta",68.7439281,74.3475814
+"575","DM15017","sherwood harbor",2015,463.918,79,NA,"new_dm_fish","Sac",65.48664902,70.97275588
+"576","DM14095","eddo’s",2014,444.284,58,NA,"new_dm_fish","Delta",62.34736876,67.72018744
+"577","DM14018",NA,NA,413.185,NA,NA,"new_dm_fish",NA,57.37494965,62.5683271
+"578","DM15217","chipps island",2015,394.441,88,NA,"new_dm_fish","Chipps",54.37797149,59.46319606
+"579","DM14027",NA,NA,473.412,NA,NA,"new_dm_fish",NA,67.00464468,72.54553192
+"580","DM15031","sherwood harbor",2015,295.666,38,NA,"new_dm_fish","Sac",38.58483674,43.10012956
+"581","DM14029",NA,NA,246.13,NA,NA,"new_dm_fish",NA,33.2833742,36.31995767
+"582","DM15066",NA,NA,369.887,NA,NA,"new_dm_fish",NA,50.45203243,55.39558042
+"583","DM16197","b&w marina",2016,258.531,42,NA,"new_dm_fish","Delta",33.44880354,36.94834546
+"584","DM16036","sherwood harbor",2016,289.344,41,NA,"new_dm_fish","Sac",37.57401216,42.05282704
+"585","DM16203","terminous",2016,272.321,42,NA,"new_dm_fish","Delta",34.85220469,39.23279686
+"586","DM16220","steamboat slough",2016,325.423,50,NA,"new_dm_fish","Delta",43.34268347,48.02967418
+"587","DM15070",NA,NA,290.066,NA,NA,"new_dm_fish",NA,37.68945274,42.17243356
+"588","DM17196","wimpy’s",2017,240.728,37,NA,"new_dm_fish","Delta",33.21131152,36.205116552
+"589","DM17159",NA,NA,276.658,NA,NA,"new_dm_fish",NA,35.54564762,39.95126428
+"590","DM17210","eddo’s",2017,272.401,37,NA,"new_dm_fish","Delta",34.86499589,39.24604966
+"591","DM15040",NA,NA,275.746,NA,NA,"new_dm_fish",NA,35.39982794,39.80018236
+"592","DM14354",NA,NA,454.137,NA,NA,"new_dm_fish",NA,63.92276493,69.35243542
+"593","DM14340",NA,NA,411.309,NA,NA,"new_dm_fish",NA,57.07499601,62.25754894
+"594","DM17205",NA,NA,251.926,NA,NA,"new_dm_fish",NA,33.36069284,36.443174834
+"595","DM17149","berkeley frontage",2017,273.672,41,NA,"new_dm_fish","Bay",35.06821608,39.45660352
+"596","DM14374",NA,NA,503.371,NA,NA,"new_dm_fish",NA,71.79478919,77.50853986
+"597","DM14360",NA,NA,428.675,NA,NA,"new_dm_fish",NA,59.85164575,65.1344005
+"598","DM17170","eddo’s",2017,247.001,45,NA,"new_dm_fish","Delta",33.29499334,36.338474259
+"599","DM14450",NA,NA,435.76,NA,NA,"new_dm_fish",NA,60.9844664,66.3081016
+"600","DM14372",NA,NA,492.453,NA,NA,"new_dm_fish",NA,70.04911017,75.69986398
+"601","DM14423",NA,NA,472.982,NA,NA,"new_dm_fish",NA,66.93589198,72.47429812
+"602","DM14331",NA,NA,517.645,NA,NA,"new_dm_fish",NA,74.07705905,79.8731707
+"603","DM14338",NA,NA,496.57,NA,NA,"new_dm_fish",NA,70.7073773,76.3818862
+"604","DM17178","sandy beach",2017,289.495,49,NA,"new_dm_fish","Delta",37.59815555,42.0778417
+"605","DM17180","sandy beach",2017,273.986,43,NA,"new_dm_fish","Delta",35.11842154,39.50862076
+"606","DM14337",NA,NA,490.177,NA,NA,"new_dm_fish",NA,69.68520053,75.32282182
+"607","DM14361",NA,NA,461.569,NA,NA,"new_dm_fish",NA,65.11106741,70.58362054
+"608","DM17176",NA,NA,234.27,NA,NA,"new_dm_fish",NA,33.1251618,36.06782593
+"609","DM17150","treasure island",2017,238.701,42,NA,"new_dm_fish","Bay",33.18427134,36.162024559
+"610","DM17188","eddo’s",2017,276.175,45,NA,"new_dm_fish","Delta",35.46842075,39.8712505
+"611","DM14406",NA,NA,510.215,NA,NA,"new_dm_fish",NA,72.88907635,78.6423169
+"612","DM14426",NA,NA,512.083,NA,NA,"new_dm_fish",NA,73.18775087,78.95176978
+"613","DM14397",NA,NA,557.115,NA,NA,"new_dm_fish",NA,80.38791735,86.4117709
+"614","DM14435",NA,NA,488.365,NA,NA,"new_dm_fish",NA,69.39547985,75.0226459
+"615","DM14152","koket",2014,385.237,64,NA,"new_dm_fish","Delta",52.90634393,57.93846142
+"616","DM15063",NA,NA,269.466,NA,NA,"new_dm_fish",NA,34.39571874,38.75983756
+"617","DM14344",NA,NA,535.655,NA,NA,"new_dm_fish",NA,76.95667795,82.8567073
+"618","DM17202",NA,NA,306.418,NA,NA,"new_dm_fish",NA,40.30397402,44.88130588
+"619","DM14396",NA,NA,488.731,NA,NA,"new_dm_fish",NA,69.45399959,75.08327746
+"620","DM17213",NA,NA,230.53,NA,NA,"new_dm_fish",NA,33.0752702,35.98831727
+"621","DM15072",NA,NA,325.188,NA,NA,"new_dm_fish",NA,43.30510932,47.99074408
+"622","DM14445",NA,NA,430.677,NA,NA,"new_dm_fish",NA,60.17174553,65.46605182
+"623","DM15098","koket",2015,429.563,78,NA,"new_dm_fish","Delta",59.99362807,65.28150658
+"624","DM14441",NA,NA,429.349,NA,NA,"new_dm_fish",NA,59.95941161,65.24605534
+"625","DM14437",NA,NA,492.162,NA,NA,"new_dm_fish",NA,70.00258218,75.65165692
+"626","DM14381",NA,NA,455.129,NA,NA,"new_dm_fish",NA,64.08137581,69.51677014
+"627","DM17212","san quentin",2017,218.567,45,NA,"new_dm_fish","Bay",32.91568378,35.733995853
+"628","DM15041",NA,NA,248.37,NA,NA,"new_dm_fish",NA,33.3132558,36.36757783
+"629","DM15058",NA,NA,370.311,NA,NA,"new_dm_fish",NA,50.51982579,55.46582026
+"630","DM17562","chipps island",2017,517.133,101,NA,"new_dm_fish","Chipps",73.99519537,79.78835278
+"631","DM14217","chipps island",2014,511.39,69,NA,"new_dm_fish","Chipps",73.0769471,78.8369674
+"632","DM14220","chipps island",2014,417.289,67,NA,"new_dm_fish","Chipps",58.03113821,63.24819574
+"633","DM15288","chipps island",2015,462.46,81,NA,"new_dm_fish","Chipps",65.2535294,70.7312236
+"634","DM16391","chipps island",2016,396.994,66,NA,"new_dm_fish","Chipps",54.78617066,59.88612604
+"635","DM17543","chipps island",2017,505.26,87,NA,"new_dm_fish","Chipps",72.0968214,77.8214716
+"636","DM17566","chipps island",2017,576.619,97,NA,"new_dm_fish","Chipps",83.50641191,89.64280354
+"637","DM15333",NA,NA,919.128,NA,NA,"new_dm_fish",NA,138.27017592,146.38284448
+"638","DM17659","chipps island",2017,445.828,70,NA,"new_dm_fish","Chipps",62.59423892,67.97596648
+"639","DM16447","chipps island",2016,478.825,74,NA,"new_dm_fish","Chipps",67.87012925,73.4422495
+"640","DM16277","chipps island",2016,396.943,78,NA,"new_dm_fish","Chipps",54.77801627,59.87767738
+"641","DM16284","chipps island",2016,445.913,79,NA,"new_dm_fish","Chipps",62.60782957,67.99004758
+"642","DM16430","chipps island",2016,518.634,90,NA,"new_dm_fish","Chipps",74.23519026,80.03700844
+"643","DM16431","chipps island",2016,506.679,89,NA,"new_dm_fish","Chipps",72.32370531,78.05654314
+"644","DM16433","chipps island",2016,514.218,85,NA,"new_dm_fish","Chipps",73.52911602,79.30545388
+"645","DM16434","chipps island",2016,567.018,92,NA,"new_dm_fish","Chipps",81.97130802,88.05230188
+"646","DM16437","chipps island",2016,498.993,84,NA,"new_dm_fish","Chipps",71.09479077,76.78328038
+"647","DM16440","chipps island",2016,558.004,93,NA,"new_dm_fish","Chipps",80.53005956,86.55904264
+"648","DM16438","chipps island",2016,530.38,87,NA,"new_dm_fish","Chipps",76.1132582,81.9828508
+"649","CWT16106",NA,NA,652.576,NA,NA,"new_dm_fish",NA,95.65117664,102.22584016
+"650","CWT16112",NA,NA,434.576,NA,NA,"new_dm_fish",NA,60.79515664,66.11196016
+"651","CWT16119",NA,NA,576.022,NA,NA,"new_dm_fish",NA,83.41095758,89.54390452
+"652","CWT16121",NA,NA,438.02,NA,NA,"new_dm_fish",NA,61.3458178,66.6824932
+"653","CWT16129",NA,NA,516.805,NA,NA,"new_dm_fish",NA,73.94275145,79.7340163
+"654","DM14096","eddo’s",2014,405.915,61,NA,"new_dm_fish","Delta",56.21254935,61.3639789
+"655","DM14343",NA,NA,528.124,NA,NA,"new_dm_fish",NA,75.75254636,81.60912184
+"656","DM14370",NA,NA,510.399,NA,NA,"new_dm_fish",NA,72.91849611,78.67279834
+"657","DM14390",NA,NA,521.187,NA,NA,"new_dm_fish",NA,74.64338943,80.45993842
+"658","DM15003","sherwood harbor",2015,441.114,80,NA,"new_dm_fish","Sac",61.84051746,67.19504524
+"659","DM15023","sherwood harbor",2015,434.267,77,NA,"new_dm_fish","Sac",60.74575063,66.06077122
+"660","DM15036","sherwood harbor",2015,484.113,73,NA,"new_dm_fish","Sac",68.71562757,74.31825958
+"661","DM16432","chipps island",2016,574.238,81,NA,"new_dm_fish","Chipps",83.12571382,89.24836708
+"662","DM15180","chipps island",2015,583.022,89,NA,"new_dm_fish","Chipps",84.53018758,90.70352452
+"663","DM15227","chipps island",2015,481.195,84,NA,"new_dm_fish","Chipps",68.24906855,73.8348637
+"664","DM16038","sherwood harbor",2016,502.968,88,NA,"new_dm_fish","Sac",71.73035352,77.44177888
+"665","DM16148","sherwood harbor",2016,304.504,49,NA,"new_dm_fish","Sac",39.99794456,44.56423264
+"666","DM16472","chipps island",2016,486.826,87,NA,"new_dm_fish","Chipps",69.14940914,74.76769516
+"667","DM16435","chipps island",2016,532.891,85,NA,"new_dm_fish","Chipps",76.51474199,82.39882306
+"668","DM16436","chipps island",2016,518.565,85,NA,"new_dm_fish","Chipps",74.22415785,80.0255779
+"669","DM16137","sandy beach",2016,272.99,41,NA,"new_dm_fish","Delta",34.9591711,39.3436234
+"670","DM16339","sandy beach",2016,281.114,43,NA,"new_dm_fish","Delta",36.25811746,40.68944524
+"671","DM16366","eddo’s",2016,253.138,40,NA,"new_dm_fish","Delta",33.37686092,36.468940742
+"672","DM16760","sherwood harbor",2016,434.951,72,NA,"new_dm_fish","Sac",60.85511539,66.17408266
+"673","DM16757","sherwood harbor",2016,525.856,73,NA,"new_dm_fish","Sac",75.38991584,81.23340496
+"674","DM17071","koket",2017,360.639,52,NA,"new_dm_fish","Delta",48.97336971,53.86355674
+"675","DM17299","clarksburg",2017,333.103,55,NA,"new_dm_fish","Sac",44.57063867,49.30194298
+"676","DM17152","wimpy’s",2017,342.036,57,NA,"new_dm_fish","Delta",45.99893604,50.78178376
+"677","DM17145","rio vista",2017,287.774,41,NA,"new_dm_fish","Delta",37.32298486,41.79274084
+"678","DM17295","sandy beach",2017,347.976,50,NA,"new_dm_fish","Delta",46.94868264,51.76580416
+"679","DM17312","rio vista",2017,407.854,75,NA,"new_dm_fish","Delta",56.52257606,61.68519364
+"680","DM17281","antioch dunes",2017,334.239,52,NA,"new_dm_fish","Delta",44.75227371,49.49013274
+"681","DM16286","chipps island",2016,541.632,81,NA,"new_dm_fish","Chipps",77.91234048,83.84685712
+"682","DM16269",NA,NA,478.457393433411,NA,NA,"new_dm_fish",NA,67.8113526360681,73.3813517961789
+"683","DM16271",NA,NA,570.798547001686,NA,NA,"new_dm_fish",NA,82.5757796800996,88.6785872962993
+"684","DM16278",NA,NA,502.405775868989,NA,NA,"new_dm_fish",NA,71.6404595036927,77.3486408304567
+"685","DM16266",NA,NA,483.232820903909,NA,NA,"new_dm_fish",NA,68.574895734326,74.1724491109416
+"686","DM16270",NA,NA,574.383378823152,NA,NA,"new_dm_fish",NA,83.1489584400338,89.2724505358434
+"687","DM16285",NA,NA,443.856894155658,NA,NA,"new_dm_fish",NA,62.2790788065482,67.6494330858263
+"688","DM16273",NA,NA,499.500280966525,NA,NA,"new_dm_fish",NA,71.1758999237377,76.8673165449145
+"689","DM16004","chipps island",2016,438.998655374488,67,NA,"new_dm_fish","Chipps",61.5022950078269,66.8446172493377
+"690","DM16007","chipps island",2016,492.115376896524,80,NA,"new_dm_fish","Chipps",69.9951276119852,75.6439333366782
+"691","DM16006","chipps island",2016,449.79930962511,80,NA,"new_dm_fish","Chipps",63.2292116159588,68.6338536324957
+"692","DM16002",NA,NA,478.899413984105,NA,NA,"new_dm_fish",NA,67.8820273019186,73.4545769206068
+"693","DM16003",NA,NA,439.234466564984,NA,NA,"new_dm_fish",NA,61.5399988590753,66.8836817311552
+"694","DM16008",NA,NA,441.985429878783,NA,NA,"new_dm_fish",NA,61.9798503833186,67.3394063137192
+"695","DM16005",NA,NA,226.521734767601,NA,NA,"new_dm_fish",NA,33.0217999417998,35.9031055594244
+"696","DM16005",NA,NA,509.488139198844,NA,NA,"new_dm_fish",NA,72.7728585765032,78.5219051396805
+"697","DM16276","chipps island",2016,416.696937464879,84,NA,"new_dm_fish","Chipps",57.9364733312595,63.1501146604319
+"698","DM16283","chipps island",2016,486.660612507024,85,NA,"new_dm_fish","Chipps",69.1229653337481,74.7402970679136
+"699","DM16010","chipps island",2016,476.376735971743,77,NA,"new_dm_fish","Chipps",67.478676314522,73.0366700810789
+"700","DM16281","chipps island",2016,542.668780605282,79,NA,"new_dm_fish","Chipps",78.0781113309785,84.018610195071
+"701","DM16280","chipps island",2016,466.248896202938,79,NA,"new_dm_fish","Chipps",65.8593360138878,71.3588921449787
+"702","DM16282","chipps island",2016,456.769788070964,77,NA,"new_dm_fish","Chipps",64.3437214146664,69.7885830918359
+"703","DM16272","chipps island",2016,490.661876856386,84,NA,"new_dm_fish","Chipps",69.7627274905676,75.4031465200289
+"704","DM16279","chipps island",2016,456.966966364293,81,NA,"new_dm_fish","Chipps",64.3752482519868,69.8212476479088
+"705","DM16267","chipps island",2016,483.439030264109,77,NA,"new_dm_fish","Chipps",68.6078665489284,74.2066097535523
+"706","DM16264","chipps island",2016,454.823593160472,77,NA,"new_dm_fish","Chipps",64.0325443104279,69.4661764429638
+"707","DM16268","chipps island",2016,523.872621819058,86,NA,"new_dm_fish","Chipps",75.0727935026492,80.9048385305451
+"708","DM16265","chipps island",2016,504.508007545958,84,NA,"new_dm_fish","Chipps",71.9765853265232,77.6968965300634
+"709","DM16287","chipps island",2016,517.222244521153,84,NA,"new_dm_fish","Chipps",74.0094646764872,79.8031370273742
+"710","DM17291","rio vista",2017,350.445,64,NA,"new_dm_fish","Delta",47.34345105,52.1748187
+"711","DM14122","sherman island",2014,363.826,55,NA,"new_dm_fish","Delta",49.48293914,54.39151516
+"712","CWT14039",NA,NA,479.353,NA,NA,"new_dm_fish",NA,67.95455117,73.52971798
+"713","DM16043","sherwood harbor",2016,239.616,39,NA,"new_dm_fish","Sac",33.19647744,36.181476544
+"714","DM16043","sherwood harbor",2016,234.011,39,NA,"new_dm_fish","Sac",33.12170674,36.062319849
+"715","DM14133","antioch dunes",2014,417.946,64,NA,"new_dm_fish","Delta",58.13618594,63.35703436
+"716","DM14133","antioch dunes",2014,438.798,64,NA,"new_dm_fish","Delta",61.47021222,66.81137668
+"717","DM15007","sherwood harbor",2015,423.796,66,NA,"new_dm_fish","Sac",59.07154244,64.32614536
+"718","DM16116","rio vista",2016,312.943,50,NA,"new_dm_fish","Delta",41.34725627,45.96223738
+"719","DM17164","mcnear’s beach",2017,258.615,35,NA,"new_dm_fish","Bay",33.4499241,36.9622609
+"720","DM14047",NA,NA,448.19,NA,NA,"new_dm_fish",NA,62.9718991,68.3672554
+"721","DM17553","chipps island",2017,478.201,79,NA,"new_dm_fish","Chipps",67.77035789,73.33887766
+"722","DM14216","chipps island",2014,435.601,71,NA,"new_dm_fish","Chipps",60.95904389,66.28176166
+"723","DM15111","chipps island",2015,533.195,85,NA,"new_dm_fish","Chipps",76.56334855,82.4491837
+"724","DM15290","chipps island",2015,450.34,81,NA,"new_dm_fish","Chipps",63.3156626,68.7234244
+"725","DM16107","koket",2016,353.371,55,NA,"new_dm_fish","Delta",47.81128919,52.65953986
+"726","DM16409","chipps island",2016,479.813,84,NA,"new_dm_fish","Chipps",68.02810057,73.60592158
+"727","DM16546","chipps island",2016,456.594,80,NA,"new_dm_fish","Chipps",64.31561466,69.75946204
+"728","DM18158","steamboat slough",2018,359.408,63,NA,"new_dm_fish","Delta",48.77654512,53.65962928
+"729","DM16709","sherwood harbor",2016,374.776,59,NA,"new_dm_fish","Sac",51.23373464,56.20549216
+"730","DM16101","koket",2016,325.695,47,NA,"new_dm_fish","Delta",43.38617355,48.0747337
+"731","DM16591","chipps island",2016,457.795,71,NA,"new_dm_fish","Chipps",64.50764255,69.9584197
+"732","DM16646","chipps island",2016,428.171,74,NA,"new_dm_fish","Chipps",59.77106119,65.05090786
+"733","DM18006","chipps island",2018,544.108,78,NA,"new_dm_fish","Chipps",78.30822812,84.25703128
+"734","DM18398","garcia bend",2018,337.422,46,NA,"new_dm_fish","Sac",45.26120358,50.01742852
+"735","DM18401","steamboat slough",2018,334.306,58,NA,"new_dm_fish","Delta",44.76298634,49.50123196
+"736","DM18411","steamboat slough",2018,359.082,60,NA,"new_dm_fish","Delta",48.72442098,53.60562412
+"737","DM18571","clarksburg",2018,331.386,62,NA,"new_dm_fish","Sac",44.29610754,49.01750476
+"738","DM18594","garcia bend",2018,283.734,48,NA,"new_dm_fish","Sac",36.67702926,41.12347444
+"739","DM18673","steamboat slough",2018,401.335,64,NA,"new_dm_fish","Delta",55.48025315,60.6052561
+"740","DM18454","sherwood harbor",2018,576.344,86,NA,"new_dm_fish","Sac",83.46244216,89.59724704
+"741","DM18647","garcia bend",2018,311.234,47,NA,"new_dm_fish","Sac",41.07400426,45.67912444
+"742","DM14050",NA,NA,482.226,NA,NA,"new_dm_fish",NA,68.41391514,74.00565916
+"743","DM14627","chipps island",2014,503.466,76,NA,"new_dm_fish","Chipps",71.80997874,77.52427756
+"744","DM14361",NA,NA,444.81,NA,NA,"new_dm_fish",NA,62.4314709,67.8073246
+"745","DM16286","chipps island",2016,525.042,81,NA,"new_dm_fish","Chipps",75.25976538,81.09855772
+"746","DM16269",NA,NA,474.28,NA,NA,"new_dm_fish",NA,67.1434292,72.6893248
+"747","DM16437","chipps island",2016,511.879,84,NA,"new_dm_fish","Chipps",73.15513331,78.91797514
+"748","DM17072","koket",2017,288.047,45,NA,"new_dm_fish","Delta",37.36663483,41.83796602
+"749","DM14129","antioch dunes",2014,321.974,52,NA,"new_dm_fish","Delta",42.79122286,47.45831284
+"750","DM16153","sherwood harbor",2016,309.026,43,NA,"new_dm_fish","Sac",40.72096714,45.31334716
+"751","DM15105","wimpy’s",2015,298.903,39,NA,"new_dm_fish","Delta",39.10240067,43.63637098
+"752","DM16201",NA,NA,265.31,NA,NA,"new_dm_fish",NA,33.7312159,38.0713546
+"753","DM16186","terminous",2016,265.11,43,NA,"new_dm_fish","Delta",33.6992379,38.0382226
+"754","DM16127","koket",2016,344.808,62,NA,"new_dm_fish","Delta",46.44215112,51.24099328
+"755","DM15170","chipps island",2015,477.815,76,NA,"new_dm_fish","Chipps",67.70864035,73.2749329
+"756","DM16071","sherwood harbor",2016,460.969,84,NA,"new_dm_fish","Sac",65.01513341,70.48422454
+"757","DM16343","koket",2016,275.131,43,NA,"new_dm_fish","Delta",35.30149559,39.69830146
+"758","DM16389","koket",2016,304.711,47,NA,"new_dm_fish","Delta",40.03104179,44.59852426
+"759","DM16515","chipps island",2016,547.312,94,NA,"new_dm_fish","Chipps",78.82051568,84.78780592
+"760","DM17089","b&w marina",2017,267.202,37,NA,"new_dm_fish","Delta",34.03372778,38.38478332
+"761","DM17317","rio vista",2017,359.76,61,NA,"new_dm_fish","Delta",48.8328264,53.7179416
+"762","DM18063","chipps island",2018,472.677,85,NA,"new_dm_fish","Chipps",66.88712553,72.42377182
+"763","DM18161","steamboat slough",2018,377.195,60,NA,"new_dm_fish","Delta",51.62050855,56.6062237
+"764","DM14046",NA,NA,490.989,NA,NA,"new_dm_fish",NA,69.81503121,75.45733774
+"765","DM14048",NA,NA,467.313,NA,NA,"new_dm_fish",NA,66.02947557,71.53517158
+"766","DM18640","garcia bend",2018,325.18,50,NA,"new_dm_fish","Sac",43.3038302,47.9894188
+"767","DM16215","clarksburg",2016,266.95,40,NA,"new_dm_fish","Sac",33.9934355,38.343037
+"768","DM16332","rio vista",2016,231.249,36,NA,"new_dm_fish","Delta",33.08486166,36.003602491
+"769","DM17075","keller beach",2017,312.214,47,NA,"new_dm_fish","Bay",41.23069646,45.84147124
+"770","DM18390","rio vista",2018,304.119,37,NA,"new_dm_fish","Delta",39.93638691,44.50045354
+"771","DM14619","chipps island",2014,447.17,74,NA,"new_dm_fish","Chipps",62.8088113,68.1982822
+"772","DM16039","garcia bend",2016,369.983,58,NA,"new_dm_fish","Sac",50.46738187,55.41148378
+"773","DM17079","rio vista",2017,285.997,40,NA,"new_dm_fish","Delta",37.03886033,41.49836302
+"774","DM17549","chipps island",2017,525.992,80,NA,"new_dm_fish","Chipps",75.41166088,81.25593472
+"775","DM17563","chipps island",2017,564.787,87,NA,"new_dm_fish","Chipps",81.61459343,87.68271442
+"776","DM17783","sherwood harbor",2017,251.911,46,NA,"new_dm_fish","Sac",33.36049274,36.442855949
+"777","DM18396","garcia bend",2018,365.188,51,NA,"new_dm_fish","Sac",49.70070932,54.61714408
+"778","DM18414","steamboat slough",2018,347.767,59,NA,"new_dm_fish","Delta",46.91526563,51.73118122
+"779","DM18522","sherwood harbor",2018,241.571,38,NA,"new_dm_fish","Sac",33.22255714,36.223037889
+"780","DM18577","medford island",2018,269.899,44,NA,"new_dm_fish","Delta",34.46495111,38.83156834
+"781","DM17039","sherwood harbor",2017,320.43,54,NA,"new_dm_fish","Sac",42.5443527,47.2025338
+"782","DM17111","rio vista",2017,347.173,62,NA,"new_dm_fish","Delta",46.82029097,51.63277918
+"783","DM17313","rio vista",2017,362.372,60,NA,"new_dm_fish","Delta",49.25045908,54.15064552
+"784","DM17541","chipps island",2017,449.06,86,NA,"new_dm_fish","Chipps",63.1110034,68.5113796
+"785","DM17542","chipps island",2017,524.243,90,NA,"new_dm_fish","Chipps",75.13201327,80.96619538
+"786","CWT14039",NA,NA,403.265,NA,NA,"new_dm_fish",NA,55.78884085,60.9249799
+"787","DM14695",NA,NA,356.224,NA,NA,"new_dm_fish",NA,48.26745536,53.13216784
+"788","DM14660",NA,NA,338.367,NA,NA,"new_dm_fish",NA,45.41229963,50.17397722
+"789","DM14661",NA,NA,390.424,NA,NA,"new_dm_fish",NA,53.73569336,58.79773984
+"790","DM14665",NA,NA,364.042,NA,NA,"new_dm_fish",NA,49.51747538,54.42729772
+"791","DM14662",NA,NA,367.336,NA,NA,"new_dm_fish",NA,50.04415304,54.97298176
+"792","DM14681",NA,NA,419.229,NA,NA,"new_dm_fish",NA,58.34132481,63.56957614
+"793","DM14675",NA,NA,375.297,NA,NA,"new_dm_fish",NA,51.31703733,56.29180102
+"794","DM14680",NA,NA,342.927,NA,NA,"new_dm_fish",NA,46.14139803,50.92938682
+"795","DM14672",NA,NA,353.479,NA,NA,"new_dm_fish",NA,47.82855731,52.67743114
+"796","DM14685",NA,NA,382.785,NA,NA,"new_dm_fish",NA,52.51429365,57.5322631
+"797","DM14689",NA,NA,293.38,NA,NA,"new_dm_fish",NA,38.2193282,42.7214308
+"798","DM14685",NA,NA,348.749,NA,NA,"new_dm_fish",NA,47.07227761,51.89385934
+"799","DM14693",NA,NA,330.901,NA,NA,"new_dm_fish",NA,44.21856089,48.93715966
+"800","DM14677",NA,NA,402.122,NA,NA,"new_dm_fish",NA,55.60608658,60.73563052
+"801","DM14658",NA,NA,343.18,NA,NA,"new_dm_fish",NA,46.1818502,50.9712988
+"802","DM14683",NA,NA,422.004,NA,NA,"new_dm_fish",NA,58.78501956,64.02928264
+"803","DM14674",NA,NA,374.729,NA,NA,"new_dm_fish",NA,51.22621981,56.19770614
+"804","DM14690",NA,NA,386.378,NA,NA,"new_dm_fish",NA,53.08877842,58.12747948
+"805","DM14669",NA,NA,263.201,NA,NA,"new_dm_fish",NA,33.51110134,37.72197766
+"806","DM14687",NA,NA,288.969,NA,NA,"new_dm_fish",NA,37.51405341,41.99070454
+"807","DM14698",NA,NA,471.918,NA,NA,"new_dm_fish",NA,66.76576902,72.29803588
+"808","DM14678",NA,NA,331.685,NA,NA,"new_dm_fish",NA,44.34391465,49.0670371
+"809","DM14673",NA,NA,532.585,NA,NA,"new_dm_fish",NA,76.46581565,82.3481311
+"810","DM14663",NA,NA,526.095,NA,NA,"new_dm_fish",NA,75.42812955,81.2729977
+"811","DM14682",NA,NA,442.037,NA,NA,"new_dm_fish",NA,61.98809593,67.34794942
+"812","DM14147","b&w marina",2014,337.778,49,NA,"new_dm_fish","Delta",45.31812442,50.07640348
+"813","DM14656",NA,NA,346.07,NA,NA,"new_dm_fish",NA,46.6439323,51.4500562

@@ -1,0 +1,1037 @@
+---
+title: "Battle Creek Natal Assignment Model Training"
+author: "Kohma Arai"
+date: "2025-11-06"
+output: html_document
+---
+
+*The objective of this script is to (i) train the Sr isotope time series model, (ii) train the trace element model, (iii) combine the predictions, and (iv) evaluate the classification performance using out-of-sample test set.*
+
+```{r setup, include=FALSE}
+rm(list = ls()) #clean the environment
+
+knitr::opts_chunk$set(echo = FALSE, eval = TRUE, message = FALSE, warning = FALSE)
+```
+
+```{r}
+# wrangling
+library(tidyverse)
+library(purrr)
+
+# classification
+library(tidymodels)
+library(caret)
+
+library(ranger)
+
+# plotting
+library(patchwork)
+library(ggalluvial)
+library(scico)
+library(RColorBrewer)
+library(here)
+
+# set colors
+# colors <- c("SAC" = "#FF7F00", "CNH" = "#FDBF6F", "BAT" = "#B15928",
+#             "MIL" =  "#FFD92F", "DEE" = "#B3B3B3", "BUT" = "#FC8D62",
+#             "FEA" = "#E31A1C", "FEH" =  "#FB9A99", "YUB" = "#E78AC3",
+#             "AME" = "#6A3D9A", "NIH" = "#CAB2D6", "MOK" = "#1F78B4",
+#             "MOH" = "#A6CEE3", "STA" = "cyan4", "TUO" =  "#8DD3C7",
+#             "MER" = "#33A02C",  "MEH" = "#B2DF8A")
+
+# set colors
+brewer.pal("Set3", n = 12)
+display.brewer.pal("Set3", n = 12)
+colors <- c("BAT" = "#8DD3C7", "CNH" = "#B3DE69", "DEE" = "#BEBADA", "MIL" = "#FB8072", "SAC" = "#80B1D3", "BUT" = "#FDB462")
+
+# define fixed source order
+source_order <- c("BAT", "CNH", "DEE", "MIL", "SAC", "BUT", "FEA", "FEH", "YUB", "AME", "NIH", "MOK", "MOH", "STA", "TUO", "MER", "MEH")
+
+```
+
+# Load data
+
+Read in baseline known-origin juvenile Sr isotope time series dataset.
+Note that this Sr data has been splined and also includes synthetic fry migrant data.
+
+```{r}
+# read in full isoscape data for Sr isotope time series model
+iso_full_read <- read_csv(here('data','ref_data_for_model_2025-09-16.csv'))
+
+# modify columns
+iso_full <- iso_full_read %>% 
+  rename(lab_id = Sample_ID) %>% 
+  mutate(NAT_LOC = factor(NAT_LOC)) %>% 
+  
+  # assign real and synthetic
+  mutate(type = case_when(
+    grepl("Fish", lab_id) ~ "synthetic",
+    TRUE ~ "real")) %>% 
+  mutate(HvW = case_when(
+    NAT_LOC %in% c("CNH", "FEH", "MEH", "NIH", "MOH") ~ "H",
+    TRUE ~ "W")) %>% 
+  
+  # drop rows with NA in columns starting with "X"
+  filter(if_all(starts_with("X"), ~ !is.na(.)))
+
+# sample size per natal source
+iso_full %>% 
+  group_by(NAT_LOC, type) %>% 
+  summarise(n = n()) %>% 
+  knitr::kable(format = "simple", caption = "Sample size of the full dataset of known-origin juveniles by natal source and type.")
+
+glimpse(iso_full)
+
+# sample size per source
+iso_full %>% 
+  group_by(NAT_LOC, type) %>% 
+  tally()
+
+# check any missing data for all columns - no missing values
+iso_full %>%
+  summarise(across(everything(), ~ sum(is.na(.)))) %>%
+  pivot_longer(everything(), names_to = "column", values_to = "n_missing") %>%
+  arrange(desc(n_missing)) %>% 
+  print(n = 100)
+
+```
+
+Read in known-origin juvenile trace element data
+
+```{r}
+# read in TE juvenile samples
+te_full_read <- read_csv(here('outputs','TE_natal_srba_juv_check.csv'))
+
+# modify columns - to wider format
+te_full <- te_full_read %>% 
+  rename(NAT_LOC = Origin) %>% 
+  mutate(NAT_LOC = factor(NAT_LOC)) %>% 
+  
+  filter(Element %in% c("Sr_Ca", "Ba_Ca")) %>% 
+  pivot_wider(
+    names_from = Element,
+    values_from = Value_mean
+  ) 
+  
+glimpse(te_full)
+
+# sample size per source
+te_full %>% 
+  group_by(NAT_LOC) %>% 
+  tally()
+
+# check missing values
+te_full %>%
+  summarise(across(everything(), ~ sum(is.na(.)))) %>%
+  pivot_longer(everything(), names_to = "column", values_to = "n_missing") %>%
+  arrange(desc(n_missing)) %>% 
+  print(n = 100)
+```
+
+Plot the baseline data for trace elements
+*Figure for Appendix X*
+
+```{r}
+te_base_p <- te_full %>%
+  
+  # set order
+  mutate(NAT_LOC = factor(NAT_LOC, levels = source_order)) %>% 
+  ggplot(aes(x = Sr_Ca, y = Ba_Ca, fill = NAT_LOC)) +
+  
+  # 1 SD (filled, semi-transparent)
+  stat_ellipse(aes(fill = NAT_LOC),
+               geom = "polygon",
+               level = 0.68,      # ~1 SD
+               alpha = 0.3,
+               color = NA) +
+  
+  # 2 SD (outline only)
+  stat_ellipse(aes(color = NAT_LOC),
+               geom = "path",
+               level = 0.95,      # ~2 SD
+               linewidth = 0.8,
+               linetype = "dashed"
+               ) +
+  
+  geom_point(shape = 21, size = 3.0, color = "gray30") +
+  labs(x = "Sr:Ca", y = "Ba:Ca", color = "Natal Origin", fill = "Natal Origin")+
+  scale_fill_manual(values = colors) +
+  scale_color_manual(values = colors) +
+  theme_classic()+
+  theme(legend.position = c(0.85, 0.85),  
+        legend.background = element_rect(color = "gray30", fill = "white"), 
+        legend.title = element_text(size = 16), 
+        legend.text = element_text(size = 14),
+        axis.title = element_text(size = 16),
+        axis.text = element_text(size = 12),
+      rect = element_rect(fill = "transparent"),
+      plot.background = element_rect(color = NA)
+        )
+
+te_base_p
+
+# save
+#ggsave(file = paste0("./outputs/te_baseline_", Sys.Date(), ".png"), te_base_p, width = 9, height = 8, bg = "transparent")
+ggsave(file = here('outputs','te_baseline.png'), te_base_p, width = 9, height = 8, bg = "transparent")
+```
+
+# Training and test set creation
+
+1. Identify overlapping samples between Sr isotope and TE baseline - n = 71
+
+```{r}
+# overlapping samples n = 71 samples overlapping between isoscape and TE baseline
+overlap_ids <- intersect(iso_full$lab_id, te_full$lab_id)
+
+iso_overlap <- iso_full %>% filter(lab_id %in% overlap_ids)
+te_overlap  <- te_full %>% filter(lab_id %in% overlap_ids)
+```
+
+2. Now create a balanced test set from overlapping samples that includes measurements for Sr isotope and TE.
+
+```{r}
+# pick (say) n = 5 per source, or the min available across sources
+#n_per_source <- min(table(te_overlap$NAT_LOC))
+n_per_source <- 5
+
+# balanced sample
+set.seed(123)
+test_te <- te_overlap %>%
+  group_by(NAT_LOC) %>%
+  slice_sample(n = n_per_source) %>%
+  ungroup()
+
+test_iso <- iso_overlap %>%
+  filter(lab_id %in% test_te$lab_id)
+```
+
+3. Add Sr isotope only test sample from the other 12 sources
+
+```{r}
+te_sources <- unique(te_full$NAT_LOC)
+iso_only <- iso_full %>% filter(!NAT_LOC %in% te_sources)
+
+# sample e.g. 5 per additional source
+n_iso_only <- 5
+
+set.seed(123)
+test_iso_extra <- iso_only %>%
+  group_by(NAT_LOC) %>%
+  slice_sample(n = n_iso_only) %>%
+  ungroup()
+```
+
+4. Combine test sets and create training data
+
+```{r}
+# full iso test set (5 shared + extra sources) 5 samples per source N = 85
+test_iso_all <- bind_rows(test_iso, test_iso_extra)
+
+# training sets = all minus holdout
+train_iso <- iso_full %>% filter(!lab_id %in% test_iso_all$lab_id)
+train_te  <- te_full %>% filter(!lab_id %in% test_te$lab_id)
+
+# save test sets
+write.csv(test_te,here('outputs',paste0("test_te_", Sys.Date(), ".csv")), row.names = F)
+write.csv(test_iso_all, here('outputs',paste0("test_iso_", Sys.Date(), ".csv")), row.names = F)
+```
+
+# Sr isotope time series
+
+Now train the Sr time series model
+
+## Balance sample
+
+```{r}
+# create a balanced sample size per natal source (also balanced real and synthetic per natal source)
+# estimate the target sample size per natal source for "real" samples
+target_size_real <- train_iso %>% 
+  filter(type == "real") %>% 
+  group_by(NAT_LOC) %>% 
+  tally() %>% 
+  summarise(target = round(mean(n, na.rm = T))) %>% 
+  pull(target)
+
+# the target sample size per source was based on the mean size across sources
+# this is a balanced approach - upsampling WITH replacement for small sources and downsampling WITHOUT replacement for large sources
+target_size_real
+
+# sample size before resampling
+train_iso %>% 
+  group_by(NAT_LOC, type) %>% 
+  summarise(n = n()) %>% 
+  print(n = 100)
+
+# Separate the real and simulated rows
+real_data <- train_iso %>% filter(type == "real")
+syn_data  <- train_iso %>% filter(type != "real")
+
+# Resample only the "real" rows by NAT_LOC
+# resample to n = 40 for W and n = 60 for H (since hatchery source does not release fry and thus no fake fry needed)
+set.seed(1234)
+real_data_resampled <- real_data %>%
+  group_by(NAT_LOC) %>%
+  group_split() %>%
+  map_df(~ {
+    n_group <- nrow(.x)
+    sample_size <- ifelse(unique(.x$HvW) == "H", 60, 40) # 60 for H and 40 for W
+
+    if (n_group < sample_size) {
+      slice_sample(.x, n = sample_size, replace = TRUE)  # Upsample
+    } else {
+      slice_sample(.x, n = sample_size, replace = FALSE) # Downsample
+    }
+  })
+
+# resample "synthetic" to n = 20
+set.seed(1234)
+syn_data_resampled <- syn_data %>% 
+  group_by(NAT_LOC) %>% 
+  slice_sample(n = 20, replace = TRUE)
+
+# Bind the resampled real data with the original simulated data
+train_iso_rs <- bind_rows(real_data_resampled, syn_data_resampled)
+
+# sample size after resampling - n = 60 per source
+train_iso_rs %>% 
+  group_by(NAT_LOC, type) %>% 
+  summarise(n = n()) %>% 
+  knitr::kable(format = "simple", caption = "Sample size of the training dataset of known-origin juveniles by natal source and type.")
+```
+
+## Model tuning and training
+
+Note that this is fitting the full Sr time series model (not loop model)
+
+```{r}
+set.seed(123)
+
+# -----------------------------------
+# 1. Define predictors and outcome
+# -----------------------------------
+predictors <- c(
+  paste0("X", seq(100, 320, 10)), # X100, X110, ... X320
+  "mean_exog"
+)
+
+# -----------------------------------
+# 2. Recipe
+# -----------------------------------
+iso_recipe <- recipe(NAT_LOC ~ X100 + X110 + X120 + X130 + X140 + X150 + X160 + X170 + X180 + X190 + 
+        X200 + X210 + X220 + X230 + X240 + X250 + X260 + X270 + X280 + X290 + 
+        X300 + X310 + X320 + mean_exog, data = train_iso_rs) 
+
+# -----------------------------------
+# 3. Model specification
+# -----------------------------------
+rf_spec <- rand_forest(
+  mtry  = tune(),
+  min_n = tune(),
+  trees = 1000
+) %>%
+  set_engine("ranger", importance = "impurity") %>%
+  set_mode("classification")
+
+# -----------------------------------
+# 4. Workflow
+# -----------------------------------
+rf_wflow <- workflow() %>%
+  add_recipe(iso_recipe) %>%
+  add_model(rf_spec)
+
+# -----------------------------------
+# 5. Resampling (CV folds)
+# -----------------------------------
+iso_folds <- vfold_cv(train_iso_rs, v = 10, strata = NAT_LOC)
+
+# -----------------------------------
+# 6. Tuning grid
+# -----------------------------------
+rf_grid <- grid_regular(
+  mtry(range = c(2, length(predictors))),  
+  min_n(range = c(2, 20)),                  
+  levels = 10
+)
+
+# -----------------------------------
+# 7. Tune the model
+# -----------------------------------
+rf_tune_res <- tune_grid(
+  rf_wflow,
+  resamples = iso_folds,
+  grid      = rf_grid,
+  metrics   = yardstick::metric_set(yardstick::accuracy, yardstick::kap),
+  control   = control_grid(save_pred = TRUE)
+)
+
+# -----------------------------------
+# 8. Select best parameters
+# -----------------------------------
+best_rf <- select_best(rf_tune_res, metric = "accuracy")
+
+# -----------------------------------
+# 9. Finalize workflow
+# -----------------------------------
+final_rf_wflow <- finalize_workflow(rf_wflow, best_rf)
+
+# -----------------------------------
+# 10. Fit final model
+# -----------------------------------
+final_rf_fit <- fit(final_rf_wflow, data = train_iso_rs)
+
+# -----------------------------------
+# 11. Save final model as RDS
+# -----------------------------------
+saveRDS(final_rf_fit, file = here('outputs',paste0("final_sr_ts_model_", Sys.Date(), ".rds")))
+
+# -----------------------------------
+# 12. Test-set evaluation
+# -----------------------------------
+rf_test_pred <- predict(final_rf_fit, new_data = test_iso_all, type = "prob") %>%
+  bind_cols(predict(final_rf_fit, new_data = test_iso_all)) %>%
+  bind_cols(test_iso_all %>% select(NAT_LOC))
+
+# Accuracy and Kappa
+metrics <- rf_test_pred %>% 
+  metrics(truth = NAT_LOC, estimate = .pred_class)
+
+# Confusion matrix
+conf_mat_res <- rf_test_pred %>%
+  conf_mat(truth = NAT_LOC, estimate = .pred_class)
+
+# Print results
+print(metrics)
+print(conf_mat_res)
+
+```
+
+# TE model
+
+Now train the trace element RF model
+
+## Balance sample
+Similar to the Sr isotope model, balance the training data
+
+```{r}
+glimpse(train_te)
+
+# compute sample size per source
+source_counts <- train_te %>%
+  group_by(NAT_LOC) %>%
+  summarize(n = n(), .groups = "drop")
+
+source_counts
+
+# target sample size = median - n = 13
+target_n <- median(source_counts$n)
+
+# function to balance each group
+balance_group <- function(df, target_n) {
+  n_current <- nrow(df)
+  
+  if(n_current < target_n) {
+    # upsample with replacement
+    df <- df %>% slice_sample(n = target_n, replace = TRUE)
+  } else if(n_current > target_n) {
+    # downsample without replacement
+    df <- df %>% slice_sample(n = target_n, replace = FALSE)
+  }
+  # if equal, do nothing
+  return(df)
+}
+
+# apply to each NAT_LOC
+train_te_rs <- train_te %>%
+  group_by(NAT_LOC) %>%
+  group_modify(~balance_group(.x, target_n)) %>%
+  ungroup()
+
+# check counts
+train_te_rs %>% count(NAT_LOC)
+
+```
+
+## Model tuning and training
+
+```{r}
+train_te_rs
+
+set.seed(123)
+
+train_te_rs
+
+# -----------------------------------
+# 2. Recipe
+# -----------------------------------
+te_recipe <- recipe(NAT_LOC ~ Sr_Ca + Ba_Ca, data = train_te_rs) 
+
+# -----------------------------------
+# 3. Model specification
+# -----------------------------------
+rf_spec_te <- rand_forest(
+  mtry  = tune(),
+  min_n = tune(),
+  trees = 1000
+) %>%
+  set_engine("ranger", importance = "impurity") %>%
+  set_mode("classification")
+
+# -----------------------------------
+# 4. Workflow
+# -----------------------------------
+rf_wflow_te <- workflow() %>%
+  add_recipe(te_recipe) %>%
+  add_model(rf_spec_te)
+
+# -----------------------------------
+# 5. Resampling (CV folds)
+# -----------------------------------
+te_folds <- vfold_cv(train_te_rs, v = 10, strata = NAT_LOC)
+
+# -----------------------------------
+# 6. Tuning grid
+# -----------------------------------
+rf_grid_te <- grid_regular(
+  mtry(range = c(1, 2)),  
+  min_n(range = c(2, 20)),                  
+  levels = 10
+)
+
+# -----------------------------------
+# 7. Tune the model
+# -----------------------------------
+rf_tune_res_te <- tune_grid(
+  rf_wflow_te,
+  resamples = te_folds,
+  grid      = rf_grid_te,
+  metrics   = yardstick::metric_set(yardstick::accuracy, yardstick::kap),
+  control   = control_grid(save_pred = TRUE)
+)
+
+# -----------------------------------
+# 8. Select best parameters
+# -----------------------------------
+best_rf_te <- select_best(rf_tune_res_te, metric = "accuracy")
+
+# -----------------------------------
+# 9. Finalize workflow
+# -----------------------------------
+final_rf_wflow_te <- finalize_workflow(rf_wflow_te, best_rf_te)
+
+# -----------------------------------
+# 10. Fit final model
+# -----------------------------------
+final_rf_fit_te <- fit(final_rf_wflow_te, data = train_te_rs)
+
+# -----------------------------------
+# 11. Save final model as RDS
+# -----------------------------------
+saveRDS(final_rf_fit_te, file = here('outputs',paste0("final_te_model_", Sys.Date(), ".rds")))
+
+# -----------------------------------
+# 12. Test-set evaluation
+# -----------------------------------
+rf_test_pred_te <- predict(final_rf_fit_te, new_data = test_te, type = "prob") %>%
+  bind_cols(predict(final_rf_fit_te, new_data = test_te)) %>%
+  bind_cols(test_te %>% select(NAT_LOC))
+
+# Accuracy and Kappa
+metrics_te <- rf_test_pred_te %>% 
+  metrics(truth = NAT_LOC, estimate = .pred_class)
+
+# Confusion matrix
+conf_mat_res_te <- rf_test_pred_te %>%
+  conf_mat(truth = NAT_LOC, estimate = .pred_class)
+
+# Print results
+print(metrics_te)
+print(conf_mat_res_te)
+
+# look at the list of the best candidate models
+show_best(rf_tune_res_te, metric = "accuracy", n = 10)
+
+```
+
+# Predict on test set
+
+## Sr isotope model
+
+Now validate the performance of both models using the out-of-sample test set
+
+```{r}
+# read in models
+# hyperparameters of fitted model 2025-10-01:  mtry = 4, min_n = 2, trees = 1000
+# hyperparameters of ts model in the DJFMP script: mtry = 11, min_n = 2, trees = 1000
+
+final_rf_fit <- readRDS(here('outputs','final_sr_ts_model_2025-11-06.rds'))
+
+# check final hyper parameters
+final_rf_fit
+
+# fit with DJFMP parameters
+# final_rf_fit <- rand_forest(mode = "classification", trees = 1000, min_n = 11, mtry = 2) %>% 
+#         set_engine("ranger", importance = "impurity") %>% 
+#         fit(NAT_LOC ~ X100 + X110 + X120 + X130 + X140 + X150 + X160 + X170 + X180 + X190 + 
+#                          X200 + X210 + X220 + X230 + X240 + X250 + X260 + X270 + X280 + X290 + 
+#                          X300 + X310 + X320 + mean_exog, data = train_iso_rs)
+
+# list of DJFMP RF model
+#rf_list <- readRDS("./outputs/RF_mod_list_del_2025-06-24.rds")
+
+#rf_list$X320
+
+# read in test data
+test_iso_all <- read.csv(here('outputs','test_iso_2025-11-06.csv'))
+
+glimpse(test_iso_all)
+
+# check sample size per source
+test_iso_all %>% 
+  group_by(NAT_LOC) %>% 
+  tally()
+```
+
+Predict using strontium isotope time series model
+
+```{r}
+# predict
+set.seed(123)
+ts_pred <- test_iso_all %>% 
+  bind_cols(predict(final_rf_fit, ., type = "class"),
+            predict(final_rf_fit, ., type = "prob")) %>% 
+  
+  # rename .pred* columns by appending "_te"
+  rename_with(~ paste0(.x, "_ts"), starts_with(".pred")) %>% 
+  
+  mutate(NAT_LOC = factor(NAT_LOC))
+
+# overall accuracy - 0.612
+ts_pred %>% 
+  summarise(accuracy = yardstick::accuracy_vec(truth = NAT_LOC, estimate = .pred_class_ts),
+            accuracy_macro = yardstick::bal_accuracy_vec(truth = NAT_LOC, estimate = .pred_class_ts),
+            n = n())
+
+# per-class
+ts_pred %>% 
+  group_by(NAT_LOC) %>% 
+  summarise(accuracy = yardstick::accuracy_vec(truth = NAT_LOC, estimate = .pred_class_ts),
+            #accuracy_macro = yardstick::bal_accuracy_vec(truth = NAT_LOC, estimate = .pred_class),
+            n = n())
+
+```
+
+Confusion matrix for strontium time series model
+
+```{r}
+cm <- conf_mat(ts_pred, truth = NAT_LOC, estimate = .pred_class_ts) %>% 
+   pluck("table") %>%
+  as_tibble()
+
+cm_labeled <- cm %>%
+    group_by(Truth) %>%
+    mutate(prop = n / sum(n),
+           label = paste0(n, "\n(", scales::percent(prop, accuracy = 0.1), ")")) %>%
+    mutate(Truth = factor(Truth, levels = c("SAC", "CNH", "BAT", "MIL", "DEE", "BUT", "FEA", "FEH", "YUB", "AME", "NIH", "MOK", "MOH", "STA", "TUO", "MER", "MEH"))) %>% 
+  mutate(Prediction = factor(Prediction, levels = c("MEH", "MER", "TUO", "STA", "MOH", "MOK", "NIH", "AME", "YUB", "FEH", "FEA", "BUT", "DEE", "MIL", "BAT", "CNH", "SAC"))) %>% 
+  ungroup()
+
+cm_plot <- ggplot(cm_labeled, aes(x = Truth, y = Prediction, fill = prop)) +
+    geom_tile(color = "white") +
+    #geom_text(aes(label = scales::percent(Prop, accuracy = 0.1)), color = "white", size = 4) + # percentage
+    #geom_text(aes(label = sprintf("%.2f", prop)), color = "white", size = 3.5, fontface = "bold") + # proportion
+    geom_text(aes(label = label), size = 3, color = "white", fontface = "bold") +
+    scale_fill_viridis_c(option = "viridis") +
+    labs(title = "Confusion matrix of Sr isotope time series model",
+         subtitle = paste0("Updated: ", Sys.Date()),
+         fill = "Proportion") +
+    theme_minimal()+
+    theme(legend.position = "none")
+
+cm_plot
+
+# save figure
+#ggsave(cm_plot, file = paste0("./outputs/figures/conf_mat_ts_", Sys.Date(), ".png"), height = 10, width = 10)
+```
+
+## TE model
+
+Natal assignment using the TE model
+
+```{r}
+final_rf_fit_te <- readRDS(here('outputs','final_te_model_2025-11-06.rds'))
+
+final_rf_fit_te
+
+# read in test data
+test_te <- read.csv(here('outputs','test_te_2025-11-06.csv'))
+
+glimpse(test_te)
+
+# check sample size per source
+test_te %>% 
+  group_by(NAT_LOC) %>% 
+  tally()
+
+# predict!
+set.seed(1234)
+te_pred <- test_te %>% 
+  bind_cols(predict(final_rf_fit_te, ., type = "class"),
+            predict(final_rf_fit_te, ., type = "prob")) %>% 
+  
+  # rename .pred* columns by appending "_te"
+  rename_with(~ paste0(.x, "_te_raw"), starts_with(".pred"))
+
+glimpse(te_pred)
+```
+
+Now combine the posterior probs
+
+```{r}
+#Set which sources to consider for the model
+sources <- c("BAT","DEE","MIL","SAC","BUT","CNH")
+
+# Merge the two prediction tables
+test_combined <- ts_pred %>%
+  dplyr::select(lab_id, NAT_LOC, starts_with(".pred_"), starts_with("X"), mean_exog) %>%
+  rename_with(~ gsub("_ts$", "_sr", .x)) %>%   # rename Sr preds
+  left_join(
+    te_pred %>%
+      dplyr::select(lab_id, starts_with(".pred_"), Sr_Ca, Ba_Ca) %>%
+      rename_with(~ gsub("_te_raw$", "_te", .x)), 
+    by = "lab_id"
+  )
+
+glimpse(test_combined)
+
+# Use te_missing_if_any = TRUE  => fallback to Sr if ANY of the TE probs are NA
+# Use te_missing_if_any = FALSE => fallback only if ALL TE probs are NA
+te_missing_if_any <- TRUE
+
+# ---- compute posteriors----
+test_post <- test_combined %>%
+  rowwise() %>%
+  mutate(
+    # grab sr and te vectors for the chosen sources as list-columns
+    sr_vec = list(c_across(all_of(paste0(".pred_", sources, "_sr")))),
+    te_vec = list(c_across(all_of(paste0(".pred_", sources, "_te")))),
+    
+    # decide whether the TE prediction should be considered missing
+    te_missing = if (te_missing_if_any) any(is.na(unlist(te_vec))) else all(is.na(unlist(te_vec))),
+    
+    # normalize sr probs (guard against zero / all-NA)
+    sr_sum = sum(unlist(sr_vec), na.rm = TRUE),
+    sr_norm = list(
+      if (is.na(sr_sum) || sr_sum == 0) rep(1/length(unlist(sr_vec)), length(unlist(sr_vec)))
+      else unlist(sr_vec) / sr_sum
+    ),
+    
+    # compute raw posterior = sr_norm * te_vec, but only when TE is present
+    post_raw = list(
+      if (te_missing) rep(NA_real_, length(unlist(sr_vec))) 
+      else unlist(sr_norm) * unlist(te_vec)
+    ),
+    
+    # normalize posterior
+    post_sum = sum(unlist(post_raw), na.rm = TRUE),
+    post_norm = list(
+      if (is.na(post_sum) || post_sum == 0) rep(NA_real_, length(unlist(sr_vec)))
+      else unlist(post_raw) / post_sum
+    ),
+    
+   # final class with fallback
+    .pred_class_final = if (te_missing || all(is.na(unlist(post_norm)))) {
+      .pred_class_sr
+    } else {
+      # if sr_class is NOT one of the allowed sources, stick with sr_class
+      if (!(.pred_class_sr %in% sources)) {
+        .pred_class_sr
+      } else {
+        sources[which.max(unlist(post_norm))]
+      }
+    }
+  ) %>%
+  ungroup() %>%
+  mutate(
+    post_norm_named = map(post_norm, ~ set_names(as.numeric(.x), paste0("post_norm_post", sources)))
+  ) %>%
+  unnest_wider(post_norm_named) %>%
+  dplyr::select(-sr_vec, -te_vec, -sr_sum, -post_raw, -post_sum, -post_norm)
+
+# example rows where TE was missing and fallback applied
+test_post %>% filter(te_missing) %>% dplyr::select(lab_id, NAT_LOC, .pred_class_sr, .pred_class_te, .pred_class_final) %>% head(10)
+
+# finalize probabilities 
+test_final <- test_post %>%
+  
+  relocate(.pred_class_final, .after = .pred_class_te) %>% 
+  relocate(.pred_class_sr, .before = .pred_class_te) %>%
+  
+  # calculate maximum sr ts model prob
+  rowwise() %>%
+  mutate(max_prob_ts = max(c_across(.pred_AME_sr:.pred_YUB_sr)),
+         max_prob_te = max(c_across(.pred_BAT_te:.pred_SAC_te)),
+         max_prob_final = max(c_across(post_norm_postBAT:post_norm_postCNH))) %>% 
+  
+  # relocate
+  relocate(max_prob_ts, .before = .pred_class_sr) %>% 
+  relocate(max_prob_te, .after = max_prob_ts) %>% 
+  relocate(max_prob_final, .after = max_prob_te) %>% 
+  
+   # make factor ordering consistent
+  mutate(
+    .pred_class_sr    = factor(.pred_class_sr,    levels = source_order),
+    .pred_class_te    = factor(.pred_class_te,    levels = source_order),
+    .pred_class_final = factor(.pred_class_final, levels = source_order),
+    NAT_LOC = factor(NAT_LOC, levels = source_order)
+  ) %>% 
+  ungroup()
+  
+glimpse(test_final)
+```
+
+
+Double check to see if post-hoc multiplier correctly applied
+
+```{r}
+glimpse(test_final)
+
+# Predicted probabilities
+pred_viz <- test_final %>%
+  select(lab_id, NAT_LOC,
+         starts_with(".pred_") 
+         ) %>%
+  select(-.pred_class_sr, -.pred_class_te, -.pred_class_final, -.pred_AME_sr, -.pred_NIH_sr, -.pred_FEA_sr, -.pred_FEH_sr, -.pred_MEH_sr, -.pred_MER_sr, -.pred_MOH_sr, -.pred_MOK_sr,  -.pred_STA_sr, -.pred_TUO_sr, -.pred_YUB_sr) %>% 
+  pivot_longer(
+    cols = -c(lab_id, NAT_LOC),
+    names_to = c("source","type"),
+    names_pattern = "\\.pred_([A-Z]+)_(sr|te)",
+    values_to = "prob"
+  ) #%>%
+  #mutate(type = toupper(type))  # optional
+
+# Posterior probabilities
+post_viz <- test_final %>%
+  select(lab_id, NAT_LOC, starts_with("post_norm_post")) %>%
+  pivot_longer(
+    cols = -c(lab_id, NAT_LOC),
+    names_to = "source",
+    names_pattern = "post_norm_post([A-Z]+)",
+    values_to = "prob"
+  ) %>%
+  mutate(type = "Posterior")
+
+# Combine
+viz_data <- bind_rows(pred_viz, post_viz)
+
+
+# Example visualization for a subset of individuals
+viz_data %>% filter(lab_id %in% unique(test_final$lab_id)[1:5]) %>% 
+  mutate(type = factor(type, levels = c("sr", "te", "Posterior"))) %>% 
+  ggplot(aes(x = source, y = prob, fill = type)) +
+  geom_col(position = position_dodge(width = 0.8), width = 0.7) +
+  facet_wrap(~ lab_id, ncol = 3) +
+  #scale_fill_manual(values = c("sr" = "#1b9e77", "te" = "#d95f02", "Posterior" = "#7570b3")) +
+  labs(
+    title = "Comparison of SR, TE, and Posterior Probabilities by Source",
+    x = "Source",
+    y = "Probability",
+    fill = "Probability Type"
+  ) +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+## Validation
+
+Using the test set, validate how combining the two predictions improved classification accuracy.
+
+```{r}
+# final accuracy improved substantially!
+# Overall accuracy (only for the six sources)
+# sr isotope ts: 0.53
+# TE: 0.7
+# combined: 0.87
+
+test_final %>% 
+  # filter only the sources of interest
+  filter(te_missing == FALSE) %>% 
+  
+  summarise(accuracy_ts = yardstick::accuracy_vec(truth = NAT_LOC, estimate = .pred_class_sr),
+            accuracy_te = yardstick::accuracy_vec(truth = NAT_LOC, estimate = .pred_class_te),
+            accuracy_final = yardstick::accuracy_vec(truth = NAT_LOC, estimate = .pred_class_final),
+            n = n())
+
+# by source
+test_final %>% 
+  
+  # filter only the sources
+  filter(te_missing == FALSE) %>% 
+  
+  group_by(NAT_LOC) %>% 
+  
+  summarise(accuracy_ts = yardstick::accuracy_vec(truth = NAT_LOC, estimate = .pred_class_sr),
+            accuracy_te = yardstick::accuracy_vec(truth = NAT_LOC, estimate = .pred_class_te),
+            accuracy_final = yardstick::accuracy_vec(truth = NAT_LOC, estimate = .pred_class_final),
+            n = n())
+```
+
+
+## Confusion matrix
+
+Look at the confusion matrices for all sources
+
+```{r}
+# function to build a CM plot
+make_cm_plot <- function(data, pred_col, title){
+  cm <- conf_mat(data, truth = NAT_LOC, estimate = !!sym(pred_col)) %>% 
+    pluck("table") %>%
+    as_tibble()
+
+  cm_lab <- cm %>%
+    group_by(Truth) %>%
+    mutate(prop = n / sum(n),
+           label = paste0(n, "\n(", scales::percent(prop, accuracy = 0.1), ")")) %>%
+    mutate(Truth = factor(Truth, levels = c("SAC", "CNH", "BAT", "MIL", "DEE", "BUT", "FEA", "FEH",
+                                            "YUB", "AME", "NIH", "MOK", "MOH", "STA", "TUO", "MER", "MEH"))) %>% 
+    mutate(Prediction = factor(Prediction, levels = c("MEH", "MER", "TUO", "STA", "MOH", "MOK", "NIH",
+                                                      "AME", "YUB", "FEH", "FEA", "BUT", "DEE", "MIL", "BAT", "CNH", "SAC"))) %>% 
+    ungroup()
+
+  ggplot(cm_lab, aes(x = Truth, y = Prediction, fill = prop)) +
+    geom_tile(color = "white") +
+    geom_text(aes(label = label), size = 2.0, color = "white", fontface = "bold") +
+    scale_fill_viridis_c(option = "viridis") +
+    labs(title = title, fill = "Proportion") +
+    theme_minimal() +
+    theme(legend.position = "none",
+          axis.text.x = element_text(angle = 45, hjust = 1))
+}
+
+# Generate the three CMs
+cm_sr    <- make_cm_plot(test_final, ".pred_class_sr", "Sr isotope time series")
+cm_te    <- make_cm_plot(test_final, ".pred_class_te", "TE model")
+cm_final <- make_cm_plot(test_final, ".pred_class_final", "Final model")
+
+# Combine them with patchwork
+cm_all <- wrap_plots(cm_sr, cm_te, cm_final, ncol = 3)
+cm_all
+
+# save figure
+#ggsave(cm_all, file = paste0("./outputs/figures/conf_mat_final_full_", Sys.Date(), ".png"), height = 6, width = 18)
+```
+
+*Updated 2025-11-04*
+
+This is the confusion matrices for the paper
+Only the overlapping six sources
+
+```{r}
+make_cm_plot_sub <- function(data, pred_col, title){
+  cm <- conf_mat(data %>% filter(NAT_LOC %in% sources),
+                 truth = NAT_LOC, estimate = !!sym(pred_col)) %>% 
+    pluck("table") %>%
+    as_tibble()
+
+  cm_lab <- cm %>%
+    group_by(Truth) %>%
+    mutate(
+      prop = n / sum(n),
+      label = ifelse(n == 0, NA, paste0(n, "\n(", scales::percent(prop, accuracy = 0.1), ")")),
+      Truth = factor(Truth, levels = c("SAC", "CNH", "BAT", "MIL", "DEE", "BUT")),
+      Prediction = factor(Prediction, levels = c("BUT", "DEE", "MIL", "BAT", "CNH", "SAC")),
+      text_col = ifelse(prop < 0.5, "black", "white")
+    ) %>%
+    ungroup() %>%
+    droplevels()
+
+  ggplot(cm_lab %>% filter(!is.na(Truth), !is.na(Prediction)),
+         aes(x = Truth, y = Prediction, fill = prop)) +
+    geom_tile(color = "gray10", alpha = 1.0) +
+    geom_text(aes(label = label, color = text_col), size = 4.0, fontface = "bold") +
+    scale_fill_distiller(palette = "Blues", direction = 1) +
+    scale_color_identity() +
+    labs(title = title, fill = "Proportion") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      axis.text = element_text(size = 12),
+      axis.title = element_text(size = 16)
+    )
+}
+
+# Generate plots with improved titles
+cm_sr_sub    <- make_cm_plot_sub(test_final, ".pred_class_sr",
+                                 #expression(paste(""^87, "Sr/", ""^86, "Sr time series"))
+                                 "Sr isotope time series")
+cm_te_sub    <- make_cm_plot_sub(test_final, ".pred_class_te",
+                                 "Trace element (Sr/Ca, Ba/Ca)")
+cm_final_sub <- make_cm_plot_sub(test_final, ".pred_class_final",
+                                 "Combined prediction")
+
+# Combine with patchwork
+cm_sub <- wrap_plots(cm_sr_sub, cm_te_sub, cm_final_sub, ncol = 3) +
+  plot_annotation(
+    #subtitle = paste0(Sys.Date()),
+    tag_levels = "A"
+  ) &
+  theme(
+    plot.tag = element_text(face = "bold", size = 24, color = "gray30"),
+    plot.title = element_text(face = "bold", size = 14, color = "gray30"),
+    rect = element_rect(fill = "transparent"),
+    panel.background = element_rect(fill = NA, color = NA),
+    plot.background = element_rect(color = NA)
+  )
+
+cm_sub
+
+# save figure
+#ggsave(cm_sub, file = paste0("./outputs/conf_mat_final_sub_", Sys.Date(), ".png"), height = 6, width = 18, dpi = 300)
+ggsave(cm_sub, file =here('outputs','conf_mat_final_sub.png'), height = 6, width = 18, dpi = 300)
+```
+
+
+## Decision boundaries
+
+```{r}
+# make a 2D Sr Ca grid
+
+grid_df <- expand.grid(
+  #sr_iso = sr_med,
+  Sr_Ca  = seq(min(test_final$Sr_Ca, na.rm = T), max(test_final$Sr_Ca, na.rm = T), length.out = 100),
+  Ba_Ca  = seq(min(test_final$Ba_Ca, na.rm = T), max(test_final$Ba_Ca, na.rm = T), length.out = 100)
+)
+
+# Predict on the grid using trained RF model
+grid_pred <- predict(final_rf_fit_te, new_data = grid_df, type = "class") %>%
+  bind_cols(grid_df) %>% 
+  mutate(.pred_class = factor(.pred_class, levels = source_order))
+
+# predict probs for continuous shading
+# grid_probs <- predict(final_rf_mod_te_mean, new_data = grid_df, type = "prob") %>%
+#   bind_cols(grid_df)
+
+# Plot decision surface + observed points
+ds_final_p <- ggplot() +
+  geom_tile(data = grid_pred, aes(x = Sr_Ca, y = Ba_Ca, fill = .pred_class), alpha = 0.3) +
+  geom_point(data = test_final %>% filter(.pred_class_final %in% sources), aes(x = Sr_Ca, y = Ba_Ca, color = .pred_class_final, size = max_prob_ts),  alpha = 0.8) +
+  scale_fill_brewer(palette = "Set2", name = "TE Decision Surface") +
+  scale_color_brewer(palette = "Dark2", name = "Final Prediction \n(Sr TS + TE)") +
+  scale_size_continuous(name = "Max Prob from Sr iso TS") +
+  coord_cartesian(expand = F)+
+  labs(title = "TE decision space and final prediction",
+       #subtitle = paste0(Sys.Date()),
+       x = "Sr:Ca",
+       y = "Ba:Ca", 
+       )+
+  theme_classic()
+  #theme_minimal(base_size = 14) +
+
+ds_final_p
+  
+# save
+#ggsave(ds_final_p, filename = paste0("./outputs/juvenile_ds_plot_", Sys.Date(), ".png"), height = 8, width = 10)
+```
+

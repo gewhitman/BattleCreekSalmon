@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BatchLogDataSet SchemaVersion="65536" DataVersion="1" SIVersion="C.1.5.588.9" BatchName="TE_20240425_1.b" BatchDataPath="D:\Agilent\ICPMH\1\DATA\Rachel Johnson\TE_20240425_1.b" UserDefineColumnsCaptions="" HashCode="912566EC0B64A90DB74AF6FDFBA409AF677DAADD59D380710CEABD8B3E347D62A183D82E7BAA7A04F6FF499834CF588DE18B6221687D7A5A59E4E5C30691E451" xmlns="BatchLog">
+  <BatchLogInfo>
+    <BatchLogID>-1</BatchLogID>
+    <SampleLogID>0</SampleLogID>
+    <AcqDateTime>2024-04-25T10:59:14-07:00</AcqDateTime>
+    <AcqResult>Pass</AcqResult>
+    <Comment>3rd time is a charm</Comment>
+    <DataFileName>D:\Agilent\ICPMH\1\DATA\Rachel Johnson\TE_20240425_1.b\TEAH_redo_2.d</DataFileName>
+    <DilutionResult>1</DilutionResult>
+    <OperatorName>Admin</OperatorName>
+    <SampleName>TEAH_redo_2</SampleName>
+    <SampleType>Sample</SampleType>
+    <ErrorMessage />
+  </BatchLogInfo>
+</BatchLogDataSet>

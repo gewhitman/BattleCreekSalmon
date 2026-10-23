@@ -1,0 +1,1265 @@
+---
+title: "Battle Creek Natal Assignment"
+author: "Kohma Arai"
+date: "2026-01-16"
+output: html_document
+---
+
+*The objective of this script is to (i) make natal assignments to Battle Creek spawners using Sr isotope and TE models, and (ii) estimate population composition through bootstrapping*
+
+```{r setup, include=FALSE}
+rm(list = ls()) #clean the environment
+
+knitr::opts_chunk$set(echo = FALSE, eval = TRUE, message = FALSE, warning = FALSE)
+```
+
+```{r}
+# wrangling
+library(tidyverse)
+library(purrr)
+library(here)
+library(readxl)
+
+# classification
+library(tidymodels)
+library(caret)
+
+library(ranger)
+
+# plotting
+library(patchwork)
+library(ggalluvial)
+library(scico)
+library(RColorBrewer)
+
+# set colors
+# colors <- c("SAC" = "#FF7F00", "CNH" = "#FDBF6F", "BAT" = "#B15928",
+#             "MIL" =  "#FFD92F", "DEE" = "#B3B3B3", "BUT" = "#FC8D62",
+#             "FEA" = "#E31A1C", "FEH" =  "#FB9A99", "YUB" = "#E78AC3",
+#             "AME" = "#6A3D9A", "NIH" = "#CAB2D6", "MOK" = "#1F78B4",
+#             "MOH" = "#A6CEE3", "STA" = "cyan4", "TUO" =  "#8DD3C7",
+#             "MER" = "#33A02C",  "MEH" = "#B2DF8A")
+
+# set colors
+brewer.pal("Set3", n = 12)
+display.brewer.pal("Set3", n = 12)
+# setting colors only for sources predicted for Battle adults (not all sources)
+colors <- c("BAT" = "#8DD3C7", "CNH" = "#B3DE69", "DEE" = "#BEBADA", "MIL" = "#FB8072", "SAC" = "#80B1D3", "BUT" = "#FDB462",
+            "FEH" = "#FFFFB3", "NIH" = "#FCCDE5", "MOK" = "#D9D9D9", "MOH" = "#BC80BD", "STA" = "#CCEBC5", "TUO" = "#FFED6F")
+
+
+# define fixed source order
+source_order <- c("BAT", "CNH", "DEE", "MIL", "SAC", "BUT", "FEA", "FEH", "YUB", "AME", "NIH", "MOK", "MOH", "STA", "TUO", "MER", "MEH")
+
+# defince reverse source order
+source_order_rev <- rev(c("BAT", "CNH", "DEE", "MIL", "SAC", "BUT", "FEA", "FEH", "YUB", "AME", "NIH", "MOK", "MOH", "STA", "TUO", "MER", "MEH"))
+
+#Set which sources to consider for the model
+sources <- c("BAT","DEE","MIL","SAC","BUT","CNH")
+```
+
+# Prepare data
+
+Load unknown Battle adult samples
+
+```{r}
+#load unknown origin BAT fish
+fish_read <- read.csv(here('data','battle_data.csv')) 
+
+# look at data structure
+glimpse(fish_read)
+
+# unique number of samples
+length(unique(fish_read$lab_id))
+```
+
+Spline Sr values for every 10 um
+
+```{r}
+# Source spline function that will work within dplyr environments
+source(here('data','function_spline.R'))
+
+# define x vector to predict Sr values to (didn't start at zero bc missing data for some otos,
+# and some are spring & winter run so their core values will be lower and could result in misclassifying fall run from that stream)
+min_x = 100; max_x = 320; N_cols = 23
+(x_vec <- seq(min_x, max_x, length.out = N_cols)) # predict values every 10um
+
+# Create loop to fit spine to Sr8786 data, then predict a value for each x vector distance
+predictedSr = NULL
+
+FishID <- unique(fish_read$lab_id)
+
+for (i in 1:length(FishID)) {
+  X <- as.data.frame(subset(fish_read, fish_read$lab_id==FishID[i]))     # subset data for first fish
+  oto_spl <- spline.fun(X, xvar = "Distance_um", yvar = "sr_spline", df = nrow(X)-1) # run function varying df by fish (as differing lengths)
+  Pred_Sr <- predict(oto_spl,x_vec)$y # Predict a Sr8786 value for every x vector distance
+  temp_df <- data.frame(lab_id = FishID[i], Distance_um = x_vec, Pred_Sr = Pred_Sr)
+  predictedSr <- rbind(predictedSr, temp_df)   #bind new df to the end of existing df
+}
+
+#nat_loc <- adult %>% distinct(Sample_ID, NAT_LOC)
+#predictedSr <- left_join(predictedSr, nat_loc)
+
+##-------------------------------------------------------
+# CREATE DF FOR MODEL (ADD IN PREDICTED SR VALUES IN A ROW PER FISH)
+
+predictedSr$Distance_um = format(predictedSr$Distance_um, digits=3) #limit to 3 digits or the col headers are nuts!
+
+predictedSr$XDistance_um = paste0("X",predictedSr$Distance_um)
+predictedSr$Distance_um = NULL
+
+fish_wide <- tidyr::spread(predictedSr, XDistance_um, Pred_Sr) ##Change to wide format, so 1 fish per row
+
+# add metadata to wide format
+fish_wide <- fish_wide %>% 
+  left_join(fish_read %>% distinct(lab_id), by = c("lab_id"))
+
+# format to long format for plotting
+fish_long <- fish_wide %>% 
+  pivot_longer(
+    cols = starts_with("X"),
+    names_to = "Distance_um",
+    names_prefix = "X",
+    values_to = "Sr8786"
+  ) %>% 
+  mutate(Distance_um = as.numeric(Distance_um))
+```
+
+Now calculate post-splined Sr raster values - Sr median, min, max, range - this is to apply the feature extraction model.
+
+```{r}
+# assign otolith region
+fish_long <- fish_long %>%
+    mutate(natal = case_when(
+      Distance_um >= 245 & Distance_um <=320   ~ "y", TRUE ~ NA),
+           late_core_natal = case_when(Distance_um > 160  ~ "y",
+                                       TRUE ~ NA))
+  
+# automated median
+median_auto <- fish_long %>%
+  filter(natal == "y") %>%
+    group_by(lab_id) %>% 
+  summarize(med_sr_auto = median(Sr8786, na.rm = T))
+  
+# automated raster
+raster_auto <- fish_long %>%
+    filter(late_core_natal=="y") %>%
+  group_by(lab_id) %>%
+    summarize(min_sr_auto = min(Sr8786, na.rm = T),
+           max_sr_auto = max(Sr8786, na.rm = T)) %>%
+    mutate(range_sr_auto = max_sr_auto - min_sr_auto) 
+
+# add raster Sr values
+fish_wide <- fish_wide %>% 
+  left_join(raster_auto, by = c("lab_id" = "lab_id")) %>% 
+  left_join(median_auto, by = c("lab_id" = "lab_id"))
+
+
+glimpse(fish_wide)
+
+```
+
+Load the natal mean TE values and exogenous feeding scores
+
+```{r}
+#read in te natal values
+te_natal_read <-read.csv(here('outputs','TE_natal_srba.csv'),  stringsAsFactors = F)
+
+glimpse(te_natal_read)
+
+# modify columns
+te_natal <- te_natal_read %>%
+  mutate(lab_id = Fish_ID)%>%
+  filter(Lifestage == "adult") %>% 
+  dplyr::select(lab_id, Sr_Ca, Ba_Ca)
+
+#read in exog scores
+exog_readin <- read_excel(here('data','battle_creek_exog_scores.xlsx'), sheet = "exog")%>%
+  dplyr::select(lab_id, mean_exog = exog_score)
+
+# join with full data
+fish_mod <- fish_wide %>% 
+  left_join(te_natal, by="lab_id") %>%
+  left_join(exog_readin, by="lab_id") %>% 
+  
+  # fill missing mean exog scores
+  mutate(#model_use = "X320",
+         mean_exog = case_when(
+           is.na(mean_exog) ~ 1.5,
+           TRUE ~ mean_exog
+         ))
+
+glimpse(fish_mod)
+```
+
+# Natal assignment
+
+## Sr time series assignment
+
+Load the natal assignment models trained in the prior script
+
+```{r}
+# Sr isotope ts model
+final_rf_fit <- readRDS(here('outputs','final_sr_ts_model_2025-11-06.rds'))
+```
+
+Predict adult origin using Sr isotope time series model
+
+```{r}
+# predict
+set.seed(123)
+pred_ts <- fish_mod %>% 
+  bind_cols(predict(final_rf_fit, ., type = "class"),
+            predict(final_rf_fit, ., type = "prob")) %>% 
+  
+  # rename .pred* columns by appending "_te"
+  rename_with(~ paste0(.x, "_sr"), starts_with(".pred"))
+```
+
+## Trace element
+
+```{r}
+# trace element model
+final_rf_fit_te <- readRDS(here('outputs','final_te_model_2025-11-06.rds'))
+```
+
+```{r}
+# predict!
+set.seed(1234)
+pred_te <- fish_mod %>% 
+  
+  # drop fish with NA in Sr Ca, otherwise all will be assinged to BUT!
+  drop_na(Sr_Ca, Ba_Ca) %>% 
+  
+  bind_cols(predict(final_rf_fit_te, ., type = "class"),
+            predict(final_rf_fit_te, ., type = "prob")) %>% 
+  
+  # rename .pred* columns by appending "_te"
+  rename_with(~ paste0(.x, "_te"), starts_with(".pred"))
+
+glimpse(pred_te)
+```
+
+## Post-hoc multiplier
+
+Now combine the posterior probs
+
+```{r}
+# Merge the two prediction tables
+pred_combined <- pred_ts %>%
+  dplyr::select(lab_id, starts_with(".pred_"), starts_with("X"), mean_exog) %>%
+  left_join(
+    pred_te %>%
+      dplyr::select(lab_id, starts_with(".pred_"), Sr_Ca, Ba_Ca), by = "lab_id"
+  )
+
+
+# Use te_missing_if_any = TRUE  => fallback to Sr if ANY of the TE probs are NA (default below)
+# Use te_missing_if_any = FALSE => fallback only if ALL TE probs are NA
+te_missing_if_any <- TRUE
+
+# ---- compute posteriors----
+pred_post <- pred_combined %>%
+  rowwise() %>%
+  mutate(
+    
+    # grab sr and te vectors for the chosen sources as list-columns
+    sr_vec = list(c_across(all_of(paste0(".pred_", sources, "_sr")))),
+    te_vec = list(c_across(all_of(paste0(".pred_", sources, "_te")))),
+    
+    # decide whether the TE prediction should be considered missing
+    te_missing = if (te_missing_if_any) any(is.na(unlist(te_vec))) else all(is.na(unlist(te_vec))),
+    
+    # normalize sr probs (guard against zero / all-NA)
+    sr_sum = sum(unlist(sr_vec), na.rm = TRUE),
+    sr_norm = list(
+      if (is.na(sr_sum) || sr_sum == 0) rep(1/length(unlist(sr_vec)), length(unlist(sr_vec)))
+      else unlist(sr_vec) / sr_sum
+    ),
+    
+    # compute raw posterior = sr_norm * te_vec, but only when TE is present
+    post_raw = list(
+      if (te_missing) rep(NA_real_, length(unlist(sr_vec))) 
+      else unlist(sr_norm) * unlist(te_vec)
+    ),
+    
+    # normalize posterior
+    post_sum = sum(unlist(post_raw), na.rm = TRUE),
+    post_norm = list(
+      if (is.na(post_sum) || post_sum == 0) rep(NA_real_, length(unlist(sr_vec)))
+      else unlist(post_raw) / post_sum
+    ),
+    
+    # final class with fallback
+    .pred_class_final = if (te_missing || all(is.na(unlist(post_norm)))) {
+      .pred_class_sr
+    } else {
+      # if sr_class is NOT one of the allowed sources, stick with sr_class
+      if (!(.pred_class_sr %in% sources)) {
+        .pred_class_sr
+      } else {
+        sources[which.max(unlist(post_norm))]
+      }
+    }
+  ) %>%
+  ungroup() %>%
+  mutate(
+    post_norm_named = map(post_norm, ~ set_names(as.numeric(.x), paste0("post_norm_post", sources)))
+  ) %>%
+  unnest_wider(post_norm_named) %>%
+  dplyr::select(-sr_vec, -te_vec, -sr_sum, -post_raw, -post_sum, -post_norm)
+
+# example rows where TE was missing and fallback applied
+pred_post %>% filter(te_missing) %>% dplyr::select(lab_id, .pred_class_sr, .pred_class_te, .pred_class_final) %>% head(10)
+
+#-----------------------
+# finalize probabilities 
+#-----------------------
+
+pred_final <- pred_post %>%
+  
+  relocate(.pred_class_final, .after = .pred_class_te) %>% 
+  relocate(.pred_class_sr, .before = .pred_class_te) %>% 
+  
+  # calculate maximum sr ts model prob
+  rowwise() %>%
+  mutate(max_prob_sr = max(c_across(.pred_AME_sr:.pred_YUB_sr)),
+         max_prob_te = max(c_across(.pred_BAT_te:.pred_SAC_te)),
+         max_prob_final = max(c_across(post_norm_postBAT:post_norm_postCNH))) %>% 
+  
+  # relocate
+  relocate(max_prob_sr, .before = .pred_class_sr) %>% 
+  relocate(max_prob_te, .after = max_prob_sr) %>% 
+  relocate(max_prob_final, .after = max_prob_te) %>% 
+  relocate(te_missing, .before = max_prob_sr) %>%
+  
+   # make factor ordering consistent
+  mutate(
+    .pred_class_sr    = factor(.pred_class_sr,    levels = source_order),
+    .pred_class_te    = factor(.pred_class_te,    levels = source_order),
+    .pred_class_final = factor(.pred_class_final, levels = source_order),
+    #NAT_LOC = factor(NAT_LOC, levels = source_order)
+  ) %>% 
+  ungroup()
+  
+glimpse(pred_final)
+```
+
+Double check to see if post-hoc multiplier correctly applied
+
+```{r}
+# adjust columns
+pred_final <- pred_final %>% 
+  mutate(
+    .pred_class_sr    = factor(.pred_class_sr,    levels = source_order),
+    .pred_class_te    = factor(.pred_class_te,    levels = source_order),
+    .pred_class_final = factor(.pred_class_final, levels = source_order))
+
+# function to compute manual posterior for one row
+check_posteriors <- function(row, sources) {
+  sr_vec <- as.numeric(row %>% dplyr::select(paste0(".pred_", sources, "_sr")))
+  te_vec <- as.numeric(row %>% dplyr::select(paste0(".pred_", sources, "_te")))
+  
+  # normalize sr
+  sr_norm <- sr_vec / sum(sr_vec, na.rm = TRUE)
+  
+  # compute posterior
+  post_raw <- sr_norm * te_vec
+  post_norm <- post_raw / sum(post_raw, na.rm = TRUE)
+  
+  # stored posterior from table
+  stored_post <- row %>% dplyr::select(paste0("post_norm_post", sources)) %>% as.numeric()
+  
+  tibble(
+    lab_id = row$lab_id,
+    source = sources,
+    sr_norm = sr_norm,
+    te_vec = te_vec,
+    post_raw = post_raw,
+    post_norm_calc = post_norm,
+    post_norm_stored = stored_post
+  )
+}
+
+# Example: check first 3 individuals
+posterior_checks <- purrr::map_dfr(1:10, ~ check_posteriors(pred_final[.x, ], sources))
+
+posterior_checks
+
+```
+
+Note that for some individuals, posterior probs for some sources could be chosen even when that source for sr or te was low!
+For example, "SC_05_50015E" was assigned SAC, because high probs for either sr or te models were canceled out because either had a zero prob.
+
+```{r}
+# Predicted probabilities
+pred_viz <- pred_final %>%
+  select(lab_id,
+         starts_with(".pred_") 
+         ) %>%
+  select(-.pred_class_sr, -.pred_class_te, -.pred_class_final, -.pred_AME_sr, -.pred_NIH_sr, -.pred_FEA_sr, -.pred_FEH_sr, -.pred_MEH_sr, -.pred_MER_sr, -.pred_MOH_sr, -.pred_MOK_sr,  -.pred_STA_sr, -.pred_TUO_sr, -.pred_YUB_sr) %>% 
+  pivot_longer(
+    cols = -c(lab_id),
+    names_to = c("source","type"),
+    names_pattern = "\\.pred_([A-Z]+)_(sr|te)",
+    values_to = "prob"
+  ) #%>%
+  #mutate(type = toupper(type))  # optional
+
+# Posterior probabilities
+post_viz <- pred_final %>%
+  select(lab_id, starts_with("post_norm_post")) %>%
+  pivot_longer(
+    cols = -c(lab_id),
+    names_to = "source",
+    names_pattern = "post_norm_post([A-Z]+)",
+    values_to = "prob"
+  ) %>%
+  mutate(type = "Posterior")
+
+# Combine
+viz_data <- bind_rows(pred_viz, post_viz)
+
+
+
+# Example visualization for a subset of individuals
+viz_data %>% filter(lab_id %in% unique(pred_final$lab_id)[1:5]) %>% 
+  mutate(type = factor(type, levels = c("sr", "te", "Posterior"))) %>% 
+  ggplot(aes(x = source, y = prob, fill = type)) +
+  geom_col(position = position_dodge(width = 0.8), width = 0.7) +
+  facet_wrap(~ lab_id, ncol = 3) +
+  labs(
+    title = "Comparison of SR, TE, and Posterior Probabilities by Source",
+    x = "Source",
+    y = "Probability",
+    fill = "Probability Type"
+  ) +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+## Figure 3
+
+This is for the flowchart
+Posterior probability plots for one fish
+
+```{r}
+glimpse(viz_data)
+
+plots_list <- viz_data %>% 
+  filter(lab_id %in% unique(pred_final$lab_id)[3]) %>% 
+  
+  # reorder factor levels
+  mutate(source = factor(source, levels = source_order)) %>%
+  mutate(type = recode(type,
+                       sr = "Strontium Isotope",
+                       te = "Trace Element",
+                       Posterior = "Combined"),
+         type = factor(type, levels = c("Strontium Isotope", "Trace Element", "Combined"))) %>% 
+  
+  split(.$type) %>%    # split by type
+  imap(~ ggplot(.x, aes(x = factor(source, levels = source_order), y = prob, fill = source)) +
+         geom_col(width = 0.7, alpha = 0.8) +
+         scale_fill_manual(values = colors) +
+         scale_y_continuous(limits = c(0, 1.0), breaks = seq(0, 1.0, by = 0.25)) +
+         labs(x = "Source",
+              y = "Probability",
+              title = .y) +     # use the type name as title
+         theme_classic() +
+         theme(legend.position = "none",
+               #axis.text.x = element_text(angle = 45, hjust = 1),
+               axis.title = element_text(size = 20),
+               axis.text = element_text(size = 16),
+               plot.title = element_text(face = "bold", size = 24, color = "gray30"),
+               rect = element_rect(fill = "transparent"),
+               plot.background = element_rect(color = NA),
+               panel.background = element_rect(fill = NA, color = NA)
+               )
+       )
+
+# save
+# walk2(plots_list, names(plots_list), ~ ggsave(
+#   filename = paste0("outputs/plot_", gsub(" ", "_", .y), ".pdf"),
+#   plot = .x,
+#   width = 5, height = 3.5, dpi = 300
+# ))
+
+```
+
+Now add meta data and save!
+
+*Updated 2026-01-16*
+
+```{r}
+# read in the most updated meta data
+meta_read <- read_excel(here('data','battle_metadata_updated_20251029.xlsx'), sheet = "metadata")
+
+glimpse(meta_read)
+
+# add a 0 in front of cwt_no for those not NA or "NTD"
+meta_read <- meta_read %>%
+  mutate(cwt_no = case_when(
+    !is.na(cwt_no) & cwt_no != "NTD" ~ str_c("0", cwt_no),
+    TRUE ~ cwt_no
+  ))
+
+# join and arrange columns
+pred_final_save <- pred_final %>%
+  
+  # note there was two samples with lab_id with a trailing _2
+  mutate(lab_id_join = str_replace(lab_id, "_2$", "")) %>%  # remove only trailing "_2"
+  select(-sr_norm) %>%
+  left_join(meta_read, by = c("lab_id_join" = "lab_id")) %>%
+  
+  # relocate columns
+  relocate(agency_id:collect_notes, .after = lab_id) %>% 
+  dplyr::select(-lab_id_join) %>% 
+  
+  # for lab_id = SC_09_50001E year missing so fill with 2009
+  mutate(year = case_when(
+    lab_id == "SC_09_50001E" ~ 2009,
+    TRUE ~ year
+  ))
+
+glimpse(pred_final_save)
+
+# check to see if no NAs in the meta data for otoliths samples
+pred_final_save %>%
+  filter(if_any(year:run, is.na))
+
+# save as csv file
+#write.csv(pred_final_save, paste0("./outputs/battle_adult_assign_", Sys.Date(), ".csv"), row.names = F)
+write.csv(pred_final_save, file = "./outputs/battle_adult_assign.csv", row.names = F)
+```
+
+# Winter-run removal and CWT
+
+*Updated 2026-01-15*
+
+```{r}
+# read in final predictions (N = 287) - this includes CWT and winter-run
+pred_final_read <- read.csv(here('outputs', 'battle_adult_assign.csv'))
+
+glimpse(pred_final_read)
+
+# number of runs
+pred_final_read %>% 
+  group_by(year, run) %>% 
+  tally()
+
+# remove winter-run (n = 14) - N = 273 
+pred_final_filter <- pred_final_read %>% 
+  filter(!run == "winter")
+
+
+```
+
+Natal origin re-assignment based on adipose fin status and CWT information
+
+Rules:
+For fish with CWT info available (n = 19), use CWT-origin instead of otolith origin (this includes n = 16 adipose absent + n = 3 adipose unknown status)
+For all other fish (including adipose absent fish without CWT info or adipose unknown status fish), use otolith origin
+For adipose absent fish without CWT into (n = 5) that was otolith assigned to a wild source, assign as "UNK".
+
+```{r}
+# read in RMIS data
+rmis_readin <-read.csv(here('data','CSV19422.csv'),  stringsAsFactors = F)
+
+# select columns
+rmis <-rmis_readin %>%
+  dplyr::select(tag_code = tag_code_or_release_id, brood_year, hatchery_location_name)
+
+
+#Read in additional data from USFW for Battle Creek
+#bc_usfw <-read_excel(here('data','Battle_Creek_otoliths_USFWS_sub.xlsx'), sheet="overview")
+
+# join with prediction
+pred_final_filter <- pred_final_filter %>% 
+  left_join(rmis, by = c("cwt_no" = "tag_code")) %>% 
+  
+  relocate(brood_year, hatchery_location_name, .after = cwt_no)
+
+# number of adipose fin absent fish - n = 21 - note that n = 5 adipose fin absent fish have no CWT info
+pred_final_filter %>% 
+  filter(adipose_fin == "absent") %>% 
+  dplyr::select(lab_id, adipose_fin, cwt_no, hatchery_location_name, .pred_class_final)
+
+# number of CWT info fish n = 19 (includes adipose absent n = 16 and unknown n = 3)
+pred_final_filter %>% 
+  filter(!(is.na(cwt_no) | cwt_no == "NTD")) %>% 
+  dplyr::select(lab_id, adipose_fin, cwt_no, hatchery_location_name, .pred_class_final)
+
+# check unique CWT hatchery - only feather river hatchery
+unique(pred_final_filter$hatchery_location_name)
+
+# now make new column with natal assignments replaced with CWT assignments
+# set wild sources
+wild_source <- c("BAT", "DEE", "MIL", "SAC", "BUT", "FEA", "YUB", "AME", "MOK", "STA", "TUO", "MER")
+
+pred_final_filter <- pred_final_filter %>% 
+  # update otolith assignment with CWT
+  mutate(.pred_class_final_cwt = case_when(hatchery_location_name == "FEATHER R HATCHERY" ~ "FEH",
+                                           TRUE ~ .pred_class_final)) %>% 
+  
+  # for adipose_fin == "absent" & .pred_class_final_cwt == wild source, then change assignment to "UNK"
+  mutate(.pred_class_final_cwt = case_when(adipose_fin == "absent" & .pred_class_final_cwt %in% wild_source ~ "UNK",
+                                           TRUE ~ .pred_class_final_cwt)) %>% 
+  # relocate
+  relocate(.pred_class_final_cwt, .after = .pred_class_final)
+
+# check adipose absent fish natal assignment
+pred_final_filter %>% 
+  filter(adipose_fin == "absent") %>% 
+  dplyr::select(lab_id, adipose_fin, cwt_no, hatchery_location_name, .pred_class_final, .pred_class_final_cwt)
+
+pred_final_filter %>% 
+  filter(adipose_fin == "unknown" & !is.na(cwt_no) ) %>% 
+  dplyr::select(lab_id, adipose_fin, cwt_no, hatchery_location_name, .pred_class_final, .pred_class_final_cwt)
+
+# for CWT fish how many matched otolith assignments? %agreement: 63% (12/19)
+pred_final_filter %>%
+  filter(!is.na(hatchery_location_name)) %>%
+  summarise(
+    matched = sum(.pred_class_final == .pred_class_final_cwt, na.rm = TRUE),
+    total = n(),
+    percent_matched = matched / total * 100
+  )
+
+# check how many samples were re-assigned - n = 8
+pred_final_filter %>%
+  summarise(
+    n_total   = n(),
+    n_changed = sum(.pred_class_final != .pred_class_final_cwt, na.rm = TRUE),
+    prop_changed = n_changed / n_total
+  )
+
+# save 2026-01-16
+#write.csv(pred_final_filter, paste0("./outputs/battle_adult_assign_cwt_corrected_", Sys.Date(), ".csv"), row.names = F)
+write.csv(pred_final_filter, file = "./outputs/battle_adult_assign_cwt_corrected.csv", row.names = F)
+```
+
+# Assignment visualization and check
+
+## Strontium isotopes
+
+Overlay predicted adult Sr profiles on known juvenile baseline Sr profiles
+
+```{r}
+# read in full isoscape data for Sr isotope time series model
+iso_full_read <- read_csv(here('data','ref_data_for_model_2025-09-16.csv'))
+
+# modify columns
+iso_full <- iso_full_read %>% 
+  rename(lab_id = Sample_ID) %>% 
+  mutate(NAT_LOC = factor(NAT_LOC)) %>% 
+  
+  # assign real and synthetic
+  mutate(type = case_when(
+    grepl("Fish", lab_id) ~ "synthetic",
+    TRUE ~ "real")) %>% 
+  mutate(HvW = case_when(
+    NAT_LOC %in% c("CNH", "FEH", "MEH", "NIH", "MOH") ~ "H",
+    TRUE ~ "W")) %>% 
+  
+  # drop rows with NA in columns starting with "X"
+  filter(if_all(starts_with("X"), ~ !is.na(.)))
+
+# sample size per natal source
+iso_full %>% 
+  group_by(NAT_LOC, type) %>% 
+  summarise(n = n()) %>% 
+  knitr::kable(format = "simple", caption = "Sample size of the full dataset of known-origin juveniles by natal source and type.")
+
+glimpse(iso_full)
+
+# sample size per source
+iso_full %>% 
+  group_by(NAT_LOC, type) %>% 
+  tally()
+
+# to long format
+iso_full_long <- iso_full %>% 
+  #filter(!is.na(NAT_LOC)) %>% 
+  #droplevels() %>% 
+  pivot_longer(
+    cols = starts_with("X"),
+    names_to = "Distance_um",
+    names_prefix = "X",
+    values_to = "Sr8786"
+  ) %>% 
+  mutate(Distance_um = as.numeric(Distance_um)) %>% 
+  dplyr::select(lab_id, Distance_um, Sr8786, NAT_LOC, type)
+
+glimpse(iso_full_long)
+```
+
+
+```{r}
+# read in prediction data
+pred_final_corrected_read <- read.csv(here('outputs','battle_adult_assign_cwt_corrected.csv'))
+
+# fix source order
+pred_final_corrected <- pred_final_corrected_read %>% 
+  
+  # look at only adipose present fish
+  #filter(!adipose_fin %in% c("absent")) %>% 
+  
+  # remove UNKOWN origin fish (adipose present & .pred_class = wild_source)
+  filter(!.pred_class_final_cwt == "UNK") %>% 
+  
+  mutate(
+    .pred_class_sr    = factor(.pred_class_sr,    levels = source_order),
+    .pred_class_te    = factor(.pred_class_te,    levels = source_order),
+    .pred_class_final = factor(.pred_class_final, levels = source_order),
+    .pred_class_final_cwt = factor(.pred_class_final_cwt, levels = source_order),
+    )
+
+glimpse(pred_final_corrected)
+
+# to long format
+pred_final_corrected_long <- pred_final_corrected %>% 
+  #filter(!is.na(NAT_LOC)) %>% 
+  #droplevels() %>% 
+  pivot_longer(
+    cols = starts_with("X"),
+    names_to = "Distance_um",
+    names_prefix = "X",
+    values_to = "Sr8786"
+  ) %>% 
+  mutate(Distance_um = as.numeric(Distance_um)) %>% 
+  
+  # make sure to select assigments from Strontium isotope model
+  dplyr::select(lab_id, adipose_fin, Distance_um, Sr8786, .pred_class_sr) %>% 
+  rename(NAT_LOC = .pred_class_sr)
+
+glimpse(pred_final_corrected_long)
+```
+
+```{r}
+# filter only adipose present fish (otolith analysis) for plotting individuals
+pred_final_corrected_long_p <- pred_final_corrected_long %>% 
+  filter(!adipose_fin %in% c("absent"))
+
+# extract existing categories
+cats_ts <- unique(pred_final_corrected_long_p$NAT_LOC)
+
+ts_sr_p <- pred_final_corrected_long_p %>% 
+  mutate(NAT_LOC = factor(NAT_LOC, levels = source_order)) %>% 
+  ggplot(aes(x = Distance_um, y = Sr8786, group = lab_id, color = NAT_LOC))+
+  
+  # as reference data as backgrounds
+  geom_line(data = iso_full_long %>% 
+              mutate(NAT_LOC = factor(NAT_LOC, levels = source_order),
+                     type = recode(type, real = "Empirical", synthetic = "Synthetic")) %>% 
+              filter(NAT_LOC %in% cats_ts), 
+            aes(x = Distance_um, y = Sr8786, group = lab_id, linetype = type), color = "gray70", size = 0.7)+
+  
+  geom_line(size = 1.0, alpha = 0.7)+
+  labs(#title = "Time-series natal approach assignment",
+       #subtitle = paste0(Sys.Date()),
+       x = "Otolith Distance from Core (µm)", 
+       y = expression(paste("Otolith "^87, "Sr/", ""^86, "Sr")),
+       color = "Prediction\n(Sr Iso)",
+       linetype = "Type"
+       )+
+  coord_cartesian(xlim = c(100, 320))+
+  facet_wrap(~NAT_LOC)+
+  scale_color_manual(values = colors)+
+  scale_linetype_manual(values = c("Empirical" = "solid", "Synthetic" = "22"))+
+  guides(
+    #color = "none",
+    linetype = guide_legend(override.aes = list(size = 1.5))
+  )+
+  theme_classic()+
+  theme(legend.position = "right",
+        legend.background = element_rect(color = "gray30", fill = "white"),  # Add square border
+    legend.title = element_text(size = 16),  # Adjust legend title style
+    legend.text = element_text(size = 14),
+    legend.key.width = unit(1.5, "cm"),
+    legend.key.height = unit(0.8, "cm"),
+    axis.text = element_text(size = 12),
+    axis.title = element_text(size = 16),
+    panel.spacing = unit(1, "lines"),
+    strip.background = element_rect(fill = "grey60", color = NA),
+    strip.text = element_text(size = 12, color = "white", face = "bold", margin = margin(t = 5, b = 5)))
+
+ts_sr_p
+#ggsave(file = paste0("./outputs/figures/assign_profile_ts_", Sys.Date(), ".png"), ts_sr_p, width = 14, height = 8, bg = "transparent")
+```
+
+
+### Trace elements
+Plot prediction on decision surface
+
+```{r}
+# filter only adipose present fish (otolith analysis) for plotting individuals
+pred_final_corrected_p <- pred_final_corrected %>% 
+  filter(!adipose_fin %in% c("absent"))
+
+# make 2D grid
+grid_df <- expand.grid(
+  #sr_iso = sr_med,
+  Sr_Ca  = seq(min(pred_final_corrected_p$Sr_Ca, na.rm = T), max(pred_final_corrected_p$Sr_Ca, na.rm = T), length.out = 100),
+  Ba_Ca  = seq(min(pred_final_corrected_p$Ba_Ca, na.rm = T), max(pred_final_corrected_p$Ba_Ca, na.rm = T), length.out = 100)
+)
+
+# Predict on the grid using trained RF model
+set.seed(123)
+grid_pred <- predict(final_rf_fit_te, new_data = grid_df, type = "class") %>%
+  bind_cols(grid_df) %>% 
+  mutate(.pred_class = factor(.pred_class, levels = source_order))
+
+# predict probs for continuous shading
+# grid_probs <- predict(final_rf_mod_te_mean, new_data = grid_df, type = "prob") %>%
+#   bind_cols(grid_df)
+
+# Plot decision surface + observed points
+ds_final_p <- ggplot() +
+  
+  # background data
+  geom_tile(data = grid_pred, aes(x = Sr_Ca, y = Ba_Ca, fill = .pred_class), alpha = 0.5) +
+  
+  # for this plot, use .pred_class_final - as this is showing how the model assigned based on otolith data
+  geom_point(data = pred_final_corrected_p %>% filter(.pred_class_final %in% sources), aes(x = Sr_Ca, y = Ba_Ca, fill = .pred_class_final, size = max_prob_sr),  alpha = 0.8, shape = 21, color = "gray30") +
+  #scale_fill_brewer(palette = "Set2", name = "TE Decision Surface") +
+  #scale_color_brewer(palette = "Dark2", name = "Final Prediction \n(Sr TS + TE)") +
+  scale_fill_manual(values = colors)+
+  scale_color_manual(values = colors)+
+  scale_size_continuous(name = "Max Prob\nSr Iso") +
+  coord_cartesian(expand = F)+
+  labs(#title = "TE decision space and adult final prediction",
+       #subtitle = paste0(Sys.Date()),
+       x = "Sr:Ca",
+       y = "Ba:Ca",
+       size = "Sr Iso Max Prob",
+       #color = "TE Prediction",
+       fill = "Prediction\n(Combined)"
+       )+
+  theme_classic()+
+  theme(legend.position = "right",
+        legend.background = element_rect(color = "gray30", fill = "white"),  # Add square border
+    legend.title = element_text(size = 16),  # Adjust legend title style
+    legend.text = element_text(size = 14),
+    legend.key.width = unit(1.5, "cm"),
+    legend.key.height = unit(0.8, "cm"),
+    axis.text = element_text(size = 12),
+    axis.title = element_text(size = 16),
+    panel.spacing = unit(1, "lines"),
+    strip.background = element_rect(fill = "grey60", color = NA),
+    strip.text = element_text(size = 12, color = "white", face = "bold", margin = margin(t = 5, b = 5))
+    )
+
+ds_final_p
+  
+# save
+#ggsave(ds_final_p, filename = paste0("./outputs/figures/adult_assign_dsplot_", Sys.Date(), ".png"), height = 8, width = 10)
+```
+
+Combine plots
+
+```{r}
+bind_p <- wrap_plots(ts_sr_p, ds_final_p, ncol = 1, heights = c(0.7, 1.0)) +
+  plot_annotation(tag_levels = 'A', tag_prefix = '', tag_suffix = '') &
+  theme(
+    plot.tag = element_text(face = "bold", size = 24, color = "gray30"),
+    plot.margin = margin(10, 10, 10, 20),
+    rect = element_rect(fill = "transparent"),
+      #panel.background = element_rect(fill = NA, color = NA),
+      plot.background = element_rect(color = NA)
+  )
+
+bind_p
+
+# save
+#ggsave(file = paste0("./outputs/assign_individual_", Sys.Date(), ".png"), bind_p, width = 12, height = 16, bg = "transparent")
+ggsave(file = here('outputs','assign_individual.png'), bind_p, width = 12, height = 16, bg = "transparent")
+
+# save as pdf
+# ggsave(
+#   filename = paste0("./outputs/figures/assign_individual_", Sys.Date(), ".pdf"),
+#   plot = bind_p,
+#   width = 12,   # in inches
+#   height = 16,   # in inches
+#   units = "in",
+#   device = cairo_pdf,     # ensures embedded fonts and smooth text rendering
+#   bg = "transparent",
+#   dpi = 600,              # technically ignored for PDF (but good practice)
+# )
+```
+
+Also plot baseline Sr timeseries of juveniles for Appendix
+
+```{r}
+ts_sr_base <- iso_full_long %>% 
+  mutate(NAT_LOC = factor(NAT_LOC, levels = source_order),
+         type = recode(type, real = "Empirical", synthetic = "Synthetic")) %>% 
+  
+  ggplot(aes(x = Distance_um, y = Sr8786))+
+  geom_line(aes(group = lab_id, linetype = type), color = "gray70", size = 0.7)+
+  
+  labs(#title = "Time-series natal approach assignment",
+       #subtitle = paste0(Sys.Date()),
+       x = "Otolith Distance from Core (µm)", 
+       y = expression(paste("Otolith "^87, "Sr/", ""^86, "Sr")),
+       color = "Prediction\n(Sr Iso)",
+       linetype = "Type"
+       )+
+  coord_cartesian(xlim = c(100, 320))+
+  facet_wrap(~NAT_LOC)+
+  #scale_color_manual(values = colors)+
+  scale_linetype_manual(values = c("Empirical" = "solid", "Synthetic" = "22"))+
+  guides(
+    #color = "none",
+    linetype = guide_legend(override.aes = list(size = 1.5))
+  )+
+  theme_classic()+
+  theme(legend.position = c(0.5, 0.12),
+        legend.background = element_rect(color = "gray30", fill = "white"),  # Add square border
+    legend.title = element_text(size = 16),  # Adjust legend title style
+    legend.text = element_text(size = 14),
+    legend.key.width = unit(1.5, "cm"),
+    legend.key.height = unit(0.8, "cm"),
+    axis.text = element_text(size = 12),
+    axis.title = element_text(size = 16),
+    panel.spacing = unit(1, "lines"),
+    strip.background = element_rect(fill = "grey60", color = NA),
+    strip.text = element_text(size = 12, color = "white", face = "bold", margin = margin(t = 5, b = 5)))
+
+ts_sr_base
+#ggsave(file = "./outputs/base_profiles.png", ts_sr_base, width = 14, height = 10, bg = "transparent")
+```
+
+
+
+Count barplots (Fig. 5)
+
+```{r}
+# this data set includes only adipose fin present fish
+glimpse(pred_final_corrected_p)
+
+# Count number of each predicted source
+source_counts <- pred_final_corrected_p %>%
+  count(.pred_class_final, name = "n") %>%
+  arrange(desc(n))
+
+# Plot barplot with count labels
+bar_p <- source_counts %>% 
+  ggplot(aes(x = reorder(.pred_class_final, -n), y = n, fill = .pred_class_final)) +
+  geom_col() +
+  geom_text(aes(label = n), vjust = -0.5, size = 3.5, color = "gray30") +
+  labs(
+    x = "Predicted Natal Origin",
+    y = "Count",
+    #title = "Number of Assignments per Source"
+  ) +
+  scale_y_continuous(limits = c(0, max(source_counts$n) + 5))+
+  coord_cartesian(expand = FALSE)+
+  scale_fill_manual(values = colors)+
+  theme_classic() +
+  theme(legend.position = "none",
+        axis.title = element_text(size = 16),
+        axis.text = element_text(size = 12)
+    #axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+
+bar_p
+ggsave(file = "./outputs/assign_barplot.png", bar_p, width = 8, height = 8, bg = "transparent")
+```
+
+
+## Sankey barplots
+
+This plot help visualize how much assignments changed from Sr isotopes, TE, to final
+
+```{r}
+sankey_p <- pred_final_corrected %>% 
+  pivot_longer(cols = starts_with(".pred_class_"),
+               names_to = "model",
+               values_to = "assignment") %>%
+  mutate(assignment = factor(assignment, levels = source_order_rev)) %>% 
+  filter(model %in% c(".pred_class_sr", ".pred_class_te", ".pred_class_final")) %>% 
+  
+  # factor order
+  mutate(model = factor(model, levels = c(".pred_class_sr", ".pred_class_te", ".pred_class_final"))) %>% 
+  
+  # filter only for the overlapping sources
+  filter(assignment %in% sources) %>% 
+  
+  ggplot(aes(x = model, stratum = assignment, alluvium = lab_id,
+             fill = assignment, label = assignment)) +
+  geom_flow(width = 1/3, stat = "alluvium", alpha = 0.5) +
+  geom_stratum(width = 1/3, color = "gray70", alpha = 0.7) +
+  labs(#title = "Sr Iso TS + TE (Sr, Ba) + Posterior Weighting (Option 3)",
+       #subtitle = paste0(Sys.Date()),
+       x = "Model Type",
+       y = "Count",
+       fill = "Natal Prediction")+
+  scale_fill_manual(values = colors)+
+  #scale_fill_brewer(palette = "Set3") +
+  #scale_color_brewer(palette = "Dark2", name = "Final Prediction \n(Sr TS + TE)") +
+  theme_classic()
+
+sankey_p
+
+#ggsave(sankey_p, file = paste0("./outputs/sankey_compare_", Sys.Date(), ".png"), height = 6, width = 8)
+ggsave(sankey_p, file = here('outputs','sankey_compare.png'), height = 6, width = 8)
+```
+
+# Proportions and Confidence Intervals
+
+Now run a bootstrap to calculate proportions per year with confidence intervals
+
+```{r}
+glimpse(pred_final_corrected)
+
+# look at sample sizes per year
+pred_final_corrected %>% 
+  group_by(year) %>% 
+  tally()
+
+# Define posterior columns (natal regions)
+source_order
+
+# Set bootstrap parameters
+n_boot <- 1000
+set.seed(1234)
+
+# Hard proportion (assigned class)
+calc_hard_props <- function(data, class_col, levels_vec) {
+  table(factor(data[[class_col]], levels = levels_vec)) / nrow(data)
+}
+
+# Bootstrap by survey year
+boot_prop_hard <- pred_final_corrected %>%
+  group_split(year) %>%
+  map_dfr(function(df_sy) {
+    sy <- unique(df_sy$year)
+    
+    # --- Hard assignment bootstrap ---
+    hard_boot <- replicate(n_boot, {
+      df_sample <- df_sy[sample(nrow(df_sy), replace = TRUE), ]
+      calc_hard_props(df_sample, ".pred_class_final_cwt", source_order) # remember to use the cwt corrected one!
+    }, simplify = "matrix")
+    
+    hard_df <- as_tibble(t(hard_boot), .name_repair = "minimal") %>%
+      setNames(source_order) %>%
+      pivot_longer(cols = everything(), names_to = "NAT_LOC", values_to = "Proportion") %>%
+      group_by(NAT_LOC) %>%
+      summarise(
+        Mean_Proportion = mean(Proportion, na.rm = TRUE),
+        SE = sd(Proportion, na.rm = TRUE),
+        # Lower_95_CI = pmax(0, Mean_Proportion - 1.96 * SE),
+        # Upper_95_CI = pmin(1, Mean_Proportion + 1.96 * SE),
+        
+        # might use a percentile-based approach for small sample sizes like our dataset
+        Lower_95_CI = quantile(Proportion, 0.025, na.rm = TRUE),
+        Upper_95_CI = quantile(Proportion, 0.975, na.rm = TRUE),
+        n = nrow(df_sy),
+        
+        .groups = "drop"
+      ) %>%
+      mutate(year = sy, Assignment_Type = "hard")
+    
+  })
+
+# Arrange results
+boot_prop_hard <- boot_prop_hard %>%
+  relocate(year, Assignment_Type, NAT_LOC)
+
+glimpse(boot_prop_hard)
+
+# save as csv file
+#write.csv(boot_prop_hard, here('outputs', paste0("prop_boot_", Sys.Date(), ".csv")), row.names = F)
+write.csv(boot_prop_hard, here('outputs', "prop_boot.csv"), row.names = F)
+
+```
+
+## Individual barplots
+
+```{r}
+# read in bootstrap data
+boot_prop_hard <- read_csv(here('outputs','prop_boot.csv'))
+
+# plot
+prop_ci <- boot_prop_hard %>% 
+  
+  # identify and remove NAT_LOCs that are all zeros across years
+  group_by(NAT_LOC) %>%
+  filter(sum(Mean_Proportion) > 0) %>%
+  ungroup() %>%
+  
+  # reorder factor levels
+  mutate(
+    NAT_LOC  = factor(NAT_LOC,    levels = source_order)) %>% 
+  #filter(Assignment_Type == "hard") %>% 
+  # mutate(Location = fct_relevel(Location,
+  #                               "AME", "MOH", "FEH", "FEA", "BUT", "SAC", "DEE-MIL", "CNH", "BAT")) %>%
+  ggplot(aes(x = NAT_LOC, y = Mean_Proportion, fill = NAT_LOC, color = NAT_LOC))+
+  
+  # background shaded rectangles for HvW
+  #annotate("rect", xmin = -Inf, xmax = Inf, ymin = 12.5, ymax = 17.5, alpha = .1, fill = "gray50")+
+  
+  geom_col(alpha = 0.7, color = NA)+
+  geom_errorbar(aes(ymin = Lower_95_CI, ymax = Upper_95_CI), width = 0.1, linewidth = 0.5)+
+  #scale_fill_manual(values = colors)+
+  #scale_color_manual(values = colors)+
+  #scale_fill_manual(values=origin_colors_rev, name="Natal origin")+
+  #scale_color_manual(values=origin_colors_rev, name="Natal origin")+
+  guides(colour = guide_legend(nrow = 1), fill = guide_legend(nrow = 1))+
+  #scale_y_continuous(breaks = seq(0.0, 0.6, by = 0.1), limits = c(0.0, 0.65))+
+  #scale_x_discrete(limits=rev)+
+  labs(y = "Mean Proportion (95% Confidence Intervals)")+
+  coord_cartesian(expand = F)+
+  #facet_wrap(~as.factor(survey_year_label), nrow = 1)+
+  facet_wrap(~as.factor(year), nrow = 3)+
+  theme_classic()+
+  theme(legend.position = "bottom",
+        axis.title.x = element_blank(),
+        axis.text.x = element_text(size = 8, angle = 45, vjust = 1, hjust = 1),
+        axis.text.y = element_text(size = 8),
+        strip.background = element_rect(fill = "grey60", color = NA),
+        strip.text = element_text(size = 16, color = "white", face = "bold"))
+
+prop_ci
+
+# 1 row
+#ggsave(prop_ci, file = "./outputs/Hist_predict_stacked_CI.png", height = 5, width = 25)
+
+# 3 rows
+#ggsave(prop_ci, file = "./outputs/Hist_predict_stacked_CI.png", height = 12, width = 18)
+```
+
+## Stacked barplots (Fig. 6)
+
+Stack plots with confidence intervals
+
+```{r}
+# calculate proportions by year
+plot_data <- pred_final_corrected %>%
+  filter(!is.na(.pred_class_final_cwt)) %>% 
+  count(year, .pred_class_final_cwt) %>%
+  group_by(year) %>%
+  mutate(prop = n / sum(n),
+         N_total = sum(n, na.rm = TRUE)) %>%
+  ungroup() %>% 
+  mutate(
+    year_label = paste0(year, "\n(N = ", N_total, ")")  # formatted label
+  )
+
+plot_data
+```
+
+```{r}
+# set colors including other
+colors_other <- c("BAT" = "#8DD3C7", "CNH" = "#B3DE69", "DEE" = "#BEBADA", "MIL" = "#FB8072", "SAC" = "#80B1D3", "BUT" = "#FDB462", "OTH" = "#D9D9D9")
+
+source_order_rev
+
+# Calculate the BAT-specific summary for overlay
+bat_trend <- boot_prop_hard %>% 
+  filter(NAT_LOC == "BAT") %>% 
+  left_join(plot_data %>% dplyr::distinct(year, year_label))
+
+# Base stacked bar plot
+stack_boot <- ggplot(plot_data %>% 
+                       # plot all sources
+                       mutate(.pred_class_final_cwt = factor(.pred_class_final_cwt, levels = source_order_rev)),
+                       # change sources to "OTH"
+                     # mutate(.pred_class_final_cwt = case_when(
+                     #   .pred_class_final_cwt %in% c("FEH", "NIH", "MOK", "MOH", "STA", "TUO") ~ "OTH",
+                     #   TRUE ~ .pred_class_final_cwt
+                     # )) %>% 
+                     #   mutate(.pred_class_final_cwt = factor(.pred_class_final_cwt, levels = c("OTH", "BUT", "SAC", "MIL", "DEE", "CNH", "BAT"))),
+                     aes(x = factor(year_label), y = prop, fill = .pred_class_final_cwt)) +
+  geom_col(alpha = 0.7, width = 0.7) +
+  geom_text(
+    aes(label = n),
+    position = position_stack(vjust = 0.5),
+    size = 5,
+    color = "gray30",
+    fontface = "bold"
+  ) +
+  # overlay with BAT bootstap data
+  # ribbons
+  # geom_ribbon(data = bat_trend,
+  #             aes(x = factor(year),
+  #                 ymin = Lower_95_CI, ymax = Upper_95_CI, group = 1),
+  #             inherit.aes = FALSE,
+  #             alpha = 0.3, fill = "#377EB8") +
+  # trend lines
+  geom_line(data = bat_trend,
+            aes(x = factor(year_label), y = Mean_Proportion, group = 1),
+            inherit.aes = FALSE,
+            color = "#377EB8", linewidth = 1) +
+  
+  # upper CI
+  geom_line(data = bat_trend,
+            aes(x = factor(year_label), y = Upper_95_CI, group = 1),
+            inherit.aes = FALSE,
+            color = "#377EB8", linewidth = 0.5, linetype = "dashed") +
+  
+  # lower CI
+  geom_line(data = bat_trend,
+            aes(x = factor(year_label), y = Lower_95_CI, group = 1),
+            inherit.aes = FALSE,
+            color = "#377EB8", linewidth = 0.5, linetype = "dashed") +
+  
+   # Vertical error bars for 95% CI
+  # geom_errorbar(
+  #   data = bat_trend,
+  #   aes(x = as.numeric(factor(year_label)), ymin = Lower_95_CI, ymax = Upper_95_CI),
+  #   inherit.aes = FALSE,
+  #   color = "#377EB8",
+  #   width = 0.1,
+  #   linewidth = 0.6
+  # )+
+  # mean points
+  geom_point(data = bat_trend,
+             aes(x = factor(year_label), y = Mean_Proportion),
+             inherit.aes = FALSE,
+             color = "#377EB8", size = 2)+
+  
+  # set color palette
+  #scale_fill_manual(values = colors_other)+ # colors for OTH
+  scale_fill_manual(values = colors)+ # colors for ALL
+  
+  labs(
+    x = "Survey Year",
+    y = "Proportion",
+    fill = "Natal Prediction",
+    #subtitle = paste0(Sys.Date())
+  ) +
+  coord_cartesian(expand = F)+
+  theme_classic() +
+  theme(legend.position = "right",
+        #legend.background = element_rect(color = "gray30", fill = "white"),  # Add square border
+    legend.title = element_text(size = 16),  # Adjust legend title style
+    legend.text = element_text(size = 14),
+    legend.key.width = unit(1.3, "cm"),
+    legend.key.height = unit(1.4, "cm"),
+    axis.text = element_text(size = 12),
+    axis.title = element_text(size = 16),
+    panel.spacing = unit(1, "lines"),
+    strip.background = element_rect(fill = "grey60", color = NA),
+    strip.text = element_text(size = 12, color = "white", face = "bold", margin = margin(t = 5, b = 5)),
+    rect = element_rect(fill = "transparent"),
+    #panel.background = element_rect(fill = NA, color = NA),
+    plot.background = element_rect(color = NA)
+    )
+
+stack_boot
+
+#ggsave(stack_boot, filename = paste0("./outputs/figures/adult_stack_boot_", Sys.Date(), ".png"), height = 8, width = 14)
+ggsave(stack_boot, filename = here('outputs','adult_stack_boot.png'), height = 8, width = 14)
+```
+
+```{r}
+# ids <- fish_mod %>% pull(lab_id)
+# 
+# x <- meta_read %>% 
+#   filter(!lab_id %in% ids)
+# 
+# write.csv(x, "./outputs/screened_ids.csv", row.names = F)
+```
+
