@@ -1,2 +1,2 @@
 # BattleCreekSalmon
-Data and analysis for Whitman et al. (Evaluating the re-establishment of spring-run Chinook salmon to Battle Creek, California)
+Data and analysis for Whitman et al. (Evaluating the reintroduction progression of a threatened salmonid into their historic habitat)
